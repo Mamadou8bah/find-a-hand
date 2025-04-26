@@ -1,0 +1,135 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family:sans-serif;
+}
+
+.navbar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+}
+
+.home-projects {
+    margin: 2rem;
+    text-align: center;
+}
+
+.home-projects-heading {
+    padding: 0.5rem;
+    
+}
+
+.popular-home-project {
+    margin-bottom: 0;
+    font-size: 1.6rem;
+    font-weight: bold;
+   
+}
+
+.home-projects-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin-top: 1rem;
+}
+
+.home-project {
+    border: 1px solid #ccc;
+    border-radius: 2%;
+    overflow: hidden;
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: transform 0.3s ease;
+    height: 100%;
+}
+
+.home-project:hover {
+    transform: scale(1.02);
+}
+
+.home-project-img-container {
+    width: 100%;
+    height: 15rem;
+    overflow: hidden;
+}
+
+.home-project-img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.home-project-info {
+    padding: 1rem;
+    text-align: left;
+}
+
+.home-project-title {
+    font-size: 1.3rem;
+    margin-bottom: 0.5rem;
+    text-align: left;
+    color: black;
+   
+}
+
+.rating {
+    font-size: 0.9rem;
+    color: #555;
+    text-align: left;
+}
+.see-more-container-mobile {
+    margin-top: 1.5rem;
+    display: none;
+    
+}
+
+.see-more-container {
+    margin-top: 1.5rem;
+}
+
+.see-more {
+    text-decoration: underline;
+    text-decoration-color: rgb(246, 184, 70);
+    color: #010101;
+    font-size: 1rem;
+}
+.project-link{
+    text-decoration: none;
+    height: 20rem;
+}
+.handymen-near-you-heading-title{
+    margin-bottom: 0;
+    font-size: 1.6rem;
+    font-weight: bold;
+}
+.handymen-near-you{
+    margin: 2rem;
+    text-align: center;
+}
+@media (min-width: 64rem) {
+    .home-projects-heading {
+        padding: 0.5rem;
+        display: flex;
+        flex-direction: row;
+    }
+    .see-more-container-mobile{
+        display: flex;
+        margin-left: 50rem;
+    }
+    .see-more-container{
+        display: none;
+    }
+    .handymen-near-you-heading{
+        padding: 0.5rem;
+        display: flex;
+        flex-direction: row;
+    }
+}
