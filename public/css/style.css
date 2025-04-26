@@ -5,7 +5,7 @@
 }
 
 body {
-    font-family:system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-family: 'Poppins', sans-serif;
 }
 
 .navbar {
@@ -105,15 +105,101 @@ body {
     text-decoration: none;
     height: 20rem;
 }
-.handymen-near-you-heading-title{
-    margin-bottom: 0;
+.handymen-near-you-heading-title {
+    margin-top: 1.5rem;
+    margin-bottom: 1rem;
     font-size: 1.6rem;
     font-weight: bold;
 }
-.handymen-near-you{
+
+.handymen-near-you {
     margin: 2rem;
     text-align: center;
 }
+
+.handymen-near-you-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(25rem, 1fr));
+    gap: 2rem;
+    margin-top: 1.2rem;
+    align-items: center;
+}
+
+.handyman-link {
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    align-items: center;
+}
+
+.handyman-near-you {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    text-align: center;
+}
+
+.handyman-image {
+    width: 8rem;
+    height: 8rem;
+    flex-shrink: 0;
+    border-radius: 0.5rem;
+    overflow: hidden;
+}
+
+.handyman-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.handyman-details {
+    text-align: left;
+}
+
+.handyman-name {
+    font-size: 1.4rem;
+    font-weight: bold;
+    margin: 0;
+}
+
+.handyman-rating {
+    display: flex;
+    align-items: center;
+    font-size: 1.2rem;
+    margin: 0.2rem 0;
+}
+
+.handyman-skill {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #666;
+    margin: 0.2rem 0;
+}
+
+.handyman-location {
+    font-size: 1.2rem;
+    color: #666;
+    margin: 0;
+}
+.see-more-container-handymen-near-you {
+    margin-top: 1rem;
+    text-align: center;
+    align-items: center;
+    align-content: center;
+
+}
+
+.see-more-handymen-near-you {
+    text-decoration: underline;
+    text-decoration-color: rgb(246, 184, 70);
+    color: #010101;
+    font-size: 1rem;
+    width: 10rem;
+}
+
+
+
 @media (min-width: 64rem) {
     .home-projects-heading {
         padding: 0.5rem;
