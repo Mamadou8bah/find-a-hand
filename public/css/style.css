@@ -81,7 +81,57 @@ body {
    
     
 }
+/* Hero Section */
+.hero {
+    padding: 6rem 2rem;
+    text-align: center;
+}
+.hero-main-text{
+    font-size: 2.5rem;
+    font-weight: 600;
+    color: #000;
+}
+/* Search */
 
+
+.services {
+margin-top: 3.125rem;
+}
+  
+.sub-section-text {
+    font-weight: normal;
+    font-size: 1.5rem;
+  }
+  
+  .services span {
+    color: #f58220;
+  }
+  
+  .service-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 3rem;
+    margin-top: 2rem;
+  }
+  
+  .service-item {
+    text-align: center;
+    max-width: 6.25rem;
+    transition: transform 0.3s ease; 
+    cursor: pointer;
+  }
+  .service-item:hover {
+    transform: scale(1.05);
+       
+  }
+  
+  .service-icon {
+    width: 3.75rem;
+    height: 3.75rem;
+    object-fit: contain;
+    margin-bottom: 0.625rem;
+  }
 /* Project Section Styles */
 .home-projects {
     margin: 2rem;
