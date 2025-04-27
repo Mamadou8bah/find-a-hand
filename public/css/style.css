@@ -1,3 +1,6 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Allura&display=swap');
+
 * {
     margin: 0;
     padding: 0;
@@ -7,13 +10,129 @@
 body {
     font-family: 'Poppins', sans-serif;
 }
+/* Navigation Styles */
+.logo-text {
+    font-family: "Allura", cursive;
+    font-weight: 400;
+    font-size: 2.5rem;
+}
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 0.9375rem;
+}
+.service-menu {
+    margin-right: auto;
+    margin-left: 2rem;
+}
+.becomehy-btn {
+    border-bottom: 2px solid #f7931e;
+    color: #000;
+    text-decoration: #f7931e;
+    font-size: 0.875rem;
 
+}
+.login,
+.signup {
+  padding: 0.375rem 0.75rem;
+  border: none;
+  cursor: pointer;
+}
+.login {
+    background-color: #fff;
+    border: 2px solid #f7931e;
+  }
+  
+.signup {
+    background-color: #f7931e;
+    border: 2px solid #f7931e;
+    color: white;
+}
 .navbar {
     position: fixed;
     top: 0;
     width: 100%;
+    z-index: 1000;
+    
+}
+.nav-burger-menu{
+    display: none;
+    cursor: pointer;
+
 }
 
+
+.nav-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 1.25rem;
+    background-color: #fff;
+    border-bottom: 1px solid #ddd;
+}
+@media (max-width:56rem) {
+
+    .nav-links{
+        display: none;
+    }
+    .nav-burger-menu{
+        display: block;
+    }
+   
+    
+}
+/* Hero Section */
+.hero {
+    padding: 6rem 2rem;
+    text-align: center;
+}
+.hero-main-text{
+    font-size: 2.5rem;
+    font-weight: 600;
+    color: #000;
+}
+/* Search */
+
+
+.services {
+margin-top: 3.125rem;
+}
+  
+.sub-section-text {
+    font-weight: normal;
+    font-size: 1.5rem;
+  }
+  
+  .services span {
+    color: #f58220;
+  }
+  
+  .service-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 3rem;
+    margin-top: 2rem;
+  }
+  
+  .service-item {
+    text-align: center;
+    max-width: 6.25rem;
+    transition: transform 0.3s ease; 
+    cursor: pointer;
+  }
+  .service-item:hover {
+    transform: scale(1.05);
+       
+  }
+  
+  .service-icon {
+    width: 3.75rem;
+    height: 3.75rem;
+    object-fit: contain;
+    margin-bottom: 0.625rem;
+  }
+/* Project Section Styles */
 .home-projects {
     margin: 2rem;
     text-align: center;
@@ -21,6 +140,7 @@ body {
 
 .home-projects-heading {
     padding: 0.5rem;
+    
     
 }
 
