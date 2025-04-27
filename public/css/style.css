@@ -651,3 +651,129 @@ body {
 }
 
 /* Footer Section */
+.footer {
+    background-color: #fff9db;
+    padding: 2rem 1rem;
+    text-align: center;
+    margin-top: 35rem;
+  }
+  
+.footer__socials {
+    margin-bottom: 2rem;
+}
+
+.footer__follow {
+    font-size: 1rem;
+    margin-bottom: 1rem;
+}
+
+.footer__icons {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.footer__icon {
+    width: 2.5rem;
+    height: 2.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    font-size: 1.5rem;
+    color: white;
+    text-decoration: none;
+}
+.footer__icon img {
+    width: 100%;
+}
+.footer__links {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    margin-bottom: 2rem;
+}
+
+
+.footer__brand {
+    font-family: "Allura", cursive;
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    font-weight: 400;
+
+}
+
+.footer__title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+
+.footer__list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.footer__item {
+    margin-bottom: 0.5rem;
+}
+
+.footer__link {
+    font-size: 1rem;
+    color: #555;
+    text-decoration: none;
+}
+
+.footer__link:hover {
+    text-decoration: underline;
+}
+
+.footer__bottom {
+    font-size: 0.875rem;
+    color: #444;
+}
+
+.footer__powered {
+    margin-top: 0.5rem;
+}
+
+.footer__names {
+    color: #f9a825;
+}
+
+
+@media (min-width: 64rem) { /* 1024px */
+    .footer {
+        padding: 3rem 6rem;
+        text-align: left;
+    }
+
+    .footer__socials {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .footer__icons {
+        justify-content: flex-start;
+    }
+
+    .footer__links {
+        flex-direction: row;
+        justify-content: space-between;
+        text-align: left;
+        margin-top: 2rem;
+    }
+
+    .footer__section {
+        flex: 1;
+    }
+
+    .footer__bottom {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 2rem;
+    }
+}
