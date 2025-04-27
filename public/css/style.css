@@ -178,13 +178,14 @@ body {
     }
 }
 .services {
-    margin-top: 0rem;
+    margin-left: 0.2rem;
+    margin-right: 0.2rem;
 }
   
 .sub-section-text {
     text-align: center;
     font-weight: normal;
-    font-size: 1.2rem;
+    font-size: 1.5rem;
   }
   
   .services span {
@@ -222,13 +223,13 @@ body {
     text-align: center;
 }
 
-.home-projects-heading {
+.home-projects-heading,.cleaning-projects-heading {
     padding: 0.5rem;
     
     
 }
 
-.popular-home-project {
+.popular-home-project, .cleaning-project-h3 {
     margin-bottom: 0;
     font-size: 1.6rem;
     font-weight: bold;
@@ -283,7 +284,21 @@ body {
     color: black;
    
 }
+/* Cleaning and Handymen Section */
 
+.cleaning-handyman-projects, .home-improvement-projects {
+    margin-left: 2rem;
+    margin-right: 2rem;
+    margin-bottom: 3rem;
+}
+
+.cleaning-project-h3 {
+    color: #454545;
+    margin-bottom: 1rem;
+}
+.section-paragraph {
+    font-size: 1rem;
+}
 .rating {
     font-size: 0.9rem;
     color: #555;
