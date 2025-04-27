@@ -222,17 +222,20 @@ body {
 .home-projects {
     margin: 2rem;
     text-align: center;
+    
 }
 
 .home-projects-heading,.cleaning-projects-heading {
-    padding: 0.5rem;
+    padding: 0.1rem;
+    display: flex;
+    flex-direction: row;
     
     
 }
 
 .popular-home-project, .cleaning-project-h3 {
     margin-bottom: 0;
-    font-size: 1.6rem;
+    font-size: 1.2rem;
     font-weight: bold;
     
    
@@ -308,12 +311,13 @@ body {
 }
 .see-more-container-mobile {
     margin-top: 1.5rem;
-    display: none;
+    display: true;
     
 }
 
 .see-more-container {
     margin-top: 1.5rem;
+    display: none;
 }
 
 .see-more {
@@ -326,6 +330,8 @@ body {
     text-decoration: none;
     height: 20rem;
 }
+
+/*handymen near you section*/
 .handymen-near-you-heading-title {
     margin-top: 1.5rem;
     margin-bottom: 1rem;
@@ -418,6 +424,7 @@ body {
     font-size: 1rem;
     width: 10rem;
 }
+/*Join us section*/
 .join-us{
     display: grid;
     grid-template-columns: repeat(auto-fit,minmax(24rem,1fr));
@@ -524,8 +531,9 @@ body {
 .how-it-works {
    display: grid;
    grid-template-columns: repeat(auto-fit,minmax(40rem,2fr));
-    margin-top: 6rem;
+    margin-top: 4rem;
     padding-left: 1.5rem;
+    margin-bottom: 0;
 }
 
 .guide {
@@ -620,9 +628,7 @@ body {
     padding: 3rem;
     width: 40%;
     box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.05);
-    position: absolute;
-    left: 10%;
-    z-index: 1;
+   
    
 }
 
@@ -672,11 +678,8 @@ body {
     padding: 3rem;
     border: 1px solid #dcdcdc;
     box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.05);
-    display: flex;
-    flex-direction: row;
-    position: absolute;
-    left: 40%;
-    top: -5%;
+    
+   
 }
 
 .empty {
@@ -684,11 +687,11 @@ body {
 }
 
 .phone-user-image {
-    width: 60%;  
+    width: 100%;  
     height: 100%; 
     overflow: hidden;
     border-radius: 1rem;
-    position: relative;
+   
 }
 
 .phone-user-image img {
@@ -727,7 +730,7 @@ body {
     background-color: #fff9db;
     padding: 2rem 1rem;
     text-align: center;
-    margin-top: 35rem;
+    margin-top: 3rem;
   }
   
 .footer__socials {
