@@ -83,24 +83,105 @@ body {
 }
 /* Hero Section */
 .hero {
-    padding: 6rem 2rem;
+    padding-top: 7rem;
+    padding-bottom: 2rem;
+    padding-left: 2rem;
+    padding-right: 2rem;
     text-align: center;
 }
 .hero-main-text{
     font-size: 2.5rem;
-    font-weight: 600;
+    font-weight: 400;
     color: #000;
+
 }
 /* Search */
+.search-wrapper {
+    display: flex;
+    align-items: stretch;
+    width: 100%;
+    max-width: 43.75rem;
+    margin: auto;
+    flex-shrink: 1;
+    margin-top: 3rem;
+  }
 
+.search-container {
+    display: flex;
+    align-items: center;
+    background-color: #e5e5e5;
+    border-top-left-radius: 1.875rem;
+    border-bottom-left-radius: 1.875rem;
+    padding: 0 1.25rem;
+    flex: 1;
+    min-width: 0;
+    height: 3.25rem;
+}
 
+.search-input {
+    border: none;
+    background: transparent;
+    outline: none;
+    font-size: 1rem;
+    color: #333;
+    flex: 1;
+    min-width: 0;
+}
+
+.divider {
+    width: 1px;
+    height: 1.875rem;
+    background-color: #ccc;
+    margin: 0 0.625rem;
+    flex-shrink: 0;
+}
+
+.location-input {
+    display: flex;
+    align-items: center;
+    flex: 1;
+    min-width: 0;
+}
+.location {
+    width: 1.5625rem;
+}
+.location-icon {
+    margin-right: 0.5rem;
+    flex-shrink: 0;
+}
+
+.search-button {
+    background-color: #f7931e;
+    border: none;
+    border-top-right-radius: 1.875rem;
+    border-bottom-right-radius: 1.875rem;
+    padding: 0 1.25rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 3.25rem;
+    flex-shrink: 0;
+}
+
+/* Responsive: Update placeholder only */
+@media (max-width: 35.625rem) {
+    .search-input.search-text::placeholder {
+        content: "Search";
+    }
+
+    .search-input.location-text::placeholder {
+        content: "Location";
+    }
+}
 .services {
-margin-top: 3.125rem;
+    margin-top: 0rem;
 }
   
 .sub-section-text {
+    text-align: center;
     font-weight: normal;
-    font-size: 1.5rem;
+    font-size: 1.2rem;
   }
   
   .services span {
