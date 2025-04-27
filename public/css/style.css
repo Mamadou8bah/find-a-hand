@@ -324,7 +324,7 @@ margin-top: 3.125rem;
     display: grid;
     grid-template-columns: repeat(auto-fit,minmax(24rem,1fr));
     margin-top: 10rem;
-    gap: 0.1rem;
+    gap: 0;
 }
 .join-us-text-container{
     padding: 3rem;
@@ -361,7 +361,11 @@ margin-top: 3.125rem;
     color: white;
 }
 
+.how-it-works{
+    position: relative;
 
+}
+.guide{}
 @media (min-width: 64rem) {
     .home-projects-heading {
         padding: 0.5rem;
