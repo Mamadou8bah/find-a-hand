@@ -21,20 +21,127 @@ body {
     align-items: center;
     gap: 0.9375rem;
 }
+
+/*This is where i implemented the dropdown menu*/
+  .dropdown {
+    position: relative;
+    display: none;
+  
+  }
+@media (min-width:64rem) {
+    
+
 .service-menu {
     margin-right: auto;
+    margin-left: 1rem;
+  }
+  
+  .dropdown {
+    position: relative;
+    display: inline-block;
     margin-left: 2rem;
+  }
+  
+.dropdown-link{
+    text-decoration: none;
+    color: #000;
+    padding: 10px;
+    display: inline-block;
+  }
+  .dropdown-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    text-decoration: none;
+    color: #000;
+    cursor: pointer;
+  }
+  
+  .dropdown-arrow {
+    transition: transform 0.3s ease;
+   
+  }
+  
+  /* Rotate arrow when dropdown is hovered or active */
+  .dropdown:hover .dropdown-arrow,
+  .dropdown.active .dropdown-arrow {
+    transform: rotate(180deg);
+  }
+  
+  
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: white;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    min-width: 900px;
+    padding: 20px;
+    top: 100%;
+    left: 0;
+    z-index: 1;
+    flex-wrap: wrap;
+    gap: 40px;
+  }
+  
+  .dropdown:hover .dropdown-content {
+    display: flex;
+  }
+  
+  .column {
+    flex: 1 1 200px;
+  }
+  
+  .column h4 {
+    margin-bottom: 10px;
+    font-size: 16px;
+    color: #f59b14;
+  }
+  
+  .dropdown-list-link {
+    display: block;
+    margin-bottom: 6px;
+    color: #333;
+    text-decoration: none;
+    font-size: 14px;
+  }
+  
+  .dropdown-list-link:hover {
+    color: #e79004;
+  }
+  
+  .new-tag {
+    color: red;
+    font-size: 10px;
+    vertical-align: top;
+  }
+  
+  .see-all {
+    margin-top: 20px;
+    width: 100%;
+    text-align: center;
+  }
+  
+  .see-all-btn {
+    display: inline-block;
+    background-color: #f3701e;
+    color: white;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+  }
+  
+  .see-all-btn:hover {
+    background-color: #0077cc;
+  }
+  
 }
-.service-dropdown{
-    border: none;
-}
-.becomehy-btn {
+  .becomehy-btn {
     border-bottom: 2px solid #f7931e;
     color: #000;
-    text-decoration: #f7931e;
+    text-decoration: underline;
+    text-decoration-color: #f7931e;
     font-size: 0.875rem;
-
-}
+  }
 .login,
 .signup {
   padding: 0.375rem 0.75rem;
@@ -350,7 +457,7 @@ body {
 }
 
 .handymen-near-you {
-    margin: 2rem;
+    margin: 1rem;
     text-align: center;
 }
 
