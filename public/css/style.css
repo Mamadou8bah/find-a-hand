@@ -239,6 +239,7 @@ body {
     padding-left: 2rem;
     padding-right: 2rem;
     text-align: center;
+
 }
 .hero-main-text{
     font-size: 2.5rem;
@@ -334,7 +335,8 @@ body {
 .sub-section-text {
     text-align: center;
     font-weight: normal;
-    font-size: 1.5rem;
+    font-size: 1.25rem;
+    margin-top: 3rem;
   }
   
   .services span {
@@ -1000,6 +1002,8 @@ body {
 .main-container {
     display: flex;
     flex-direction: column;
+    align-items: center;
+    justify-content: center;
     min-height: 100vh;
     background-color: #f8f8f8;
 }
@@ -1013,7 +1017,7 @@ body {
     align-items: center;
 }
 
-.signup-form {
+.signup-form, .login-form {
     width: 100%;
     max-width: 28rem;
     background-color: #fff;
@@ -1025,7 +1029,7 @@ body {
 .form-title {
     text-align: center;
     font-size: 3rem;
-    margin-bottom: 2rem;
+    margin-bottom: 1rem;
     font-family: "Allura", cursive;
     font-weight: 500;
 }
@@ -1038,6 +1042,13 @@ body {
     border-radius: 0.5rem;
     font-size: 1rem;
 }
+.label-text {
+    display: block;
+    margin-bottom: 0.4rem;
+    font-size: 0.9rem;
+    color: #333;
+  }
+  
 
 .form-agreement {
     font-size: 0.9rem;
@@ -1048,6 +1059,10 @@ body {
 .form-link {
     color: #f7931e;
     text-decoration: none;
+}
+.forget_password_link {
+    display: inline-block;
+    margin-bottom: 3rem;
 }
 
 .form-button {
@@ -1086,5 +1101,7 @@ body {
         max-width: 30rem;
         padding: 3rem;
     }
+
 }
   
+
