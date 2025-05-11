@@ -1,6 +1,7 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Allura&display=swap');
 
+
 * {
     margin: 0;
     padding: 0;
@@ -138,9 +139,8 @@ body {
   .becomehy-btn {
     border-bottom: 2px solid #f7931e;
     color: #000;
-    text-decoration: underline;
-    text-decoration-color: #f7931e;
     font-size: 0.875rem;
+    text-decoration-line: none;
   }
 .login,
 .signup {
@@ -168,9 +168,41 @@ body {
 .nav-burger-menu{
     display: none;
     cursor: pointer;
-
 }
 
+.sidebar {
+    position: fixed;
+    top: 0;
+    right: 0;
+    padding: 1rem 1rem;
+    list-style: none;
+    background-color: #fff;
+    box-shadow: 0 0 1px 2px #e2e2e2;
+    width: 15.625rem;
+    height: 100vh;
+    display: none;
+    flex-direction: column;
+    justify-content: flex-start;
+
+}
+.sidebar-li {
+    height: 40px;
+
+}
+.sidebar-link {
+    font-size: 1rem;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    padding: 0 1rem;
+    text-decoration: none;
+    color: #333;
+}
+.nav_line {
+    margin: 0.7rem 2rem 0.7rem 1rem;
+    background-color: #e2e2e2;
+    height: 1px;
+}
 
 .nav-container {
     display: flex;
@@ -180,7 +212,7 @@ body {
     background-color: #fff;
     border-bottom: 1px solid #ddd;
 }
-@media (max-width:56rem) {
+@media (max-width:64rem) {
 
     .nav-links{
         display: none;
@@ -188,7 +220,7 @@ body {
     .nav-burger-menu{
         display: block;
     }
-   
+
     
 }
 /* Hero Section */

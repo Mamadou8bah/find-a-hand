@@ -15,3 +15,14 @@ function updatePlaceholders() {
 
 window.addEventListener('load', updatePlaceholders);
 window.addEventListener('resize', updatePlaceholders);
+
+// For sidebar
+function showSidebar() {
+  const sidebar = document.querySelector('.sidebar')
+  sidebar.style.display = 'flex'
+}
+
+function hideSidebar(){
+  const sidebar = document.querySelector('.sidebar')
+  sidebar.style.display = 'none'
+}
