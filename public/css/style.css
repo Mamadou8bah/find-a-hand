@@ -153,6 +153,7 @@ body {
 .login {
     background-color: #fff;
     border: 2px solid #f7931e;
+    color: #000;
   }
   
 .signup {
@@ -1090,6 +1091,8 @@ body {
     .main-container {
         flex-direction: row;
         background-image: url('../images/hero-image.jpg');
+        background-repeat: no-repeat;
+        background-position: center;
         
     }
 
