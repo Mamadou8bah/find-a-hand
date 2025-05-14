@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="../public/css/style.css" />
+  <title>Findahand - Become a Handyman</title>
+</head>
+<body>
+  <div class="main-container">
+    <div class="form-container">
+      <form class="signup-form" action="/handyman/register" method="POST" enctype="multipart/form-data">
+        <h1 class="form-title">Findahand</h1>
+        <p class="form-description">
+          Join Findahand as a handyman and connect with clients who need your skills.
+       </p>
+
+
+        <input class="form-input" type="text" name="name" placeholder="Full Name" required />
+        <input class="form-input" type="tel" name="phone" placeholder="Phone Number" required />
+        <input class="form-input" type="text" name="location" placeholder="Location" required />
+
+       
+        <select class="form-input" name="skill" required>
+          <option value="">-- Select Skill --</option>
+          <option value="Electrician">Electrician</option>
+          <option value="Plumber">Plumber</option>
+          <option value="Carpenter">Carpenter</option>
+          <option value="Painter">Painter</option>
+          <option value="Mechanic">Mechanic</option>
+          <option value="Welder">Welder</option>
+          <option value="AC Technician">AC Technician</option>
+        </select>
+
+      
+        <input class="form-input" type="number" name="experience" placeholder="Years of Experience" min="0" required />
+        <label class="form-label">Upload Profile Picture</label>
+        <input class="form-input" type="file" name="profilePicture" accept="image/*" required />
+
+
+        <p class="form-agreement">
+          By submitting, you confirm the accuracy of your details and agree to Findahand’s
+          <a href="#" class="form-link">Terms of Service</a> and
+          <a href="#" class="form-link">Privacy Policy</a>.
+        </p>
+        <button class="form-button" type="submit">Submit Application</button>
+      </form>
+    </div>
+  </div>
+</body>
+</html>

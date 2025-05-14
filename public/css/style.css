@@ -117,7 +117,7 @@ body {
   }
   
   .see-all {
-    margin-top: 20px;
+    margin-top: 0;
     width: 100%;
     text-align: center;
   }
@@ -128,7 +128,7 @@ body {
     color: white;
     padding: 10px 20px;
     text-decoration: none;
-    border-radius: 5px;
+    border-radius: 7px;
   }
   
   .see-all-btn:hover {
@@ -1029,7 +1029,6 @@ body {
 .form-title {
     text-align: center;
     font-size: 3rem;
-    margin-bottom: 1rem;
     font-family: "Allura", cursive;
     font-weight: 500;
 }
@@ -1063,6 +1062,12 @@ body {
 .forget_password_link {
     display: inline-block;
     margin-bottom: 3rem;
+}
+.form-description{
+    margin-bottom: 1rem;
+    margin-top: 0;
+    text-align: center;
+    color: orange;
 }
 
 .form-button {
