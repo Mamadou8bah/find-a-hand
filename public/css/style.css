@@ -1062,7 +1062,11 @@ body {
 }
 .forget_password_link {
     display: inline-block;
-    margin-bottom: 3rem;
+    margin-bottom: 0.3rem;
+}
+.dont_have_account_link{
+    display: inline-block;
+    margin-bottom: 2rem;
 }
 .form-description{
     margin-bottom: 1rem;
