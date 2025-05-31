@@ -3,7 +3,7 @@ function updatePlaceholders() {
   const width = window.innerWidth;
   const searchInput = document.getElementById('searchInput');
   const locationInput = document.getElementById('locationInput');
-
+  
   if (width <= 570) {
     searchInput.placeholder = "Search";
     locationInput.placeholder = "Location";
