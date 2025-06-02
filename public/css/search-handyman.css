@@ -13,8 +13,7 @@ body {
   background-image: url('../images/helping-moving-out.webp');
   background-size: cover;
   background-position: center;
-  height: 20rem;
-  padding-top: 2rem;
+  height: 50vh;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -23,8 +22,10 @@ body {
 }
 .search {
   background-color: #0000005f;
-  padding: 3rem;
-  width: 80%;
+  padding-inline: 1.5rem;
+  padding-top: 2.5rem;
+  padding-bottom: 2.5rem;
+  width: 90%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -111,6 +112,7 @@ body {
 
 .container {
   padding-top: 3rem;
+  padding-bottom: 3rem;
   padding-inline: 1rem;
   display: flex;
   flex-direction: column;
