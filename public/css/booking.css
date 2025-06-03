@@ -91,3 +91,52 @@ h1 {
   flex-shrink: 0;
   min-width: 130px;
 }
+input.invalid, textarea.invalid, select.invalid {
+  border: 2px solid red;
+}
+
+input.valid, textarea.valid, select.valid {
+  border: 2px solid green;
+}
+
+.char-counter {
+  font-size: 0.85rem;
+  color: gray;
+  margin-top: 4px;
+}
+@media (max-width: 600px) {
+  .container {
+    margin: 1rem;
+    padding: 1rem;
+    box-shadow: none;
+    border-radius: 0;
+  }
+
+  h1 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .booking-form input,
+  .booking-form select,
+  .booking-form textarea {
+    font-size: 0.95rem;
+    padding: 0.6rem;
+  }
+
+  .btn {
+    width: 100%;
+    padding: 0.9rem;
+    font-size: 1rem;
+  }
+
+  .location-row {
+    flex-direction: column;
+  }
+
+  .share-btn {
+    width: 100%;
+    min-width: auto;
+  }
+}
+
