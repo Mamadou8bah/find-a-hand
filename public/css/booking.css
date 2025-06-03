@@ -1,0 +1,93 @@
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f6f7fb;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  max-width: 50rem;
+  margin: 3rem auto;
+  padding: 2rem;
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+  text-align: center;
+  color: #333;
+  margin-bottom: 1.5rem;
+}
+
+.booking-form .form-group {
+  margin-bottom: 1.2rem;
+}
+
+.booking-form label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  color: #444;
+}
+
+.booking-form input,
+.booking-form select,
+.booking-form textarea {
+  width: 100%;
+  padding: 0.8rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 1rem;
+  box-sizing: border-box;
+}
+
+
+.booking-form input[type="date"],
+.booking-form input[type="time"] {
+  background-color: #f0f0f0;
+  border: 1px solid #bbb;
+  padding: 0.7rem;
+  border-radius: 8px;
+  font-size: 1rem;
+  color: #333;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+
+.booking-form textarea {
+  resize: vertical;
+}
+
+
+.location-row {
+  display: flex;
+  gap: 0.8rem;
+}
+
+.location-row input[type="text"] {
+  flex: 1;
+}
+
+.btn {
+  display: inline-block;
+  background-color: #f7931e;
+  color: white;
+  font-size: 1rem;
+  padding: 0.9rem 1.2rem;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  user-select: none;
+}
+
+.btn:hover {
+  background-color: #f9ab04;
+}
+
+.share-btn {
+  flex-shrink: 0;
+  min-width: 130px;
+}
