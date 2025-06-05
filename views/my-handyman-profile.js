@@ -23,7 +23,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const fields = [name, phone, email, job, location];
 
-    // === Disable save button initially ===
     if (saveBtn) {
         saveBtn.disabled = true;
         saveBtn.classList.add("opacity-50", "cursor-not-allowed");
@@ -32,22 +31,12 @@ document.addEventListener("DOMContentLoaded", function () {
     function validateField() {
         let isValid = true;
 
-        // Name
         if (name.value.trim() === "") isValid = false;
-
-        // Phone
         if (!/^\d{6,15}$/.test(phone.value.trim())) isValid = false;
-
-        // Email
         if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email.value.trim())) isValid = false;
-
-        // Job
         if (job.value === "select") isValid = false;
-
-        // Location
         if (location.value.trim() === "") isValid = false;
 
-        // Toggle Save button
         if (saveBtn) {
             saveBtn.disabled = !isValid;
             if (isValid) {
@@ -58,13 +47,11 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
-    // === Attach listeners to fields for real-time validation ===
     fields.forEach(field => {
         field.addEventListener("input", validateField);
         field.addEventListener("change", validateField);
     });
 
-    // === Form Submission ===
     if (form && saveBtn) {
         saveBtn.addEventListener("click", function (e) {
             e.preventDefault();
@@ -102,12 +89,14 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-    // === Appointment delete logic ===
     document.querySelectorAll(".delete-button").forEach(button => {
         button.addEventListener("click", function () {
-            const appointment = this.closest(".appointment");
-            if (appointment) {
-                appointment.remove();
+            const confirmed = confirm("Are you sure you want to delete this appointment?");
+            if (confirmed) {
+                const appointment = this.closest(".appointment");
+                if (appointment) {
+                    appointment.remove();
+                }
             }
         });
     });
