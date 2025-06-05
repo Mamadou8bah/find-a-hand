@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile</title>
+    <link rel="stylesheet" href="../public/css/my-handyman-profile.css">
+    <link rel="stylesheet" href="../public/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="my-handyman-profile.js"></script>
+</head>
+<body>
+    <div class="back-header">
+        <a class="back-btn" href="index.html">&lt;Back</a>
+    </div>
+    <section class="profile-header"> 
+         <h2 class="my-profile">My Profile</h2>
+        <div class="image-container">
+            <img src="../public/images/handyman-profiles/profile4.jpeg" alt="my profile">
+        </div>
+        <p class="handyman-name">Mamadou Bah</p>
+        <p class="handyman-job">Electrician</p>
+        <span class="rating"> <i class="fas fa-star" style="color: orange;"></i>
+                        <i class="fas fa-star" style="color: orange;"></i>
+                        <i class="fas fa-star" style="color: orange;"></i>
+                        <i class="fas fa-star" style="color: orange;"></i>
+                        <i class="fas fa-star-half-alt" style="color: orange;"></i>
+                        <span>4.5</span></span>
+    </section>
+    <div class="tabs">
+        <button class="tab active" onclick="switchTab('appointments')">Appointments</button>
+        <button class="tab " onclick="switchTab('reviews')">Reviews</button>
+        <button class="tab " onclick="switchTab('edit')">Edit</button>
+    </div>
+
+    <div class="tab-content" id="appointments">
+        <div class="appointment">
+            <div class="appointment-info">
+                <p class="appointment-date">June 20, 2025</p>
+            <p class="appointment-description">Light Fixture installation</p>
+            <span><p class="appointment-time">12:00 PM</p><p class="client-name">Fatou Camara</p></span>
+            </div>
+            <button class="delete-button"><i class="fa fa-trash"></i></button>
+        </div>
+          <div class="appointment">
+            <div class="appointment-info">
+                <p class="appointment-date">June 20, 2025</p>
+            <p class="appointment-description">Light Fixture installation</p>
+            <span><p class="appointment-time">12:00 PM</p><p class="client-name">Fatou Camara</p></span>
+            </div>
+           <button class="delete-button"><i class="fa fa-trash"></i></button>
+        </div>
+          <div class="appointment">
+            <div class="appointment-info">
+                <p class="appointment-date">June 20, 2025</p>
+            <p class="appointment-description">Light Fixture installation</p>
+            <span><p class="appointment-time">12:00 PM</p><p class="client-name">Fatou Camara</p></span>
+            </div>
+            <button class="delete-button"><i class="fa fa-trash"></i></button>
+        </div>
+          <div class="appointment">
+            <div class="appointment-info">
+                <p class="appointment-date">June 20, 2025</p>
+            <p class="appointment-description">Light Fixture installation</p>
+            <span><p class="appointment-time">12:00 PM</p><p class="client-name">Fatou Camara</p></span>
+            </div>
+            <button class="delete-button"><i class="fa fa-trash"></i></button>
+        </div>
+    </div>
+    <div class="tab-content hidden">
+
+    </div>
+    <div class="tab-content hidden" id="edit">
+        <form action="">
+            <div class="form-group">
+                <label for="name">Full Name</label>
+                <input type="text" id="name" value="Mamadou Bah">
+                <small class="error" id="nameError"></small>
+            </div>
+            <div class="form-group">
+                <label for="phone">Phone</label>
+                <input type="tel" id="phone" value="3281914">
+                <small class="error" id="phoneError"></small>
+            </div>
+            <div class="form-group">
+                <label for="email">Email Address</label>
+                <input type="email" id="email" value="mbah18791@gmail.com">
+                <small class="error" id="emailError"></small>
+            </div>
+            <div class="form-group">
+                <label for="job">Job Type</label>
+                <select name="Job" id="job">
+                    <option value="select">Select</option>
+                    <option value="electrician">Electrician</option>
+                    <option value="capenter">Capenter</option>
+                    <option value="plumber">Plumber</option>
+                    <option value="cleaner">Cleaner</option>
+                    <option value="gardener">Gardener</option>
+                </select>
+                <small class="error" id="jobError"></small>
+            </div>
+            <div class="form-group">
+                <label for="location">Location</label>
+                <input type="text" id="location" value="lamin">
+                <small class="error" id="locationError"></small>
+            </div>
+            <div class="form-group">
+                <label for="bio">Bio</label>
+                <textarea name="bio" id="bio" cols="20"></textarea>
+            </div>
+            <div class="form-group">
+               <button  id="save-btn" type="submit" class="bg-blue-500 text-white px-4 py-2 rounded opacity-50 cursor-not-allowed save-btn">
+                Save Changes
+            </button>
+
+            </div>
+        </form>
+        
+    </div>
+    <div class="tab-content hidden" id="reviews">
+        <div class="review">
+         <span class="rating"> <i class="fas fa-star" style="color: orange;"></i>
+                        <i class="fas fa-star" style="color: orange;"></i>
+                        <i class="fas fa-star" style="color: orange;"></i>
+                        <i class="fas fa-star" style="color: orange;"></i>
+                        <i class="fas fa-star-half-alt" style="color: orange;"></i>
+                        <span>4.5</span>
+         </span>
+         <p class="rating-description">Reliable and Quick</p>
+         <p class="rating-user">Fatou Bah</p>
+        </div>
+        <div class="review">
+         <span class="rating"> <i class="fas fa-star" style="color: orange;"></i>
+                        <i class="fas fa-star" style="color: orange;"></i>
+                        <i class="fas fa-star" style="color: orange;"></i>
+                        <i class="fas fa-star" style="color: orange;"></i>
+                        <i class="fas fa-star-half-alt" style="color: orange;"></i>
+                        <span>4.5</span>
+         </span>
+         <p class="rating-description">Reliable and Quick</p>
+         <p class="rating-user">Fatou Bah</p>
+        </div>
+         <div class="review">
+         <span class="rating"> <i class="fas fa-star" style="color: orange;"></i>
+                        <i class="fas fa-star" style="color: orange;"></i>
+                        <i class="fas fa-star" style="color: orange;"></i>
+                        <i class="fas fa-star" style="color: orange;"></i>
+                        <i class="fas fa-star-half-alt" style="color: orange;"></i>
+                        <span>4.5</span>
+         </span>
+         <p class="rating-description">Reliable and Quick</p>
+         <p class="rating-user">Fatou Bah</p>
+        </div>
+         <div class="review">
+         <span class="rating"> <i class="fas fa-star" style="color: orange;"></i>
+                        <i class="fas fa-star" style="color: orange;"></i>
+                        <i class="fas fa-star" style="color: orange;"></i>
+                        <i class="fas fa-star" style="color: orange;"></i>
+                        <i class="fas fa-star-half-alt" style="color: orange;"></i>
+                        <span>4.5</span>
+         </span>
+         <p class="rating-description">Reliable and Quick</p>
+         <p class="rating-user">Fatou Bah</p>
+        </div>
+
+    </div>
+</body>
+</html>

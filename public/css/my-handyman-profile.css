@@ -1,0 +1,139 @@
+.profile-header{
+    justify-content: center;
+    text-align: center;
+    margin-top: -3rem;
+}
+.back-header{
+    display: flex;
+    flex-direction: row;
+}
+
+.back-btn{
+    font-size:x-large;
+    text-decoration: none;
+    color: black;
+    font-weight: bold;
+    padding: 1rem;
+}
+.image-container{
+    width: 11rem;
+    height: 11rem;
+    justify-self: center;
+    margin-top: 1rem;
+    
+}
+.image-container img{
+    width: 100%;
+    height: auto;
+    overflow: hidden;
+    border-radius: 50%;
+}
+.tabs{
+    display: flex;
+    justify-content: space-around;
+    background: white;
+    border-top: 1px solid orange;
+    margin-top: 1rem;
+}
+.tab{
+    flex: 1;
+    padding: 12px;
+    cursor: pointer;
+    font-weight: bold;
+    background: none;
+    border: none;
+    transition: background 0.3s;
+}
+.tab.active{
+   border-bottom: 3px solid #f59b14;
+
+}
+
+.tab-content{
+    padding: 1.3rem;
+}
+.tab-content.hidden{
+    display: none;
+}
+.form-group{
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 0.5rem;
+}
+.form-group input,select{
+     border: 1px solid;
+     padding: 0.6rem;
+     border-radius: 16px;
+}
+.save-btn{
+    background-color:#f59b14;
+    border: 1px solid;
+     padding: 0.6rem;
+     border-radius: 16px;
+     font-size: 1rem;
+     font-weight: bold;
+     color: #f9fbfd;
+}
+.error{
+color: red;
+font-size: 0.3rem;
+margin-bottom: 0.4rem;
+display: none;
+}
+
+@media (min-width:64rem) {
+.form-group{
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 0.5rem;
+    width: 60%;
+    align-self: center;
+    justify-self: center;
+    justify-content: center;
+}
+.form-group input,select{
+     border: 1px solid;
+     padding: 0.6rem;
+     border-radius: 16px;
+}
+.save-btn{
+    background-color:#f59b14;
+    border: 1px solid;
+     padding: 0.6rem;
+     border-radius: 16px;
+}
+}
+
+.appointment,.review{
+    margin-bottom: 1rem;
+    padding: 0.5rem;
+    background: #f9fbfd;
+    border-radius: 6px;
+}
+option{
+    font-size: large;
+}
+.appointment{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.delete-button{
+    width: 5rem;
+    height: 6rem;
+    background: none;
+    align-self: center;
+    border: none;
+    color: red;
+    font-size: 2rem;
+
+}
+.rating-user{
+    font-weight: bold;
+}
+.appointment-date{
+    font-weight: bold;
+}
+label{
+    font-weight: 500;
+}
