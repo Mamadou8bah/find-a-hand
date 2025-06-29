@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile</title>
+    <link rel="stylesheet" href="../public/css/my-handyman-profile.css">
+    <link rel="stylesheet" href="../public/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="my-handyman-profile.js"></script>
+    <style>
+        /* Additional styles for new elements */
+        .action-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .btn {
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-call {
+            background-color: #4CAF50;
+            color: white;
+        }
+        
+        .btn-message {
+            background-color: #2196F3;
+            color: white;
+        }
+        
+        .btn:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+        }
+        
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .service-item {
+            padding: 15px 80px;
+            background-color: #f9f9f9;
+            border-radius: 50%;
+            text-align: center;
+        }
+        
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-top: 20px;
+        }
+        
+        .portfolio-item {
+            aspect-ratio: 1;
+            overflow: hidden;
+            border-radius: 8px;
+            position: relative;
+        }
+        
+        .portfolio-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+        
+        @media (max-width: 600px) {
+            .portfolio-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .action-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .btn {
+                width: 80%;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="back-header">
+        <a class="back-btn" href="index.html">&lt;Back</a>
+    </div>
+    <section class="profile-header"> 
+        <div class="image-container">
+            <img src="../public/images/handyman-profiles/profile4.jpeg" alt="my profile">
+        </div>
+        <p class="handyman-name">Mamadou Bah</p>
+        <p class="handyman-job">Electrician</p>
+        <span class="rating"> 
+            <i class="fas fa-star" style="color: orange;"></i>
+            <i class="fas fa-star" style="color: orange;"></i>
+            <i class="fas fa-star" style="color: orange;"></i>
+            <i class="fas fa-star" style="color: orange;"></i>
+            <i class="fas fa-star-half-alt" style="color: orange;"></i>
+            <span>4.5</span>
+        </span>
+        
+        <!-- Added Call and Message buttons -->
+        <div class="action-buttons">
+            <a href="booking.html" class="btn btn-call">Book Now</a>
+            <a href="sms:+2203281914" class="btn btn-message">Call Now</a>
+        </div>
+    </section>
+    
+    <!-- Changed tab names and content -->
+    <div class="tabs">
+        <button class="tab active" onclick="switchTab('about')">About</button>
+        <button class="tab" onclick="switchTab('portfolio')">Portfolio</button>
+        <button class="tab" onclick="switchTab('reviews')">Reviews</button>
+    </div>
+
+    <!-- About Tab Content -->
+    <div class="tab-content" id="about">
+        <h3>Services Offered</h3>
+        <div class="services-grid">
+            <div class="service-item">Electrical Wiring</div>
+            <div class="service-item">Light Fixtures</div>
+            <div class="service-item">Circuit Breakers</div>
+            <div class="service-item">Outlet Installation</div>
+            <div class="service-item">Electrical Repairs</div>
+        </div>
+        
+        <h3 style="margin-top: 20px;">Location</h3>
+        <p>Lamin, The Gambia</p>
+        
+        <h3 style="margin-top: 20px;">Availability</h3>
+        <p>Monday - Friday: 8:00 AM - 6:00 PM</p>
+        <p>Saturday: 9:00 AM - 2:00 PM</p>
+    </div>
+    
+    <!-- Portfolio Tab Content -->
+    <div class="tab-content hidden" id="portfolio">
+        <h3>My Work</h3>
+        <div class="portfolio-grid">
+            <div class="portfolio-item">
+                <img src="../public/images/light-fixture.jpg" alt="Electrical Work" class="portfolio-img">
+            </div>
+            <div class="portfolio-item">
+                <img src="../public/images/light-fixture.jpg" alt="Light Installation" class="portfolio-img">
+            </div>
+            <div class="portfolio-item">
+                <img src="../public/images/tv-mounting.jpg" alt="Wiring Project" class="portfolio-img">
+            </div>
+            <div class="portfolio-item">
+                <img src="../public/images/circuit-repair.jpg" alt="Circuit Repair" class="portfolio-img">
+            </div>
+        </div>
+    </div>
+    
+    <!-- Reviews Tab Content (kept your existing reviews) -->
+    <div class="tab-content hidden" id="reviews">
+        <div class="review">
+            <span class="rating"> 
+                <i class="fas fa-star" style="color: orange;"></i>
+                <i class="fas fa-star" style="color: orange;"></i>
+                <i class="fas fa-star" style="color: orange;"></i>
+                <i class="fas fa-star" style="color: orange;"></i>
+                <i class="fas fa-star-half-alt" style="color: orange;"></i>
+                <span>4.5</span>
+            </span>
+            <p class="rating-description">Reliable and Quick</p>
+            <p class="rating-user">Fatou Bah</p>
+        </div>
+      </div>
+               
