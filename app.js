@@ -1,6 +1,7 @@
 const express = require('express');
 const dotenv = require('dotenv');
 const userRoutes = require('./backend/routes/userRoutes');
+const bookingRoutes = require('./backend/routes/bookingRoutes');
 const cors=require('cors')
 dotenv.config();
 
@@ -12,6 +13,8 @@ app.use(cors())
 app.use(express.json()); 
 
 app.use('/api/users', userRoutes);
+app.use('/api/bookings', bookingRoutes);
+
 
 
 app.get('/', (req, res) => {

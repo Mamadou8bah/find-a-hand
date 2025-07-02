@@ -604,96 +604,195 @@
     </div>
 
     <script>
-        function showSection(sectionId) {
-            // Hide all sections
-            document.getElementById('dashboard-section').classList.add('hidden');
-            document.getElementById('bookings-section').classList.add('hidden');
-            document.getElementById('account-section').classList.add('hidden');
-            
-            // Show the selected section
-            document.getElementById(sectionId + '-section').classList.remove('hidden');
-            
-            // Update active menu item
-            const menuItems = document.querySelectorAll('.menu-item');
-            menuItems.forEach(item => item.classList.remove('active'));
-            
-            // Find and activate the corresponding menu item
-            for (let item of menuItems) {
-                if (item.getAttribute('onclick')?.includes(sectionId)) {
-                    item.classList.add('active');
-                    break;
-                }
+    function showSection(sectionId) {
+        document.getElementById('dashboard-section').classList.add('hidden');
+        document.getElementById('bookings-section').classList.add('hidden');
+        document.getElementById('account-section').classList.add('hidden');
+        document.getElementById(sectionId + '-section').classList.remove('hidden');
+
+        const menuItems = document.querySelectorAll('.menu-item');
+        menuItems.forEach(item => item.classList.remove('active'));
+
+        for (let item of menuItems) {
+            if (item.getAttribute('onclick')?.includes(sectionId)) {
+                item.classList.add('active');
+                break;
             }
         }
-        
-        // Simple form handling (would be more complex in a real app)
-        document.addEventListener('DOMContentLoaded', function() {
-            const saveBtn = document.querySelector('.account-section .btn-primary');
-            if (saveBtn) {
-                saveBtn.addEventListener('click', function() {
-                    alert('Account information updated successfully!');
-                    // In a real app, you would send this data to the server
-                });
-            }
-            
-            const updatePasswordBtn = document.querySelectorAll('.account-section .btn-primary')[1];
-            if (updatePasswordBtn) {
-                updatePasswordBtn.addEventListener('click', function() {
-                    alert('Password updated successfully!');
-                    // In a real app, you would validate and send this data to the server
-                });
-            }
-        });
-        async function loadUserProfile() {
+    }
+
+    async function loadUserProfile() {
     const token = localStorage.getItem('token');
     if (!token) {
-      alert('You must be logged in.');
-      window.location.href = './login.html';
-      return;
+        alert('Please log in.');
+        window.location.href = './login.html';
+        return;
     }
 
     try {
-      const response = await fetch('http://localhost:5000/api/users/profile', {
-        method: 'GET',
-        headers: {
-          'Authorization': `Bearer ${token}`,
-        },
-      });
+        const response = await fetch('http://localhost:5000/api/users/profile', {
+            headers: {
+                'Authorization': `Bearer ${token}`,
+            }
+        });
 
-      const user = await response.json();
+        if (!response.ok) {
+            throw new Error('Failed to fetch user profile');
+        }
 
-      if (!response.ok) {
-        alert(user.message || 'Failed to fetch profile');
-        localStorage.removeItem('token');
-        window.location.href = './login.html';
-        return;
-      }
+        const user = await response.json();
 
-      // Update sidebar name
-      document.querySelectorAll('.sidebar-header h3').forEach(el => {
-        el.textContent = `${user.firstName} ${user.lastName}`;
-      });
+        document.querySelectorAll('.user-profile span').forEach(el => {
+            el.textContent = `${user.firstName} ${user.lastName}`;
+        });
+        const sidebarHeader = document.querySelector('.sidebar-header');
+        if (sidebarHeader) {
+            sidebarHeader.querySelector('h3').textContent = `${user.firstName} ${user.lastName}`;
+        }
 
-      // Update top right profile name
-      document.querySelectorAll('.user-profile span').forEach(el => {
-        el.textContent = `${user.firstName} ${user.lastName}`;
-      });
-
-      // Fill account form fields
-      document.getElementById('firstName').value = user.firstName || '';
-      document.getElementById('lastName').value = user.lastName || '';
-      document.getElementById('email').value = user.email || '';
-      document.getElementById('phone').value = user.phone || '';
-      document.getElementById('address').value = user.address || '';
-      document.getElementById('city').value = user.city || '';
+        document.getElementById('firstName').value = user.firstName;
+        document.getElementById('lastName').value = user.lastName;
+        document.getElementById('email').value = user.email;
+        document.getElementById('phone').value = user.phone;
+        document.getElementById('address').value = user.address;
+        document.getElementById('city').value = user.city;
 
     } catch (err) {
-      console.error(err);
-      alert('Something went wrong fetching profile data.');
+        console.error(err);
+        alert('Error loading user profile');
     }
-  }
+}
 
-  document.addEventListener('DOMContentLoaded', loadUserProfile);
-    </script>
+async function loadUserBookings() {
+    const token = localStorage.getItem('token');
+    if (!token) {
+        alert('Please log in.');
+        window.location.href = './login.html';
+        return;
+    }
+
+    try {
+        const response = await fetch('http://localhost:5000/api/bookings', {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json',
+            },
+        });
+
+        if (!response.ok) {
+            const errorData = await response.json();
+            alert(errorData.message || 'Failed to load bookings');
+            return;
+        }
+
+        const bookings = await response.json();
+
+        const upcomingBookings = bookings.filter(b => ['pending', 'confirmed'].includes(b.status.toLowerCase()));
+        const completedBookings = bookings.filter(b => b.status.toLowerCase() === 'completed');
+        const favoriteHandymenCount = new Set(bookings.map(b => b.handymanId)).size;
+
+        document.querySelector('.dashboard-cards .card:nth-child(1) p').textContent = upcomingBookings.length;
+        document.querySelector('.dashboard-cards .card:nth-child(2) p').textContent = completedBookings.length;
+        document.querySelector('.dashboard-cards .card:nth-child(3) p').textContent = favoriteHandymenCount;
+
+        function createBookingRow(booking) {
+            const statusClassMap = {
+                pending: 'status-pending',
+                confirmed: 'status-confirmed',
+                completed: 'status-completed',
+                cancelled: 'status-cancelled',
+            };
+            const statusClass = statusClassMap[booking.status.toLowerCase()] || 'status-pending';
+
+            return `
+                <tr>
+                    <td>${booking.service}</td>
+                    <td>${booking.handymanName || 'N/A'}</td>
+                    <td>${new Date(booking.date).toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' })}</td>
+                    <td>${booking.time}</td>
+                    <td><span class="status ${statusClass}">${booking.status}</span></td>
+                    <td>
+                        <button class="btn btn-outline" onclick="viewBookingDetails('${booking._id}')">Details</button>
+                        ${(booking.status.toLowerCase() === 'pending' || booking.status.toLowerCase() === 'confirmed')
+                            ? `<button class="btn btn-outline" onclick="cancelBooking('${booking._id}')">Cancel</button>`
+                            : ''}
+                    </td>
+                </tr>
+            `;
+        }
+
+        document.querySelector('#dashboard-section tbody').innerHTML =
+            bookings.slice(0, 3).map(createBookingRow).join('');
+
+        document.querySelector('#bookings-section tbody').innerHTML =
+            bookings.map(createBookingRow).join('');
+
+    } catch (err) {
+        console.error(err);
+        alert('Error loading bookings');
+    }
+}
+
+function viewBookingDetails(id) {
+    alert(`Show details for booking ${id}`);
+}
+
+function cancelBooking(id) {
+    if (!confirm('Are you sure you want to cancel this booking?')) return;
+
+    const token = localStorage.getItem('token');
+    fetch(`http://localhost:5000/api/bookings/${id}/cancel`, {
+        method: 'POST',
+        headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json',
+        },
+    })
+        .then(async res => {
+            if (!res.ok) {
+                const errorData = await res.json();
+                throw new Error(errorData.message || 'Failed to cancel booking');
+            }
+            return res.json();
+        })
+        .then(data => {
+            if (data.success) {
+                alert('Booking cancelled successfully');
+                loadUserBookings();
+            } else {
+                alert(data.message || 'Failed to cancel booking');
+            }
+        })
+        .catch(err => {
+            console.error(err);
+            alert('Error cancelling booking: ' + err.message);
+        });
+}
+
+document.addEventListener('DOMContentLoaded', function () {
+    // Form button listeners
+    const saveBtn = document.querySelectorAll('.account-section .btn-primary')[0];
+    const updatePasswordBtn = document.querySelectorAll('.account-section .btn-primary')[1];
+
+    if (saveBtn) {
+        saveBtn.addEventListener('click', function () {
+            alert('Account information updated successfully!');
+        });
+    }
+
+    if (updatePasswordBtn) {
+        updatePasswordBtn.addEventListener('click', function () {
+            alert('Password updated successfully!');
+        });
+    }
+
+    // Load user data
+    loadUserProfile();
+    loadUserBookings();
+});
+
+</script>
+
 </body>
 </html>

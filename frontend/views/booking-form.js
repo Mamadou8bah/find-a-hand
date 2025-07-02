@@ -35,10 +35,10 @@ class FormValidator {
       });
     });
 
-    this.form.addEventListener('submit', e => {
+    this.form.addEventListener('submit', async (e) => {
       e.preventDefault();
       if (this.validateForm()) {
-        this.showSummary();
+        await this.submitForm();
       }
     });
   }
@@ -109,8 +109,45 @@ class FormValidator {
     this.submitButton.disabled = !this.validateForm();
   }
 
-  showSummary() {
-    alert('Form submitted successfully!');
+  async submitForm() {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      alert('Please log in to book a handyman');
+      window.location.href = './login.html';
+      return;
+    }
+
+    const service = this.fields.service.value;
+    const taskDescription = this.fields.task.value.trim();
+    const date = this.fields.date.value;
+    const time = this.fields.time.value;
+    const phone = this.fields.phone.value.trim();
+    const location = this.fields.location.value.trim();
+
+    try {
+      const response = await fetch('http://localhost:5000/api/bookings', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`
+        },
+        body: JSON.stringify({ service, taskDescription, date, time, phone, location })
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        alert('Booking created successfully!');
+        this.form.reset();
+        this.updateCharCount();
+        this.toggleSubmit();
+      } else {
+        alert(data.message || 'Failed to create booking');
+      }
+    } catch (err) {
+      console.error(err);
+      alert('Error submitting booking');
+    }
   }
 }
 
