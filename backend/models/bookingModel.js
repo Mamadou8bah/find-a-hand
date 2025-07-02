@@ -6,6 +6,7 @@ const bookingSchema = mongoose.Schema({
     required: true,
     ref: 'User'
   },
+  handymanId: { type: mongoose.Schema.Types.ObjectId, ref: 'Handyman', required: true },
   service: {
     type: String,
     required: true
