@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
     <title>Customer Dashboard | FindaHand</title>
     <style>
         :root {
@@ -369,7 +371,8 @@
                 <div class="header">
                     <h1>Dashboard Overview</h1>
                     <div class="user-profile">
-                        <img src="../public/images/user-profiles/user6.jpg" alt="User">
+                        <i class="fas fa-user" style="font-size: 40px;"></i>
+
                         <span>Alassan Saine</span>
                     </div>
                 </div>
@@ -441,7 +444,9 @@
                 <div class="header">
                     <h1>My Bookings</h1>
                     <div class="user-profile">
-                        <img src="../public/images/user-profiles/user6.jpg" alt="User">
+                       <i class="fas fa-user" style="font-size: 40px;"></i>
+
+
                         <span>Alassan Saine</span>
                     </div>
                 </div>
@@ -531,7 +536,8 @@
                 <div class="header">
                     <h1>Account Settings</h1>
                     <div class="user-profile">
-                        <img src="../public/images/user-profiles/user6.jpg" alt="User">
+                        <i class="fas fa-user" style="font-size: 20px;"></i>
+
                         <span>Alassan Saine</span>
                     </div>
                 </div>
@@ -704,11 +710,24 @@ async function loadUserBookings() {
                 cancelled: 'status-cancelled',
             };
             const statusClass = statusClassMap[booking.status.toLowerCase()] || 'status-pending';
+            async function fetchHandymanById(handymanId) {
+            try {
+                const response = await fetch(`http://localhost:5000/api/handymen/${handymanId}`);
+                if (!response.ok) {
+                throw new Error('Handyman not found');
+                }
+                const handyman = await response.json();
+                console.log('Handyman:', handyman);
+                return handyman; // contains firstName, lastName, email, etc.
+            } catch (error) {
+                console.error(error);
+            }
+            }
 
             return `
                 <tr>
                     <td>${booking.service}</td>
-                    <td>${booking.handymanName || 'N/A'}</td>
+                    <td class="handyman-name" data-id="${booking.handymanId}">Loading...</td>
                     <td>${new Date(booking.date).toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' })}</td>
                     <td>${booking.time}</td>
                     <td><span class="status ${statusClass}">${booking.status}</span></td>
@@ -732,6 +751,24 @@ async function loadUserBookings() {
         console.error(err);
         alert('Error loading bookings');
     }
+
+    document.querySelectorAll('.handyman-name').forEach(async td => {
+  const handymanId = td.getAttribute('data-id');
+  if (!handymanId) {
+    td.textContent = 'N/A';
+    return;
+  }
+
+  try {
+    const res = await fetch(`http://localhost:5000/api/handymen/${handymanId}`);
+    if (!res.ok) throw new Error('Not found');
+    const handyman = await res.json();
+    td.textContent = handyman.firstName + ' ' + handyman.lastName;
+  } catch {
+    td.textContent = 'N/A';
+  }
+});
+
 }
 
 function viewBookingDetails(id) {

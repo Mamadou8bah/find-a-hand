@@ -275,6 +275,9 @@
     // **Set the Book Now button link with handymanId**
     const bookNowBtn = document.getElementById('bookNowBtn');
     if (bookNowBtn) {
+      localStorage.setItem('handyman', JSON.stringify(handyman));
+
+     
       bookNowBtn.href = `booking.html?handymanId=${handyman._id}`;
     }
 

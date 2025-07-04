@@ -2,15 +2,16 @@ const Booking = require('../models/bookingModel');
 
 const createBooking = async (req, res) => {
   try {
-    const { service, taskDescription, date, time, phone, location } = req.body;
+    const { handymanId, service, taskDescription, date, time, phone, location } = req.body;
 
     
-    if (!service || !taskDescription || !date || !time || !phone || !location) {
+    if (! handymanId||!service || !taskDescription || !date || !time || !phone || !location) {
       return res.status(400).json({ message: 'Please fill in all fields' });
     }
 
     const booking = await Booking.create({
       user: req.user._id, 
+      handymanId,
       service,
       taskDescription,
       date,
@@ -56,5 +57,22 @@ const cancelBooking = async (req, res) => {
     res.status(500).json({ message: 'Server error cancelling booking' });
   }
 };
+const getBookingById = async (req, res) => {
+  try {
+    const bookingId = req.params.id;
 
-module.exports = { createBooking,getBooking ,cancelBooking };
+    // Find booking by ID and user to ensure authorization
+    const booking = await Booking.findOne({ _id: bookingId, user: req.user._id });
+
+    if (!booking) {
+      return res.status(404).json({ message: 'Booking not found or not authorized' });
+    }
+
+    res.json(booking);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Server error fetching booking' });
+  }
+};
+
+module.exports = { createBooking,getBooking ,cancelBooking, getBookingById  };

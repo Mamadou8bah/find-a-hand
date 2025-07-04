@@ -27,7 +27,9 @@ class FormValidator {
   }
 
   async init() {
-    if (!this.handymanId) {
+
+    const handyman = JSON.parse(localStorage.getItem('handyman'));
+    if (!handyman || !handyman._id) {
       alert('No handyman specified for booking.');
       this.submitButton.disabled = true;
       return;
@@ -51,7 +53,6 @@ class FormValidator {
       return;
     }
 
-    // Pre-fill phone if user has one
     if (this.userInfo.phone) {
       this.fields.phone.value = this.userInfo.phone;
     }
@@ -66,29 +67,38 @@ class FormValidator {
   }
 
   async loadUserInfo() {
-    const userJson = localStorage.getItem('user');
-    if (userJson) {
+  const userJson = localStorage.getItem('user');
+  
+  // Try parsing only if it is a valid string
+  if (userJson) {
+    try {
       this.userInfo = JSON.parse(userJson);
       return;
-    }
-
-    const token = localStorage.getItem('token');
-    if (!token) return;
-
-    try {
-      const response = await fetch('http://localhost:5000/api/users/me', {
-        headers: { Authorization: `Bearer ${token}` }
-      });
-
-      if (!response.ok) throw new Error('Failed to fetch user info');
-
-      this.userInfo = await response.json();
-      localStorage.setItem('user', JSON.stringify(this.userInfo));
-    } catch (error) {
-      console.error('Error loading user info:', error);
-      this.userInfo = null;
+    } catch (e) {
+      console.error('Invalid JSON found in localStorage for "user":', userJson);
+      localStorage.removeItem('user'); // remove the corrupted value
     }
   }
+
+  const token = localStorage.getItem('token');
+  if (!token) return;
+
+  try {
+    const response = await fetch('http://localhost:5000/api/users/profile', {
+      headers: { Authorization: `Bearer ${token}` }
+    });
+
+    if (!response.ok) throw new Error('Failed to fetch user info');
+
+    const userData = await response.json(); 
+    this.userInfo = userData;
+
+    localStorage.setItem('user', JSON.stringify(userData)); 
+  } catch (error) {
+    console.error('Error loading user info:', error);
+    this.userInfo = null;
+  }
+}
 
   attachListeners() {
     Object.keys(this.fields).forEach(key => {
@@ -199,6 +209,9 @@ class FormValidator {
         },
         body: JSON.stringify(bookingPayload)
       });
+      this.submitButton.textContent = 'Booking...';
+       this.submitButton.disabled = true;
+
 
       const data = await response.json();
 
@@ -207,6 +220,7 @@ class FormValidator {
         this.form.reset();
         this.updateCharCount();
         this.toggleSubmit();
+        localStorage.removeItem('handyman'); // Clear handyman info after booking
       } else {
         alert(data.message || 'Failed to create booking');
       }
