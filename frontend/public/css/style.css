@@ -1102,7 +1102,7 @@ body {
     .main-container {
         flex-direction: row;
         background-image: url('../images/hero-image.jpg');
-        background-repeat: no-repeat;
+        background-repeat: repeat-x;
         background-position: center;
         
     }

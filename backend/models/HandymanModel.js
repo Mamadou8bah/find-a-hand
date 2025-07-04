@@ -50,7 +50,11 @@ const handymanSchema = new mongoose.Schema({
     type: Number,
     min: 0
   },
-  profileImage: String,
+profileImage: {
+  type: String,
+  required: [true, 'Profile image is required']
+},
+
   portfolioImages: [String],
   rating: {
     type: Number,
@@ -68,10 +72,19 @@ const handymanSchema = new mongoose.Schema({
     type: Map,
     of: String
   },
+  pendingRequests: {type: Number},
+  monthlyEarnings: {
+    type: Number}
+    ,confirmedBookings: {type: Number},
   createdAt: {
     type: Date,
     default: Date.now
-  }
+  },
+  bookings: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Booking'
+  }],
+
 });
 
 // Hash password before saving

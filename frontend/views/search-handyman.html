@@ -85,8 +85,41 @@
         <div class="rating">0.0 <span class="star">★</span> (0) • <span class="distance">5.5 km away</span></div>
       </div>
     </a>
+<script>
+  document.addEventListener('DOMContentLoaded', async () => {
+  const container = document.querySelector('.container');
+  container.innerHTML = ''; // Clear default cards
 
-    <!-- You can add more entries here -->
+  try {
+    const response = await fetch('http://localhost:5000/api/handymen'); // Your backend endpoint
+    if (!response.ok) throw new Error('Failed to fetch handymen');
+    const handymen = await response.json();
+
+    handymen.forEach(handyman => {
+      const card = document.createElement('a');
+      card.className = 'plumber-card';
+      card.href = `view-handymen.html?handymanId=${handyman._id}`; // Link to profile page with handyman ID
+
+      card.innerHTML = `
+        <div class="plumber-img">
+          <img src="${handyman.profileImage ? 'http://localhost:5000/' + handyman.profileImage : '../public/images/handyman-profiles/default-profile.jpg'}" alt="Profile" class="customer-profile">
+        </div>
+        <div class="plumber-info">
+          <div class="plumber-name">${handyman.firstName} ${handyman.lastName}</div>
+          <div class="plumber-location">${handyman.location || 'Unknown Location'}</div>
+          <div class="rating">${handyman.ratingAverage?.toFixed(1) ?? '0.0'} <span class="star">★</span> (${handyman.reviewCount ?? 0})</div>
+        </div>
+      `;
+      container.appendChild(card);
+    });
+  } catch (error) {
+    console.error(error);
+    container.innerHTML = '<p>Error loading handymen.</p>';
+  }
+});
+
+</script>
+
 
   </div>
 

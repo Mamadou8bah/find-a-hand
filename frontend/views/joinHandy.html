@@ -9,45 +9,91 @@
 <body>
   <div class="main-container">
     <div class="form-container">
-      <form class="signup-form" action="/handyman/register" method="POST" enctype="multipart/form-data">
-        <h1 class="form-title">Findahand</h1>
-        <p class="form-description">
-          Join Findahand as a handyman and connect with clients who need your skills.
-       </p>
+    <form id="handymanForm" class="signup-form" enctype="multipart/form-data">
 
+  <h1 class="form-title">Findahand</h1>
+  <p class="form-description">
+    Join Findahand as a handyman and connect with clients who need your skills.
+  </p>
 
-        <input class="form-input" type="text" name="name" placeholder="Full Name" required />
-        <input class="form-input" type="tel" name="phone" placeholder="Phone Number" required />
-        <input class="form-input" type="text" name="location" placeholder="Location" required />
+  <input class="form-input" type="text" name="firstName" placeholder="First Name" required />
+  <input class="form-input" type="text" name="lastName" placeholder="Last Name" required />
+  <input class="form-input" type="email" name="email" placeholder="Email" required />
+  <input class="form-input" type="tel" name="phone" placeholder="Phone Number" required />
+  <input class="form-input" type="text" name="location" placeholder="Location" required />
+  
+  <input class="form-input" type="password" name="password" placeholder="Password" required />
 
-       
-        <select class="form-input" name="skill" required>
-          <option value="">-- Select Skill --</option>
-          <option value="Electrician">Electrician</option>
-          <option value="Plumber">Plumber</option>
-          <option value="Carpenter">Carpenter</option>
-          <option value="Painter">Painter</option>
-          <option value="Mechanic">Mechanic</option>
-          <option value="Welder">Welder</option>
-          <option value="AC Technician">AC Technician</option>
-        </select>
+  <select class="form-input" name="profession" required>
+    <option value="">-- Select Profession --</option>
+    <option value="Electrician">Electrician</option>
+    <option value="Plumber">Plumber</option>
+    <option value="Carpenter">Carpenter</option>
+    <option value="Painter">Painter</option>
+    <option value="Mechanic">Mechanic</option>
+    <option value="Welder">Welder</option>
+    <option value="AC Technician">AC Technician</option>
+  </select>
 
-      
-        <input class="form-input" type="number" name="experience" placeholder="Years of Experience" min="0" required />
-        <label class="form-label">Upload Profile Picture</label>
-        <input class="form-input" type="file" name="profilePicture" accept="image/*" required />
+  <label class="form-label">Skills (comma separated)</label>
+  <input class="form-input" type="text" name="skills" placeholder="e.g. wiring,repair" required />
 
+  <input class="form-input" type="number" name="experience" placeholder="Years of Experience" min="0" required />
 
-        <p class="form-agreement">
-          By submitting, you confirm the accuracy of your details and agree to Findahand’s
-          <a href="#" class="form-link">Terms of Service</a> and
-          <a href="#" class="form-link">Privacy Policy</a>.
-        </p>
-        <a href="../views/handyman-dashboard.html">
-          <button class="form-button" type="submit">Submit</button>
-        </a>
-      </form>
+  <label class="form-label">Upload Profile Picture</label>
+  <input class="form-input" type="file" name="profileImage" accept="image/*" required />
+
+  <p class="form-agreement">
+    By submitting, you confirm the accuracy of your details and agree to Findahand’s
+    <a href="#" class="form-link">Terms of Service</a> and
+    <a href="#" class="form-link">Privacy Policy</a>.
+  </p>
+
+  <button class="form-button" type="submit">Submit</button>
+</form>
+
     </div>
   </div>
+
+ 
+  <script>
+ document.querySelector(".signup-form").addEventListener("submit", async function (e) {
+  e.preventDefault();
+
+  const form = e.target;
+  const formData = new FormData(form);
+
+  try {
+    const response = await fetch('http://localhost:5000/api/handymen/register', {
+      method: 'POST',
+      body: formData
+    });
+
+    const contentType = response.headers.get('content-type');
+
+    if (contentType && contentType.includes('application/json')) {
+      const data = await response.json();
+
+      if (response.ok) {
+        alert("Registration successful! Redirecting to dashboard...");
+        localStorage.setItem("token", data.token);
+        window.location.href = "../views/handyman-dashboard.html";
+      } else {
+        alert("Registration failed: " + (data.message || (data.errors && data.errors[0]?.msg) || "Unknown error"));
+      }
+    } else {
+      // Non-JSON response: log and alert
+      const text = await response.text();
+      console.error('Unexpected server response:', text);
+      alert("Registration failed with unexpected server response.");
+    }
+  } catch (error) {
+    console.error("Registration error:", error);
+    alert("Something went wrong! " + (error.message || error));
+  }
+});
+
+</script>
+
 </body>
 </html>

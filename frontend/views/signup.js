@@ -43,7 +43,7 @@ document.getElementById('signup-form').addEventListener('submit',async (e)=>{
                 localStorage.setItem('token',result.token)
                 window.location.href = './search-handyman.html'
             }else{
-                 errorPage.innerText="Failed to Create Account"
+                 errorPage.innerText=result.message ||"Failed to Create Account"
             }
         }catch(error){
              errorPage.innerText="Error "+error.message

@@ -639,15 +639,15 @@
                 <div class="dashboard-cards">
                     <div class="card">
                         <h3 class="card-title">Pending Requests</h3>
-                        <p class="card-value">5</p>
+                        <p class="card-value" id="pending-request">5</p>
                     </div>
                     <div class="card">
                         <h3 class="card-title">Confirmed Bookings</h3>
-                        <p class="card-value">12</p>
+                        <p class="card-value" id="confirmed-bookings">12</p>
                     </div>
                     <div class="card">
                         <h3 class="card-title">This Month's Earnings</h3>
-                        <p class="card-value">$2,450</p>
+                        <p class="card-value" id="monthly-earnings">$2,450</p>
                     </div>
                 </div>
                 
@@ -657,12 +657,12 @@
                         <button class="btn btn-outline" onclick="showSection('bookings')">View All</button>
                     </div>
                     
-                    <table class="table">
+                    <table class="table" id="table-bookings">
                         <thead>
                             <tr>
-                                <th>Customer</th>
-                                <th>Service</th>
-                                <th>Date/Time</th>
+                                <th id="customer-name">Customer</th>
+                                <th id="service">Service</th>
+                                <th id="date-time">Date/Time</th>
                                 <th>Status</th>
                                 <th>Action</th>
                             </tr>
@@ -1628,5 +1628,6 @@
             });
         });
     </script>
+    <script src="handyman-dashboard.js"></script>
 </body>
 </html>

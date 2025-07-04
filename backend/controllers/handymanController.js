@@ -1,6 +1,7 @@
 const Handyman = require('../models/HandymanModel');
 const jwt = require('jsonwebtoken');
 const { validationResult } = require('express-validator');
+const Booking = require('../models/bookingModel');
 
 // Register a new handyman
 exports.register = async (req, res) => {
@@ -27,9 +28,10 @@ exports.register = async (req, res) => {
       location,
       password,
       profession,
-      skills: req.body.skills || [],
+      skills: Array.isArray(req.body.skills) ? req.body.skills : req.body.skills.split(',').map(skill => skill.trim()),
       experience: req.body.experience || 0,
-      hourlyRate: req.body.hourlyRate || 0
+      hourlyRate: req.body.hourlyRate || 0,
+      profileImage: req.file.path 
     });
 
     await handyman.save();
@@ -123,10 +125,24 @@ exports.updateProfile = async (req, res) => {
     phone,
     location,
     profession,
-    skills: Array.isArray(skills) ? skills : skills.split(',').map(skill => skill.trim()),
     experience,
     hourlyRate
   };
+
+  if (skills) {
+    profileFields.skills = Array.isArray(skills)
+      ? skills
+      : skills.split(',').map(skill => skill.trim());
+  }
+
+  if (req.file) {
+    profileFields.profileImage = req.file.path;
+  }
+
+  // Remove undefined keys (to avoid overwriting fields with undefined)
+  Object.keys(profileFields).forEach(
+    key => profileFields[key] === undefined && delete profileFields[key]
+  );
 
   try {
     let handyman = await Handyman.findById(req.handyman.id);
@@ -143,10 +159,36 @@ exports.updateProfile = async (req, res) => {
 
     res.json(handyman);
   } catch (err) {
+    console.error('Update profile error:', err.message);
+    res.status(500).send('Server error');
+  }
+};
+
+exports.updateBookingStatus = async (req, res) => {
+  const { status } = req.body;
+
+  if (!['confirmed', 'cancelled', 'completed'].includes(status)) {
+    return res.status(400).json({ message: 'Invalid status' });
+  }
+
+  try {
+    const booking = await Booking.findOne({
+      _id: req.params.id,
+      handymanId: req.handyman.id
+    });
+
+    if (!booking) return res.status(404).json({ message: 'Booking not found' });
+
+    booking.status = status;
+    await booking.save();
+
+    res.json({ message: `Booking marked as ${status}`, booking });
+  } catch (err) {
     console.error(err.message);
     res.status(500).send('Server error');
   }
 };
+
 
 // Get all handymen
 exports.getAllHandymen = async (req, res) => {
@@ -208,5 +250,19 @@ exports.addReview = async (req, res) => {
   } catch (err) {
     console.error(err.message);
     res.status(500).send('Server error');
+  }
+};
+
+
+exports.getMyBookings = async (req, res) => {
+  try {
+    const bookings = await Booking.find({ handymanId: req.handyman.id })
+      .populate('userId', 'firstName lastName phone') // Show who booked
+      .sort({ createdAt: -1 });
+
+    res.json(bookings);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).json({ message: 'Server error' });
   }
 };

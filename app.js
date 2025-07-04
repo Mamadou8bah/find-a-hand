@@ -4,13 +4,14 @@ const userRoutes = require('./backend/routes/userRoutes');
 const bookingRoutes = require('./backend/routes/bookingRoutes');
 const cors=require('cors')
 dotenv.config();
-
-
-
 const app = express();
-
 app.use(cors())
 app.use(express.json()); 
+app.use('/uploads', express.static('uploads'));
+app.use('/api/handymen', require('./backend/routes/handymanRoutes'));
+
+
+
 
 app.use('/api/users', userRoutes);
 app.use('/api/bookings', bookingRoutes);
