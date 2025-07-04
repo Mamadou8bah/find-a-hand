@@ -115,7 +115,8 @@
         
         <!-- Added Call and Message buttons -->
         <div class="action-buttons">
-            <a href="booking.html" class="btn btn-call">Book Now</a>
+       <a id="bookNowBtn" href="#" class="btn btn-call">Book Now</a>
+
             <a href="sms:+2203281914" class="btn btn-message">Call Now</a>
         </div>
     </section>
@@ -180,4 +181,122 @@
             <p class="rating-user">Fatou Bah</p>
         </div>
       </div>
-               
+
+     <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+  function getQueryParam(param) {
+    return new URLSearchParams(window.location.search).get(param);
+  }
+
+  const handymanId = getQueryParam('handymanId');
+  if (!handymanId) {
+    alert('No handyman specified');
+    return;
+  }
+
+  try {
+    const response = await fetch(`http://localhost:5000/api/handymen/${handymanId}`);
+    if (!response.ok) throw new Error('Failed to fetch handyman data');
+    const handyman = await response.json();
+
+    // Update profile image
+    const img = document.querySelector('.image-container img');
+    img.src = handyman.profileImage
+      ? `http://localhost:5000/${handyman.profileImage}`
+      : '../public/images/handyman-profiles/default-profile.jpg';
+    img.alt = `${handyman.firstName} ${handyman.lastName}`;
+
+    // Update name, job
+    document.querySelector('.handyman-name').textContent = `${handyman.firstName} ${handyman.lastName}`;
+    document.querySelector('.handyman-job').textContent = handyman.profession || handyman.job || 'No profession set';
+
+    // Update rating stars and value
+    const ratingSpan = document.querySelector('.rating');
+    ratingSpan.innerHTML = generateStars(handyman.ratingAverage || 0) + ` <span>${(handyman.ratingAverage || 0).toFixed(1)}</span>`;
+
+    // Update services (assumed handyman.services is an array of strings)
+    const servicesGrid = document.querySelector('.services-grid');
+    if (servicesGrid && handyman.services && handyman.services.length) {
+      servicesGrid.innerHTML = '';
+      handyman.services.forEach(service => {
+        const div = document.createElement('div');
+        div.className = 'service-item';
+        div.textContent = service;
+        servicesGrid.appendChild(div);
+      });
+    }
+
+    // Update location
+    const aboutTab = document.getElementById('about');
+    const locationPara = aboutTab.querySelector('p:nth-of-type(2)');
+    if (locationPara) locationPara.textContent = handyman.location || 'No location specified';
+
+    // Update availability
+    const availabilityParagraphs = aboutTab.querySelectorAll('p:nth-of-type(n+3)');
+    if (handyman.availability) {
+      if (typeof handyman.availability === 'string') {
+        availabilityParagraphs.forEach(p => p.textContent = handyman.availability);
+      } else if (typeof handyman.availability === 'object') {
+        if (availabilityParagraphs.length >= 2) {
+          availabilityParagraphs[0].textContent = handyman.availability.weekdays || '';
+          availabilityParagraphs[1].textContent = handyman.availability.saturday || '';
+        }
+      }
+    }
+
+    // Update portfolio images
+    const portfolioGrid = document.querySelector('.portfolio-grid');
+    if (portfolioGrid && handyman.portfolio && handyman.portfolio.length) {
+      portfolioGrid.innerHTML = '';
+      handyman.portfolio.forEach(imgUrl => {
+        const div = document.createElement('div');
+        div.className = 'portfolio-item';
+        div.innerHTML = `<img src="${imgUrl}" alt="Portfolio image" class="portfolio-img">`;
+        portfolioGrid.appendChild(div);
+      });
+    }
+
+    // Update reviews
+    const reviewsContainer = document.getElementById('reviews');
+    if (reviewsContainer && handyman.reviews && handyman.reviews.length) {
+      reviewsContainer.innerHTML = '';
+      handyman.reviews.forEach(review => {
+        const div = document.createElement('div');
+        div.className = 'review';
+        div.innerHTML = `
+          <span class="rating">${generateStars(review.rating)} <span>${review.rating.toFixed(1)}</span></span>
+          <p class="rating-description">${review.comment || ''}</p>
+          <p class="rating-user">${review.customerName || 'Anonymous'}</p>
+        `;
+        reviewsContainer.appendChild(div);
+      });
+    }
+
+    // **Set the Book Now button link with handymanId**
+    const bookNowBtn = document.getElementById('bookNowBtn');
+    if (bookNowBtn) {
+      localStorage.setItem('handyman', JSON.stringify(handyman));
+
+     
+      bookNowBtn.href = `booking.html?handymanId=${handyman._id}`;
+    }
+
+  } catch (error) {
+    console.error(error);
+    alert('Failed to load handyman profile.');
+  }
+});
+
+// Helper to generate stars (unchanged)
+function generateStars(rating) {
+  let stars = '';
+  for (let i = 1; i <= 5; i++) {
+    if (rating >= i) stars += '<i class="fas fa-star" style="color: orange;"></i>';
+    else if (rating >= i - 0.5) stars += '<i class="fas fa-star-half-alt" style="color: orange;"></i>';
+    else stars += '<i class="far fa-star" style="color: orange;"></i>';
+  }
+  return stars;
+}
+
+     </script>
+</body>

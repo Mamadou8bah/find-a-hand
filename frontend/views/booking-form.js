@@ -19,8 +19,86 @@ class FormValidator {
     };
     this.charCounter = document.getElementById('taskCounter');
     this.submitButton = document.getElementById('btn');
-    this.attachListeners();
+
+    this.handymanId = this.getQueryParam('handymanId');
+    this.userInfo = null;
+
+    this.init();
   }
+
+  async init() {
+
+    const handyman = JSON.parse(localStorage.getItem('handyman'));
+    if (!handyman || !handyman._id) {
+      alert('No handyman specified for booking.');
+      this.submitButton.disabled = true;
+      return;
+    }
+
+    const token = localStorage.getItem('token');
+    if (!token) {
+      const currentUrl = window.location.href;
+      localStorage.setItem('redirectAfterLogin', currentUrl);
+      window.location.href = './login.html';
+      return;
+    }
+
+    await this.loadUserInfo();
+
+    if (!this.userInfo) {
+      alert('Could not load user info. Please login again.');
+      localStorage.removeItem('token');
+      localStorage.setItem('redirectAfterLogin', window.location.href);
+      window.location.href = './login.html';
+      return;
+    }
+
+    if (this.userInfo.phone) {
+      this.fields.phone.value = this.userInfo.phone;
+    }
+
+    this.attachListeners();
+    this.updateCharCount();
+    this.toggleSubmit();
+  }
+
+  getQueryParam(param) {
+    return new URLSearchParams(window.location.search).get(param);
+  }
+
+  async loadUserInfo() {
+  const userJson = localStorage.getItem('user');
+  
+  // Try parsing only if it is a valid string
+  if (userJson) {
+    try {
+      this.userInfo = JSON.parse(userJson);
+      return;
+    } catch (e) {
+      console.error('Invalid JSON found in localStorage for "user":', userJson);
+      localStorage.removeItem('user'); // remove the corrupted value
+    }
+  }
+
+  const token = localStorage.getItem('token');
+  if (!token) return;
+
+  try {
+    const response = await fetch('http://localhost:5000/api/users/profile', {
+      headers: { Authorization: `Bearer ${token}` }
+    });
+
+    if (!response.ok) throw new Error('Failed to fetch user info');
+
+    const userData = await response.json(); 
+    this.userInfo = userData;
+
+    localStorage.setItem('user', JSON.stringify(userData)); 
+  } catch (error) {
+    console.error('Error loading user info:', error);
+    this.userInfo = null;
+  }
+}
 
   attachListeners() {
     Object.keys(this.fields).forEach(key => {
@@ -44,14 +122,13 @@ class FormValidator {
   }
 
   updateCharCount() {
-    const task = this.fields.task.value.length;
-    this.charCounter.textContent = `${task} / 200`;
+    const taskLength = this.fields.task.value.length;
+    this.charCounter.textContent = `${taskLength} / 200`;
   }
 
   validateField(key) {
     const field = this.fields[key];
     const error = this.errors[key];
-
     let valid = true;
     let message = '';
 
@@ -111,18 +188,17 @@ class FormValidator {
 
   async submitForm() {
     const token = localStorage.getItem('token');
-    if (!token) {
-      alert('Please log in to book a handyman');
-      window.location.href = './login.html';
-      return;
-    }
 
-    const service = this.fields.service.value;
-    const taskDescription = this.fields.task.value.trim();
-    const date = this.fields.date.value;
-    const time = this.fields.time.value;
-    const phone = this.fields.phone.value.trim();
-    const location = this.fields.location.value.trim();
+    const bookingPayload = {
+      handymanId: this.handymanId,
+      service: this.fields.service.value,
+      taskDescription: this.fields.task.value.trim(),
+      date: this.fields.date.value,
+      time: this.fields.time.value,
+      phone: this.fields.phone.value.trim(),
+      location: this.fields.location.value.trim(),
+      userId: this.userInfo?._id || this.userInfo?.id || null
+    };
 
     try {
       const response = await fetch('http://localhost:5000/api/bookings', {
@@ -131,8 +207,11 @@ class FormValidator {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`
         },
-        body: JSON.stringify({ service, taskDescription, date, time, phone, location })
+        body: JSON.stringify(bookingPayload)
       });
+      this.submitButton.textContent = 'Booking...';
+       this.submitButton.disabled = true;
+
 
       const data = await response.json();
 
@@ -141,6 +220,7 @@ class FormValidator {
         this.form.reset();
         this.updateCharCount();
         this.toggleSubmit();
+        localStorage.removeItem('handyman'); // Clear handyman info after booking
       } else {
         alert(data.message || 'Failed to create booking');
       }
