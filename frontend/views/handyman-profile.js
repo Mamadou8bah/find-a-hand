@@ -195,6 +195,11 @@ class HandymanProfile {
     }
 
     // Display rating
+    console.log('Handyman rating data:', {
+      rating: this.handyman.rating,
+      reviews: this.handyman.reviews,
+      reviewCount: this.handyman.reviews?.length
+    });
     this.displayRating(this.handyman.rating || 0, this.handyman.reviews?.length || 0);
     console.log('Rating displayed');
 
@@ -213,8 +218,15 @@ class HandymanProfile {
   }
 
   displayRating(rating, reviewCount) {
+    console.log('displayRating called with:', { rating, reviewCount });
+    
     const starsContainer = document.getElementById('stars');
     const ratingText = document.getElementById('ratingText');
+
+    if (!starsContainer || !ratingText) {
+      console.error('Rating elements not found:', { starsContainer, ratingText });
+      return;
+    }
 
     starsContainer.innerHTML = '';
 
@@ -223,17 +235,29 @@ class HandymanProfile {
       if (rating >= i) {
         star.className = 'fas fa-star';
         star.style.color = 'orange';
+        star.textContent = '★'; // Fallback Unicode star
       } else if (rating >= i - 0.5) {
         star.className = 'fas fa-star-half-alt';
         star.style.color = 'orange';
+        star.textContent = '★'; // Fallback Unicode star
       } else {
         star.className = 'far fa-star';
         star.style.color = 'orange';
+        star.textContent = '☆'; // Fallback Unicode empty star
       }
       starsContainer.appendChild(star);
     }
 
     ratingText.textContent = `${reviewCount} review${reviewCount !== 1 ? 's' : ''}`;
+    
+    // Add a visible rating number for debugging
+    const ratingNumber = document.createElement('span');
+    ratingNumber.textContent = ` (${rating.toFixed(1)})`;
+    ratingNumber.style.marginLeft = '5px';
+    ratingNumber.style.fontWeight = 'bold';
+    ratingText.appendChild(ratingNumber);
+    
+    console.log('Rating display completed');
   }
 
   setupEventListeners() {
