@@ -206,6 +206,88 @@ app.get('/handyman-login-test', async (req, res) => {
   }
 });
 
+// Comprehensive login test endpoint
+app.get('/login-test', async (req, res) => {
+  try {
+    console.log('=== Login Test Endpoint Called ===');
+    
+    // Test 1: Environment Variables
+    const envTest = {
+      NODE_ENV: process.env.NODE_ENV,
+      MONGO_URI: process.env.MONGO_URI ? 'Set' : 'Missing',
+      JWT_SECRET: process.env.JWT_SECRET ? 'Set' : 'Missing'
+    };
+    
+    // Test 2: Database Connection
+    const mongoose = require('mongoose');
+    const dbState = mongoose.connection.readyState;
+    const dbStates = ['disconnected', 'connected', 'connecting', 'disconnecting'];
+    
+    // Test 3: Handyman Model
+    const Handyman = require('./backend/models/HandymanModel');
+    const handymenCount = await Handyman.countDocuments();
+    
+    // Test 4: JWT Functionality
+    let jwtTest = 'Failed';
+    try {
+      const jwt = require('jsonwebtoken');
+      const testPayload = { test: 'data' };
+      const testToken = jwt.sign(testPayload, process.env.JWT_SECRET, { expiresIn: '1h' });
+      jwt.verify(testToken, process.env.JWT_SECRET);
+      jwtTest = 'Success';
+    } catch (jwtError) {
+      jwtTest = `Failed: ${jwtError.message}`;
+    }
+    
+    // Test 5: Bcrypt Functionality
+    let bcryptTest = 'Failed';
+    try {
+      const bcrypt = require('bcryptjs');
+      const testPassword = 'testpassword123';
+      const hashedPassword = await bcrypt.hash(testPassword, 10);
+      const isMatch = await bcrypt.compare(testPassword, hashedPassword);
+      bcryptTest = isMatch ? 'Success' : 'Failed: Password comparison failed';
+    } catch (bcryptError) {
+      bcryptTest = `Failed: ${bcryptError.message}`;
+    }
+    
+    // Test 6: Express Validator
+    let validatorTest = 'Failed';
+    try {
+      const { check, validationResult } = require('express-validator');
+      const testValidation = [
+        check('email', 'Please include a valid email').isEmail(),
+        check('password', 'Password is required').exists()
+      ];
+      validatorTest = 'Success';
+    } catch (validatorError) {
+      validatorTest = `Failed: ${validatorError.message}`;
+    }
+    
+    res.status(200).json({
+      message: 'Comprehensive login test',
+      environment: envTest,
+      database: {
+        state: dbStates[dbState],
+        handymenCount: handymenCount
+      },
+      jwt: jwtTest,
+      bcrypt: bcryptTest,
+      validator: validatorTest,
+      timestamp: new Date().toISOString()
+    });
+    
+  } catch (error) {
+    console.error('Login test error:', error);
+    res.status(500).json({
+      message: 'Login test failed',
+      error: error.message,
+      stack: error.stack,
+      timestamp: new Date().toISOString()
+    });
+  }
+});
+
 // Health check endpoint
 app.get('/health', (req, res) => {
   const healthCheck = {
@@ -218,6 +300,75 @@ app.get('/health', (req, res) => {
   };
   
   res.status(200).json(healthCheck);
+});
+
+// Test endpoint that simulates handyman login
+app.post('/test-handyman-login', async (req, res) => {
+  try {
+    console.log('=== Test Handyman Login ===');
+    console.log('Request body:', req.body);
+    
+    const { email, password } = req.body;
+    
+    if (!email || !password) {
+      return res.status(400).json({ 
+        message: 'Email and password are required',
+        received: { email: !!email, password: !!password }
+      });
+    }
+    
+    // Test 1: Find handyman
+    const Handyman = require('./backend/models/HandymanModel');
+    const handyman = await Handyman.findOne({ email });
+    
+    if (!handyman) {
+      console.log('Handyman not found for email:', email);
+      return res.status(400).json({ message: 'Invalid credentials' });
+    }
+    
+    console.log('Handyman found:', handyman._id);
+    
+    // Test 2: Compare password
+    const isMatch = await handyman.comparePassword(password);
+    if (!isMatch) {
+      console.log('Password mismatch for handyman:', handyman._id);
+      return res.status(400).json({ message: 'Invalid credentials' });
+    }
+    
+    console.log('Password verified successfully');
+    
+    // Test 3: Create JWT token
+    const jwt = require('jsonwebtoken');
+    const payload = {
+      handyman: {
+        id: handyman.id,
+        role: 'handyman'
+      }
+    };
+    
+    const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '7d' });
+    console.log('JWT token created successfully');
+    
+    res.json({ 
+      token, 
+      message: 'Login successful',
+      handyman: {
+        id: handyman._id,
+        email: handyman.email,
+        firstName: handyman.firstName,
+        lastName: handyman.lastName
+      }
+    });
+    
+  } catch (error) {
+    console.error('Test login error:', error);
+    res.status(500).json({
+      message: 'Test login failed',
+      error: error.message,
+      stack: error.stack,
+      timestamp: new Date().toISOString()
+    });
+  }
 });
 
 module.exports = app;
