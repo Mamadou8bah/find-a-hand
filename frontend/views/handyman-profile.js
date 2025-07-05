@@ -147,7 +147,7 @@ class HandymanProfile {
     // Display profile image
     const imageElement = document.getElementById('handymanImage');
     if (imageElement && this.handyman.profileImage) {
-      imageElement.src = `${CONFIG.API_BASE_URL.replace('/api', '')}/${this.handyman.profileImage}`;
+      imageElement.src = `${CONFIG.API_BASE_URL}/${this.handyman.profileImage}`;
       console.log('Setting profile image:', imageElement.src);
     } else if (imageElement) {
       imageElement.src = 'https://via.placeholder.com/140x140/f7931e/ffffff?text=Profile';

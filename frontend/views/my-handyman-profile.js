@@ -184,6 +184,10 @@ class MyHandymanProfile {
         const profileImage = document.getElementById('profileImage');
         if (this.handyman.profileImage) {
             profileImage.src = `${CONFIG.API_BASE_URL}/${this.handyman.profileImage}`;
+            console.log('Setting profile image:', profileImage.src);
+        } else {
+            profileImage.src = '../public/images/handyman-profiles/default-profile.jpg';
+            console.log('Using default profile image');
         }
 
         // Update profile info

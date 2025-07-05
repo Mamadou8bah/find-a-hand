@@ -206,6 +206,7 @@
       ? `${CONFIG.API_BASE_URL}/${handyman.profileImage}`
       : './public/images/handyman-profiles/default-profile.jpg';
     img.alt = `${handyman.firstName} ${handyman.lastName}`;
+    console.log('Setting profile image:', img.src);
 
    
     document.querySelector('.handyman-name').textContent = `${handyman.firstName} ${handyman.lastName}`;

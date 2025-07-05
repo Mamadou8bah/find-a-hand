@@ -157,7 +157,7 @@ async function loadHandymen() {
         <a href="handyman-profile.html?handymanId=${handyman._id}" class="handyman-link">
           <div class="handyman-near-you">
             <div class="handyman-image">
-              <img src="${handyman.profileImage ? CONFIG.API_BASE_URL + '/' + handyman.profileImage : 'public/images/handyman-profiles/profile1.jpeg'}" alt="${handyman.firstName} ${handyman.lastName}">
+              <img src="${handyman.profileImage ? CONFIG.API_BASE_URL + '/' + handyman.profileImage : './public/images/handyman-profiles/profile1.jpeg'}" alt="${handyman.firstName} ${handyman.lastName}">
             </div>
             <div class="handyman-details">
               <p class="handyman-name">${handyman.firstName} ${handyman.lastName}</p>
