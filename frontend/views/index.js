@@ -142,10 +142,14 @@ async function loadHandymen() {
     limitedHandymen.forEach(handyman => {
      
       let stars = '';
+      const rating = handyman.rating || 0; // Ensure rating is a number
+      
+      console.log(`Handyman ${handyman.firstName} ${handyman.lastName}: rating = ${handyman.rating}, normalized = ${rating}`);
+      
       for (let i = 1; i <= 5; i++) {
-        if (handyman.rating >= i) {
+        if (rating >= i) {
           stars += '<i class="fas fa-star" style="color: orange;"></i>';
-        } else if (handyman.rating >= i - 0.5) {
+        } else if (rating >= i - 0.5) {
           stars += '<i class="fas fa-star-half-alt" style="color: orange;"></i>';
         } else {
           stars += '<i class="far fa-star" style="color: orange;"></i>';
@@ -163,7 +167,7 @@ async function loadHandymen() {
               <p class="handyman-name">${handyman.firstName} ${handyman.lastName}</p>
               <span class="handyman-rating">
                 ${stars}
-                <span>${handyman.ratingCount || 0}</span>
+                <span>${handyman.ratingCount > 0 ? handyman.ratingCount : 'No reviews'}</span>
               </span>
               <p class="handyman-skill">${handyman.profession || handyman.job || 'No profession set'}</p>
               <p class="handyman-location">${handyman.location || 'Location not specified'}</p>
