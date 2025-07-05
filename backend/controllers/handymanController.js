@@ -82,15 +82,22 @@ exports.login = async (req, res) => {
   const { email, password } = req.body;
 
   try {
+    console.log('=== handyman login attempt ===');
+    console.log('Email:', email);
+    
     // Check if handyman exists
     let handyman = await Handyman.findOne({ email });
     if (!handyman) {
+      console.log('Handyman not found for email:', email);
       return res.status(400).json({ message: 'Invalid credentials' });
     }
+
+    console.log('Handyman found:', handyman._id);
 
     // Check password
     const isMatch = await handyman.comparePassword(password);
     if (!isMatch) {
+      console.log('Password mismatch for handyman:', handyman._id);
       return res.status(400).json({ message: 'Invalid credentials' });
     }
 
@@ -108,7 +115,12 @@ exports.login = async (req, res) => {
     res.json({ token, message: 'Login successful' });
   } catch (err) {
     console.error('Login error:', err.message);
-    res.status(500).send('Server error');
+    console.error('Error stack:', err.stack);
+    res.status(500).json({ 
+      message: 'Server error', 
+      error: err.message,
+      timestamp: new Date().toISOString()
+    });
   }
 };
 
@@ -155,7 +167,12 @@ exports.getProfile = async (req, res) => {
     res.json(handyman);
   } catch (err) {
     console.error('getProfile error:', err.message);
-    res.status(500).send('Server error');
+    console.error('Error stack:', err.stack);
+    res.status(500).json({ 
+      message: 'Server error', 
+      error: err.message,
+      timestamp: new Date().toISOString()
+    });
   }
 };
 
@@ -204,7 +221,12 @@ exports.updateProfile = async (req, res) => {
     res.json(handyman);
   } catch (err) {
     console.error('Update profile error:', err.message);
-    res.status(500).send('Server error');
+    console.error('Error stack:', err.stack);
+    res.status(500).json({ 
+      message: 'Server error', 
+      error: err.message,
+      timestamp: new Date().toISOString()
+    });
   }
 };
 

@@ -179,6 +179,33 @@ app.get('/env-check', (req, res) => {
   });
 });
 
+// Handyman login test endpoint
+app.get('/handyman-login-test', async (req, res) => {
+  try {
+    const Handyman = require('./backend/models/HandymanModel');
+    const jwt = require('jsonwebtoken');
+    
+    // Check if we can find any handymen
+    const handymenCount = await Handyman.countDocuments();
+    
+    // Check if JWT_SECRET is available
+    const jwtSecret = process.env.JWT_SECRET;
+    
+    res.status(200).json({
+      message: 'Handyman login test',
+      handymenCount: handymenCount,
+      jwtSecretAvailable: !!jwtSecret,
+      timestamp: new Date().toISOString()
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: 'Handyman login test failed',
+      error: error.message,
+      timestamp: new Date().toISOString()
+    });
+  }
+});
+
 // Health check endpoint
 app.get('/health', (req, res) => {
   const healthCheck = {
