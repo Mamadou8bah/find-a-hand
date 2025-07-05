@@ -195,15 +195,15 @@
   }
 
   try {
-    const response = await fetch(`http://localhost:5000/api/handymen/${handymanId}`);
+    const response = await fetch(`${CONFIG.API_BASE_URL}/api/handymen/${handymanId}`);
     if (!response.ok) throw new Error('Failed to fetch handyman data');
     const handyman = await response.json();
 
    
     const img = document.querySelector('.image-container img');
     img.src = handyman.profileImage
-      ? `http://localhost:5000/${handyman.profileImage}`
-      : '../public/images/handyman-profiles/default-profile.jpg';
+      ? `${CONFIG.API_BASE_URL}/${handyman.profileImage}`
+      : 'public/images/handyman-profiles/default-profile.jpg';
     img.alt = `${handyman.firstName} ${handyman.lastName}`;
 
    

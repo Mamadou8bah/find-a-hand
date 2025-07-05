@@ -129,7 +129,7 @@ async function loadHandymen() {
    
     container.innerHTML = '<div style="text-align: center; padding: 20px; color: #666;">Loading handymen...</div>';
     
-    const response = await fetch('http://localhost:5000/api/handymen');
+    const response = await fetch(`${CONFIG.API_BASE_URL}/api/handymen`);
     if (!response.ok) throw new Error('Failed to fetch handymen');
 
     const handymen = await response.json();
@@ -157,7 +157,7 @@ async function loadHandymen() {
         <a href="handyman-profile.html?handymanId=${handyman._id}" class="handyman-link">
           <div class="handyman-near-you">
             <div class="handyman-image">
-              <img src="${handyman.profileImage ? 'http://localhost:5000/' + handyman.profileImage : '../public/images/handyman-profiles/default-profile.jpg'}" alt="${handyman.firstName} ${handyman.lastName}">
+              <img src="${handyman.profileImage ? CONFIG.API_BASE_URL + '/' + handyman.profileImage : 'public/images/handyman-profiles/profile1.jpeg'}" alt="${handyman.firstName} ${handyman.lastName}">
             </div>
             <div class="handyman-details">
               <p class="handyman-name">${handyman.firstName} ${handyman.lastName}</p>

@@ -1,8 +1,8 @@
 document.getElementById('signup-form').addEventListener('submit',async (e)=>{
     e.preventDefault();
 
-    const firstName=document.getElementById('first-name').value.trim()
-    const lastName=document.getElementById('last-name').value.trim()
+    const firstName=document.getElementById('firstName').value.trim()
+    const lastName=document.getElementById('lastName').value.trim()
     const email=document.getElementById('email').value.trim()
     const phone=document.getElementById('phone').value.trim()
     const location=document.getElementById('location').value.trim()
@@ -29,7 +29,7 @@ document.getElementById('signup-form').addEventListener('submit',async (e)=>{
         }
 
         try{
-            const response=await fetch('http://localhost:5000/api/users/register',{
+            const response=await fetch(`${CONFIG.API_BASE_URL}/api/users/register`,{
                 method:'POST',
                 headers:{'Content-Type':'application/json'},
                 body:JSON.stringify(data)
@@ -42,7 +42,7 @@ document.getElementById('signup-form').addEventListener('submit',async (e)=>{
                 localStorage.setItem('token',result.token)
                 
                 // Get user profile
-                const userRes = await fetch('http://localhost:5000/api/users/profile', {
+                const userRes = await fetch(`${CONFIG.API_BASE_URL}/api/users/profile`, {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',
@@ -80,7 +80,7 @@ document.getElementById('signup-form').addEventListener('submit',async (e)=>{
                     
                     window.location.href = './booking.html';
                 } else {
-                    window.location.href = './search-handyman.html';
+                    window.location.href = './customer-dashboard.html';
                 }
             }else{
                  errorPage.innerText=result.message ||"Failed to Create Account"

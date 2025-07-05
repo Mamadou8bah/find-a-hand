@@ -1213,7 +1213,7 @@
     }
 
     try {
-        const response = await fetch('http://localhost:5000/api/users/profile', {
+        const response = await fetch(`${CONFIG.API_BASE_URL}/api/users/profile`, {
             headers: {
                 'Authorization': `Bearer ${token}`,
             }
@@ -1255,7 +1255,7 @@ async function loadUserBookings() {
     }
 
     try {
-        const response = await fetch('http://localhost:5000/api/bookings', {
+        const response = await fetch(`${CONFIG.API_BASE_URL}/api/bookings`, {
             method: 'GET',
             headers: {
                 'Authorization': `Bearer ${token}`,
@@ -1289,7 +1289,7 @@ async function loadUserBookings() {
             const statusClass = statusClassMap[booking.status.toLowerCase()] || 'status-pending';
             async function fetchHandymanById(handymanId) {
             try {
-                const response = await fetch(`http://localhost:5000/api/handymen/${handymanId}`);
+                const response = await fetch(`${CONFIG.API_BASE_URL}/api/handymen/${handymanId}`);
                 if (!response.ok) {
                 throw new Error('Handyman not found');
                 }
@@ -1337,7 +1337,7 @@ async function loadUserBookings() {
   }
 
   try {
-    const res = await fetch(`http://localhost:5000/api/handymen/${handymanId}`);
+    const res = await fetch(`${CONFIG.API_BASE_URL}/api/handymen/${handymanId}`);
     if (!res.ok) throw new Error('Not found');
     const handyman = await res.json();
     td.textContent = handyman.firstName + ' ' + handyman.lastName;
@@ -1364,7 +1364,7 @@ async function cancelBooking(id) {
     }
 
     try {
-        const response = await fetch(`http://localhost:5000/api/bookings/${id}/cancel`, {
+        const response = await fetch(`${CONFIG.API_BASE_URL}/api/bookings/${id}/cancel`, {
             method: 'PUT',
             headers: {
                 'Authorization': `Bearer ${token}`,

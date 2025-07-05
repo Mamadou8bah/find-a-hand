@@ -111,7 +111,7 @@ class FormValidator {
     if (!token) return;
 
     try {
-      const response = await fetch('http://localhost:5000/api/users/profile', {
+      const response = await fetch(`${CONFIG.API_BASE_URL}/api/users/profile`, {
         headers: { Authorization: `Bearer ${token}` }
       });
 
@@ -243,7 +243,7 @@ class FormValidator {
       this.submitButton.textContent = 'Booking...';
       this.submitButton.disabled = true;
 
-      const response = await fetch('http://localhost:5000/api/bookings', {
+      const response = await fetch(`${CONFIG.API_BASE_URL}/api/bookings`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

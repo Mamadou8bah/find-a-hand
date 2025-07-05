@@ -5,7 +5,7 @@ document.querySelector('.login-form').addEventListener('submit', async (e) => {
   const password = document.getElementById('password').value.trim();
 
   try {
-    const response = await fetch('http://localhost:5000/api/users/login', {
+    const response = await fetch(`${CONFIG.API_BASE_URL}/api/users/login`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email, password }),
@@ -23,7 +23,7 @@ document.querySelector('.login-form').addEventListener('submit', async (e) => {
     localStorage.setItem('userType', 'customer');
 
     // Get user profile
-    const userRes = await fetch('http://localhost:5000/api/users/profile', {
+    const userRes = await fetch(`${CONFIG.API_BASE_URL}/api/users/profile`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',

@@ -273,7 +273,7 @@
       try {
         container.innerHTML = '<div class="loading">Loading handymen...</div>';
         
-        const response = await fetch('http://localhost:5000/api/handymen');
+        const response = await fetch(`${CONFIG.API_BASE_URL}/api/handymen`);
         if (!response.ok) throw new Error('Failed to fetch handymen');
         
         allHandymen = await response.json();

@@ -21,12 +21,26 @@ const corsOptions = {
       // Add your production frontend URLs here
       'https://find-a-hand.netlify.app',
       'https://find-a-hand.vercel.app',
-      'https://your-frontend-domain.com' // Replace with your actual frontend domain
+      'https://your-frontend-domain.com', // Replace with your actual frontend domain
+      // Add any Netlify preview URLs
+      'https://*.netlify.app',
+      'https://*.vercel.app'
     ];
     
-    if (allowedOrigins.indexOf(origin) !== -1) {
+    // Check if origin matches any allowed pattern
+    const isAllowed = allowedOrigins.some(allowed => {
+      if (allowed.includes('*')) {
+        // Handle wildcard patterns
+        const pattern = allowed.replace('*', '.*');
+        return new RegExp(pattern).test(origin);
+      }
+      return allowed === origin;
+    });
+    
+    if (isAllowed) {
       callback(null, true);
     } else {
+      console.log('CORS blocked origin:', origin);
       callback(new Error('Not allowed by CORS'));
     }
   },
@@ -37,6 +51,10 @@ const corsOptions = {
 app.use(cors(corsOptions));
 app.use(express.json()); 
 app.use('/uploads', express.static('uploads'));
+
+// Serve static files from frontend directory
+app.use(express.static('frontend'));
+
 app.use('/api/handymen', require('./backend/routes/handymanRoutes'));
 
 app.use('/api/users', userRoutes);
@@ -44,7 +62,60 @@ app.use('/api/bookings', bookingRoutes);
 app.use('/api/customers', customerRoutes);
 
 app.get('/', (req, res) => {
-  res.status(200).send('Find-A-Hand API is running...');
+  res.sendFile(__dirname + '/frontend/views/index.html');
+});
+
+// Serve other HTML pages
+app.get('/login', (req, res) => {
+  res.sendFile(__dirname + '/frontend/views/login.html');
+});
+
+app.get('/signup', (req, res) => {
+  res.sendFile(__dirname + '/frontend/views/signup.html');
+});
+
+app.get('/login-selection', (req, res) => {
+  res.sendFile(__dirname + '/frontend/views/login-selection.html');
+});
+
+app.get('/login-handyman', (req, res) => {
+  res.sendFile(__dirname + '/frontend/views/login-handyman.html');
+});
+
+app.get('/joinHandy', (req, res) => {
+  res.sendFile(__dirname + '/frontend/views/joinHandy.html');
+});
+
+app.get('/search-handyman', (req, res) => {
+  res.sendFile(__dirname + '/frontend/views/search-handyman.html');
+});
+
+app.get('/handyman-profile', (req, res) => {
+  res.sendFile(__dirname + '/frontend/views/handyman-profile.html');
+});
+
+app.get('/booking', (req, res) => {
+  res.sendFile(__dirname + '/frontend/views/booking.html');
+});
+
+app.get('/customer-dashboard', (req, res) => {
+  res.sendFile(__dirname + '/frontend/views/customer-dashboard.html');
+});
+
+app.get('/handyman-dashboard', (req, res) => {
+  res.sendFile(__dirname + '/frontend/views/handyman-dashboard.html');
+});
+
+app.get('/my-handyman-profile', (req, res) => {
+  res.sendFile(__dirname + '/frontend/views/my-handyman-profile.html');
+});
+
+app.get('/view-handymen', (req, res) => {
+  res.sendFile(__dirname + '/frontend/views/view-handymen.html');
+});
+
+app.get('/all-home-projects', (req, res) => {
+  res.sendFile(__dirname + '/frontend/views/all-home-projects.html');
 });
 
 // Test endpoint for deployment verification

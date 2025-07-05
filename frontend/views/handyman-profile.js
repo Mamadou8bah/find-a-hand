@@ -1,48 +1,28 @@
 class HandymanProfile {
   constructor() {
+    this.handymanId = this.getQueryParam('handymanId');
     this.handyman = null;
-    this.handymanId = this.getHandymanIdFromUrl();
-    this.init();
-  }
-
-  getHandymanIdFromUrl() {
-    const urlParams = new URLSearchParams(window.location.search);
-    const handymanId = urlParams.get('handymanId');
+    this.reviews = [];
+    this.currentTab = 'about';
     
-    if (!handymanId) {
-      console.error('No handyman ID in URL parameters');
-      return null;
-    }
-    
-    // Basic validation for MongoDB ObjectId format
-    if (!/^[0-9a-fA-F]{24}$/.test(handymanId)) {
-      console.error('Invalid handyman ID format');
-      return null;
-    }
-    
-    return handymanId;
-  }
-
-  async init() {
-    console.log('Initializing handyman profile page');
     if (!this.handymanId) {
-      console.error('No handyman ID provided');
       this.showError('No handyman ID provided');
       return;
     }
+    
+    this.init();
+  }
 
-    console.log('Handyman ID from URL:', this.handymanId);
+  getQueryParam(param) {
+    return new URLSearchParams(window.location.search).get(param);
+  }
 
-    // Show loading state
-    this.showLoading();
-
+  async init() {
     try {
       await this.loadHandymanData();
       this.setupEventListeners();
-      this.checkUserAuthentication();
-      console.log('Handyman profile page initialized successfully');
     } catch (error) {
-      console.error('Error initializing handyman profile:', error);
+      console.error('Error initializing profile:', error);
       this.showError('Failed to load handyman profile');
     }
   }
@@ -50,7 +30,7 @@ class HandymanProfile {
   async loadHandymanData() {
     console.log('Loading handyman data for ID:', this.handymanId);
     try {
-      const response = await fetch(`${API_BASE_URL}/handymen/${this.handymanId}`);
+      const response = await fetch(`${CONFIG.API_BASE_URL}/api/handymen/${this.handymanId}`);
       console.log('Response status:', response.status);
       
       if (!response.ok) {
@@ -167,7 +147,7 @@ class HandymanProfile {
     // Display profile image
     const imageElement = document.getElementById('handymanImage');
     if (imageElement && this.handyman.profileImage) {
-      imageElement.src = `${API_BASE_URL.replace('/api', '')}/${this.handyman.profileImage}`;
+      imageElement.src = `${CONFIG.API_BASE_URL.replace('/api', '')}/${this.handyman.profileImage}`;
       console.log('Setting profile image:', imageElement.src);
     } else if (imageElement) {
       imageElement.src = 'https://via.placeholder.com/140x140/f7931e/ffffff?text=Profile';
@@ -338,10 +318,10 @@ class HandymanProfile {
     submitBtn.textContent = 'Submitting...';
 
     try {
-      console.log('Submitting review to:', `${API_BASE_URL}/customers/reviews`);
+      console.log('Submitting review to:', `${CONFIG.API_BASE_URL}/customers/reviews`);
       console.log('Review data:', { rating, comment, handymanId: this.handymanId });
       
-      const response = await fetch(`${API_BASE_URL}/customers/reviews`, {
+      const response = await fetch(`${CONFIG.API_BASE_URL}/customers/reviews`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -443,7 +423,7 @@ class HandymanProfile {
       } else if (review.userId && typeof review.userId === 'string') {
         // If userId is just a string ID, try to fetch user data
         try {
-          const userResponse = await fetch(`${API_BASE_URL}/users/${review.userId}`);
+          const userResponse = await fetch(`${CONFIG.API_BASE_URL}/users/${review.userId}`);
           if (userResponse.ok) {
             const userData = await userResponse.json();
             userName = `${userData.firstName} ${userData.lastName}`;

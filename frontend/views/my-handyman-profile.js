@@ -141,7 +141,7 @@ class MyHandymanProfile {
             
             console.log('Token found:', token.substring(0, 20) + '...');
             
-            const response = await fetch('http://localhost:5000/api/handymen/me', {
+            const response = await fetch(`${CONFIG.API_BASE_URL}/api/handymen/me`, {
                 headers: {
                     'Authorization': `Bearer ${token}`,
                     'Content-Type': 'application/json'
@@ -172,7 +172,7 @@ class MyHandymanProfile {
             this.displayReviews();
             this.updateReviewStats();
         } catch (error) {
-            console.error('Error loading profile:', error);
+            console.error('Error loading handyman profile:', error);
             this.showNotification('Failed to load profile: ' + error.message, 'error');
         }
     }
@@ -321,7 +321,7 @@ class MyHandymanProfile {
                 return;
             }
             
-            const response = await fetch('http://localhost:5000/api/handymen/me/bookings', {
+            const response = await fetch(`${CONFIG.API_BASE_URL}/api/handymen/me/bookings`, {
                 headers: {
                     'Authorization': `Bearer ${token}`,
                     'Content-Type': 'application/json'
@@ -485,7 +485,7 @@ class MyHandymanProfile {
 
         try {
             const token = localStorage.getItem('token');
-            const response = await fetch(`http://localhost:5000/api/handymen/me/bookings/${appointmentId}`, {
+            const response = await fetch(`${CONFIG.API_BASE_URL}/api/handymen/me/bookings/${appointmentId}`, {
                 method: 'DELETE',
                 headers: {
                     'Authorization': `Bearer ${token}`,
@@ -519,7 +519,7 @@ class MyHandymanProfile {
 
         try {
             const token = localStorage.getItem('token');
-            const response = await fetch('http://localhost:5000/api/handymen/me', {
+            const response = await fetch(`${CONFIG.API_BASE_URL}/api/handymen/me`, {
                 method: 'PUT',
                 headers: {
                     'Authorization': `Bearer ${token}`,

@@ -44,7 +44,7 @@ async function fetchCurrentUserData() {
   }
   
   try {
-    const res = await fetch('http://localhost:5000/api/handymen/me', {
+    const res = await fetch(`${CONFIG.API_BASE_URL}/api/handymen/me`, {
       headers: { 'Authorization': `Bearer ${token}` }
     });
     
@@ -73,7 +73,7 @@ async function fetchHandymanBookings() {
   if (!token) return [];
 
   try {
-    const res = await fetch('http://localhost:5000/api/handymen/me/bookings', {
+    const res = await fetch(`${CONFIG.API_BASE_URL}/api/handymen/me/bookings`, {
       headers: { 'Authorization': `Bearer ${token}` }
     });
     
@@ -93,9 +93,9 @@ async function updateHeaderAndSidebar(user) {
 
   document.querySelectorAll('.profile-image').forEach(img => {
     if (user.profileImage) {
-      img.src = `http://localhost:5000/${user.profileImage}`;
+      img.src = `${CONFIG.API_BASE_URL}/${user.profileImage}`;
     } else {
-      img.src = '../public/images/handyman-profiles/default-profile.jpg';
+      img.src = 'public/images/handyman-profiles/default-profile.jpg';
     }
   });
   
@@ -250,7 +250,7 @@ function updatePortfolioSection(user) {
     newItem.className = 'portfolio-item';
     newItem.innerHTML = `
       <div class="portfolio-image-container">
-        <img src="http://localhost:5000/${image}" alt="Portfolio item ${index + 1}" class="portfolio-image">
+        <img src="${CONFIG.API_BASE_URL}/${image}" alt="Portfolio item ${index + 1}" class="portfolio-image">
       </div>
       <div class="portfolio-details">
         <h3 class="portfolio-title">Portfolio Item ${index + 1}</h3>
@@ -372,10 +372,10 @@ async function handleBookingAction(bookingId, action, rowElement) {
       bookingIdType: typeof bookingId,
       action,
       status,
-      url: `http://localhost:5000/api/handymen/me/bookings/${bookingId}/status`
+      url: `${CONFIG.API_BASE_URL}/api/handymen/me/bookings/${bookingId}/status`
     });
 
-    const response = await fetch(`http://localhost:5000/api/handymen/me/bookings/${bookingId}/status`, {
+    const response = await fetch(`${CONFIG.API_BASE_URL}/api/handymen/me/bookings/${bookingId}/status`, {
       method: 'PUT',
       headers: { 
         'Content-Type': 'application/json',
@@ -452,7 +452,7 @@ async function saveProfile() {
   formData.append('hourlyRate', hourlyRate);
 
   try {
-    const response = await fetch('http://localhost:5000/api/handymen/me', {
+    const response = await fetch(`${CONFIG.API_BASE_URL}/api/handymen/me`, {
       method: 'PUT',
       headers: {
         'Authorization': `Bearer ${token}`
@@ -502,7 +502,7 @@ async function updatePassword() {
   }
 
   try {
-    const response = await fetch('http://localhost:5000/api/handymen/me/password', {
+    const response = await fetch(`${CONFIG.API_BASE_URL}/api/handymen/me/password`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
