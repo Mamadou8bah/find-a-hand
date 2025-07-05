@@ -154,7 +154,7 @@ async function loadHandymen() {
 
       // Create handyman item
       const handymanHTML = `
-        <a href="handyman-profile.html?handymanId=${handyman._id}" class="handyman-link">
+        <a href="/public/views/handyman-profile.html?handymanId=${handyman._id}" class="handyman-link" data-handyman='${JSON.stringify(handyman)}'>
           <div class="handyman-near-you">
             <div class="handyman-image">
               <img src="${handyman.profileImage ? CONFIG.API_BASE_URL + '/' + handyman.profileImage : './public/images/handyman-profiles/profile1.jpeg'}" alt="${handyman.firstName} ${handyman.lastName}">
@@ -173,6 +173,14 @@ async function loadHandymen() {
       `;
 
       container.insertAdjacentHTML('beforeend', handymanHTML);
+    });
+
+    // Add click event listeners to handyman cards
+    container.querySelectorAll('.handyman-link').forEach(card => {
+      card.addEventListener('click', (e) => {
+        const handymanData = JSON.parse(card.dataset.handyman);
+        localStorage.setItem('handyman', JSON.stringify(handymanData));
+      });
     });
 
   } catch (error) {
