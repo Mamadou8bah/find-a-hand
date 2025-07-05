@@ -254,6 +254,7 @@
     <div class="loading">Loading handymen...</div>
   </div>
 
+  <script src="./config.js"></script>
   <script>
     let allHandymen = [];
     let filteredHandymen = [];
@@ -301,7 +302,7 @@
         return `
           <a href="/public/views/handyman-profile.html?handymanId=${handyman._id}" class="plumber-card" data-handyman='${JSON.stringify(handyman)}'>
             <div class="plumber-img">
-              <img src="${handyman.profileImage ? 'http://localhost:5000/' + handyman.profileImage : './public/images/handyman-profiles/default-profile.jpg'}" 
+              <img src="${handyman.profileImage ? CONFIG.API_BASE_URL + '/' + handyman.profileImage : './public/images/handyman-profiles/default-profile.jpg'}" 
                    alt="${handyman.firstName} ${handyman.lastName}" class="customer-profile">
             </div>
             <div class="plumber-info">
@@ -471,7 +472,6 @@
       }, 3000);
     }
   </script>
-  <script src="./config.js"></script>
 
 </body>
 </html>
