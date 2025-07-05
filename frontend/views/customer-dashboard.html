@@ -1366,7 +1366,7 @@ async function cancelBooking(id) {
 
     try {
         const response = await fetch(`${CONFIG.API_BASE_URL}/api/bookings/${id}/cancel`, {
-            method: 'PUT',
+            method: 'POST',
             headers: {
                 'Authorization': `Bearer ${token}`,
                 'Content-Type': 'application/json',
@@ -1374,14 +1374,18 @@ async function cancelBooking(id) {
         });
 
         if (!response.ok) {
-            throw new Error('Failed to cancel booking');
+            const errorData = await response.json();
+            throw new Error(errorData.message || 'Failed to cancel booking');
         }
 
-        alert('Booking cancelled successfully');
-        loadUserBookings(); 
+        const result = await response.json();
+        alert(result.message || 'Booking cancelled successfully');
+        
+        // Reload bookings to reflect the change
+        await loadUserBookings(); 
     } catch (error) {
-        console.error(error);
-        alert('Failed to cancel booking');
+        console.error('Cancel booking error:', error);
+        alert(error.message || 'Failed to cancel booking');
     }
 }
 
