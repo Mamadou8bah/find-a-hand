@@ -203,9 +203,9 @@ Your application will be live and ready to connect handymen with customers world
 ## ✅ COMPLETED FIXES
 
 ### 1. Asset Path Fixes
-- [x] **Fixed all HTML asset links**: Changed `./public/` and `public/` to `/public/` in all HTML files
-- [x] **Updated CSS references**: All CSS files now use absolute paths (`/public/css/...`)
-- [x] **Updated image references**: All images now use absolute paths (`/public/images/...`)
+- [x] **Fixed all HTML asset links**: Changed all paths to use `/public/` (with leading slash)
+- [x] **Updated CSS references**: All CSS files now use `/public/css/...`
+- [x] **Updated image references**: All images now use `/public/images/...`
 - [x] **Fixed JavaScript references**: Removed `./` prefixes and duplicate references
 
 ### 2. JavaScript API URL Fixes
@@ -218,9 +218,10 @@ Your application will be live and ready to connect handymen with customers world
 - [x] **Static asset serving**: Configured `/public/*` redirects
 - [x] **Multi-page app support**: Each route now maps to its corresponding HTML file
 - [x] **Fallback routing**: Added SPA-like fallback for unmatched routes
+- [x] **Publish directory**: Set to `frontend` (not `frontend/views`)
 
 ### 4. File Structure Verification
-- [x] **All HTML files exist**: 15 HTML files in `frontend/views/`
+- [x] **All HTML files exist**: 15 HTML files in `frontend/views/` + 1 in `frontend/`
 - [x] **All CSS files exist**: 6 CSS files in `frontend/public/css/`
 - [x] **All JS files exist**: 8 JS files in `frontend/views/`
 - [x] **All images exist**: Images in `frontend/public/images/`
@@ -245,7 +246,7 @@ Your Express backend must be deployed separately since Netlify only serves stati
 1. **Connect your GitHub repository to Netlify**
 2. **Build settings:**
    - Build command: `echo "No build required"`
-   - Publish directory: `frontend/views`
+   - Publish directory: `frontend`
 3. **Environment variables:**
    - No environment variables needed for frontend (all config is in config.js)
 
@@ -261,7 +262,7 @@ Your Express backend must be deployed separately since Netlify only serves stati
 - [ ] API_BASE_URL in config.js points to your live backend
 - [ ] All static assets are in correct locations
 - [ ] No hardcoded localhost URLs remain
-- [ ] All file paths use absolute references (`/public/...`)
+- [ ] All file paths use `/public/...` (with leading slash)
 
 ### After Deployment
 - [ ] Homepage loads correctly
@@ -296,26 +297,28 @@ Your Express backend must be deployed separately since Netlify only serves stati
 
 ```
 find-a-hand/
-├── frontend/
-│   ├── views/           # Netlify publish directory
-│   │   ├── *.html      # 15 HTML files
-│   │   ├── *.js        # 8 JS files
-│   │   └── config.js   # API configuration
-│   └── public/         # Static assets
-│       ├── css/        # 6 CSS files
-│       └── images/     # All images and icons
-├── backend/            # Deploy separately
-├── netlify.toml       # Netlify configuration
-└── package.json       # Backend dependencies
+├── frontend/              # Netlify publish directory
+│   ├── index.html        # Homepage
+│   ├── views/            # Other HTML pages
+│   │   ├── *.html       # 15 HTML files
+│   │   ├── *.js         # 8 JS files
+│   │   └── config.js    # API configuration
+│   └── public/          # Static assets
+│       ├── css/         # 6 CSS files
+│       └── images/      # All images and icons
+├── backend/             # Deploy separately
+├── netlify.toml        # Netlify configuration
+└── package.json        # Backend dependencies
 ```
 
 ## 🎯 READY FOR DEPLOYMENT
 
 Your project is now **production-ready** for Netlify deployment with:
-- ✅ All asset paths fixed
+- ✅ All asset paths fixed to use `/public/...`
 - ✅ All API URLs configured
 - ✅ Netlify configuration optimized
 - ✅ Multi-page routing configured
 - ✅ Static asset serving configured
+- ✅ Publish directory set to `frontend`
 
 **Next step**: Deploy your backend to Railway/Render/Heroku, then deploy frontend to Netlify! 

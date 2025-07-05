@@ -1,76 +1,76 @@
 [build]
-  publish = "frontend/views"
+  publish = "frontend"
   base = "."
 
 # Custom redirects for each HTML page
 [[redirects]]
   from = "/login"
-  to = "/login.html"
+  to = "/views/login.html"
   status = 200
 
 [[redirects]]
   from = "/signup"
-  to = "/signup.html"
+  to = "/views/signup.html"
   status = 200
 
 [[redirects]]
   from = "/login-selection"
-  to = "/login-selection.html"
+  to = "/views/login-selection.html"
   status = 200
 
 [[redirects]]
   from = "/login-handyman"
-  to = "/login-handyman.html"
+  to = "/views/login-handyman.html"
   status = 200
 
 [[redirects]]
   from = "/joinHandy"
-  to = "/joinHandy.html"
+  to = "/views/joinHandy.html"
   status = 200
 
 [[redirects]]
   from = "/search-handyman"
-  to = "/search-handyman.html"
+  to = "/views/search-handyman.html"
   status = 200
 
 [[redirects]]
   from = "/handyman-profile"
-  to = "/handyman-profile.html"
+  to = "/views/handyman-profile.html"
   status = 200
 
 [[redirects]]
   from = "/booking"
-  to = "/booking.html"
+  to = "/views/booking.html"
   status = 200
 
 [[redirects]]
   from = "/customer-dashboard"
-  to = "/customer-dashboard.html"
+  to = "/views/customer-dashboard.html"
   status = 200
 
 [[redirects]]
   from = "/handyman-dashboard"
-  to = "/handyman-dashboard.html"
+  to = "/views/handyman-dashboard.html"
   status = 200
 
 [[redirects]]
   from = "/my-handyman-profile"
-  to = "/my-handyman-profile.html"
+  to = "/views/my-handyman-profile.html"
   status = 200
 
 [[redirects]]
   from = "/view-handymen"
-  to = "/view-handymen.html"
+  to = "/views/view-handymen.html"
   status = 200
 
 [[redirects]]
   from = "/all-home-projects"
-  to = "/all-home-projects.html"
+  to = "/views/all-home-projects.html"
   status = 200
 
 [[redirects]]
   from = "/debug"
-  to = "/debug.html"
+  to = "/views/debug.html"
   status = 200
 
 # Serve static assets from public directory

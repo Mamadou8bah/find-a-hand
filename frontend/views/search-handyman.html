@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="stylesheet" href="/public/css/search-handyman.css">
+  <link rel="stylesheet" href="./public/css/search-handyman.css">
   <title>Findahand - Search Handymen</title>
   <style>
     /* Enhanced filtering styles while keeping original design */
@@ -225,12 +225,12 @@
           <input type="text" id="searchInput" class="search-input search-text" placeholder="What can we help you with ?" />
           <div class="divider"></div>
           <div class="location-input">
-            <span class="location-icon"><img class="location" src="/public/images/icons/location-icon.svg" alt=""></span>
+            <span class="location-icon"><img class="location" src="./public/images/icons/location-icon.svg" alt=""></span>
             <input type="text" id="locationInput" class="search-input location-text" placeholder="Enter Location" />
           </div>
         </div>
         <button class="search-button" id="searchBtn">
-          <img src="/public/images/icons/search-icon.svg" alt="">
+          <img src="./public/images/icons/search-icon.svg" alt="">
         </button>
       </div>
     </div>
@@ -301,7 +301,7 @@
         return `
           <a href="handyman-profile.html?handymanId=${handyman._id}" class="plumber-card" data-handyman='${JSON.stringify(handyman)}'>
             <div class="plumber-img">
-              <img src="${handyman.profileImage ? 'http://localhost:5000/' + handyman.profileImage : '/public/images/handyman-profiles/default-profile.jpg'}" 
+              <img src="${handyman.profileImage ? 'http://localhost:5000/' + handyman.profileImage : './public/images/handyman-profiles/default-profile.jpg'}" 
                    alt="${handyman.firstName} ${handyman.lastName}" class="customer-profile">
             </div>
             <div class="plumber-info">
