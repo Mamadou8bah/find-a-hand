@@ -31,6 +31,7 @@ const corsOptions = {
     // Allow specific production domains
     const allowedDomains = [
       'https://find-a-hand.netlify.app',
+      'https://findahand.netlify.app',
       'https://find-a-hand.vercel.app',
       'https://golden-gaufre-857914.netlify.app'
     ];
