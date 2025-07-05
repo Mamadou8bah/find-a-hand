@@ -266,6 +266,7 @@ class HandymanProfile {
     if (viewReviewsBtn) {
       viewReviewsBtn.addEventListener('click', () => {
         this.showReviewsTab();
+        this.checkUserAuthentication();
       });
     }
 
@@ -285,10 +286,28 @@ class HandymanProfile {
     const reviewFormContainer = document.getElementById('reviewFormContainer');
     const reviewsSection = document.querySelector('#reviews .reviews-section');
 
+    // Remove any existing prompts
+    const existingPrompts = reviewsSection.querySelectorAll('.login-prompt');
+    existingPrompts.forEach(prompt => prompt.remove());
+
     if (token && userType === 'customer') {
       // Customer is logged in, show review form
       if (reviewFormContainer) {
         reviewFormContainer.style.display = 'block';
+      }
+      
+      // Add a "Leave Review" button if not already present
+      if (!document.getElementById('leaveReviewBtn')) {
+        const leaveReviewBtn = document.createElement('button');
+        leaveReviewBtn.id = 'leaveReviewBtn';
+        leaveReviewBtn.className = 'btn btn-primary';
+        leaveReviewBtn.innerHTML = '<i class="fas fa-star"></i> Leave a Review';
+        leaveReviewBtn.addEventListener('click', () => {
+          if (reviewFormContainer) {
+            reviewFormContainer.style.display = reviewFormContainer.style.display === 'none' ? 'block' : 'none';
+          }
+        });
+        reviewsSection.insertBefore(leaveReviewBtn, reviewsSection.firstChild);
       }
     } else if (token && userType === 'handyman') {
       // Handyman is logged in, show message that they can't review themselves
@@ -296,7 +315,14 @@ class HandymanProfile {
         const handymanPrompt = document.createElement('div');
         handymanPrompt.className = 'login-prompt';
         handymanPrompt.innerHTML = `
-          <p>Handymen cannot review themselves. Please <a href="login-selection.html">log in as a customer</a> to leave a review.</p>
+          <div style="background: #fff3cd; border: 1px solid #ffeaa7; padding: 15px; border-radius: 8px; margin-bottom: 20px;">
+            <p style="margin: 0; color: #856404;">
+              <i class="fas fa-info-circle"></i> 
+              Handymen cannot review themselves. Please 
+              <a href="login-selection.html" style="color: #f7931e; text-decoration: underline;">log in as a customer</a> 
+              to leave a review.
+            </p>
+          </div>
         `;
         reviewsSection.insertBefore(handymanPrompt, reviewsSection.firstChild);
       }
@@ -306,7 +332,14 @@ class HandymanProfile {
         const loginPrompt = document.createElement('div');
         loginPrompt.className = 'login-prompt';
         loginPrompt.innerHTML = `
-          <p>Please <a href="login-selection.html">log in as a customer</a> to leave a review for this handyman.</p>
+          <div style="background: #d1ecf1; border: 1px solid #bee5eb; padding: 15px; border-radius: 8px; margin-bottom: 20px;">
+            <p style="margin: 0; color: #0c5460;">
+              <i class="fas fa-user-lock"></i> 
+              Please 
+              <a href="login-selection.html" style="color: #f7931e; text-decoration: underline;">log in as a customer</a> 
+              to leave a review for this handyman.
+            </p>
+          </div>
         `;
         reviewsSection.insertBefore(loginPrompt, reviewsSection.firstChild);
       }
@@ -348,10 +381,10 @@ class HandymanProfile {
     submitBtn.textContent = 'Submitting...';
 
     try {
-      console.log('Submitting review to:', `${CONFIG.API_BASE_URL}/customers/reviews`);
+      console.log('Submitting review to:', `${CONFIG.API_BASE_URL}/api/handymen/reviews`);
       console.log('Review data:', { rating, comment, handymanId: this.handymanId });
       
-      const response = await fetch(`${CONFIG.API_BASE_URL}/customers/reviews`, {
+      const response = await fetch(`${CONFIG.API_BASE_URL}/api/handymen/reviews`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -403,6 +436,14 @@ class HandymanProfile {
 
     const messageDiv = document.createElement('div');
     messageDiv.className = `review-message ${type}`;
+    messageDiv.style.cssText = `
+      padding: 10px 15px;
+      margin-bottom: 15px;
+      border-radius: 5px;
+      font-weight: 500;
+      ${type === 'success' ? 'background: #d4edda; color: #155724; border: 1px solid #c3e6cb;' : ''}
+      ${type === 'error' ? 'background: #f8d7da; color: #721c24; border: 1px solid #f5c6cb;' : ''}
+    `;
     messageDiv.textContent = message;
     form.insertBefore(messageDiv, form.firstChild);
 
@@ -420,6 +461,9 @@ class HandymanProfile {
       reviewsTab.classList.remove('hidden');
       // Scroll to reviews section
       reviewsTab.scrollIntoView({ behavior: 'smooth' });
+      
+      // Check authentication and show/hide review form accordingly
+      this.checkUserAuthentication();
     }
   }
 

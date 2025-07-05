@@ -726,4 +726,30 @@ body {
   .review-comment {
     font-size: 14px;
   }
+}
+
+/* Leave Review Button */
+#leaveReviewBtn {
+  background: #f7931e;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+#leaveReviewBtn:hover {
+  background: #e79004;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(247, 147, 30, 0.3);
+}
+
+#leaveReviewBtn i {
+  font-size: 14px;
 } 
