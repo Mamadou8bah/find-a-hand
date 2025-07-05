@@ -299,7 +299,7 @@
 
       container.innerHTML = filteredHandymen.map(handyman => {
         return `
-          <a href="handyman-profile.html?handymanId=${handyman._id}" class="plumber-card" data-handyman='${JSON.stringify(handyman)}'>
+          <a href="/public/views/handyman-profile.html?handymanId=${handyman._id}" class="plumber-card" data-handyman='${JSON.stringify(handyman)}'>
             <div class="plumber-img">
               <img src="${handyman.profileImage ? 'http://localhost:5000/' + handyman.profileImage : './public/images/handyman-profiles/default-profile.jpg'}" 
                    alt="${handyman.firstName} ${handyman.lastName}" class="customer-profile">

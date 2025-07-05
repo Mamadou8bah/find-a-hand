@@ -7,7 +7,7 @@ window.addEventListener('DOMContentLoaded', () => {
     if (handyman._id) {
       localStorage.setItem('pendingHandyman', JSON.stringify(handyman));
     }
-    window.location.href = './login-selection.html';
+    window.location.href = '/public/views/login-selection.html';
     return;
   }
   new FormValidator();
@@ -63,7 +63,7 @@ class FormValidator {
       if (handyman._id) {
         localStorage.setItem('pendingHandyman', JSON.stringify(handyman));
       }
-      window.location.href = './login-selection.html';
+      window.location.href = '/public/views/login-selection.html';
       return;
     }
 
@@ -76,7 +76,7 @@ class FormValidator {
       if (handyman._id) {
         localStorage.setItem('pendingHandyman', JSON.stringify(handyman));
       }
-      window.location.href = './login-selection.html';
+      window.location.href = '/public/views/login-selection.html';
       return;
     }
 
@@ -151,7 +151,7 @@ class FormValidator {
           localStorage.setItem('pendingHandyman', JSON.stringify(handyman));
         }
         alert('Please login to make a booking.');
-        window.location.href = './login.html';
+        window.location.href = '/public/views/login.html';
         return;
       }
 
@@ -263,7 +263,7 @@ class FormValidator {
         localStorage.removeItem('handyman');
         localStorage.removeItem('pendingHandyman');
        
-        window.location.href = './index.html';
+        window.location.href = '/public/index.html';
       } else {
         alert(data.message || 'Failed to create booking');
         this.submitButton.textContent = 'Book Now';

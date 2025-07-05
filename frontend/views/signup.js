@@ -78,9 +78,9 @@ document.getElementById('signup-form').addEventListener('submit',async (e)=>{
                     window.location.href = redirectUrl;
                 } else if (pendingHandyman) {
                     
-                    window.location.href = './booking.html';
+                    window.location.href = '/public/views/booking.html';
                 } else {
-                    window.location.href = './customer-dashboard.html';
+                    window.location.href = '/public/views/customer-dashboard.html';
                 }
             }else{
                  errorPage.innerText=result.message ||"Failed to Create Account"

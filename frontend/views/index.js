@@ -59,7 +59,7 @@ function performSearch() {
   
  
   setTimeout(() => {
-    window.location.href = 'search-handyman.html';
+    window.location.href = '/public/views/search-handyman.html';
   }, 1000);
 }
 
@@ -235,7 +235,7 @@ document.addEventListener('DOMContentLoaded', function() {
       showSearchSuccess(`Searching for ${serviceName} services...`);
       
       setTimeout(() => {
-        window.location.href = 'search-handyman.html';
+        window.location.href = '/public/views/search-handyman.html';
       }, 800);
     });
   });
@@ -252,7 +252,7 @@ document.addEventListener('DOMContentLoaded', function() {
       showSearchSuccess(`Searching for ${projectTitle}...`);
       
       setTimeout(() => {
-        window.location.href = 'search-handyman.html';
+        window.location.href = '/public/views/search-handyman.html';
       }, 800);
     });
   });

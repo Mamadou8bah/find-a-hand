@@ -1,6 +1,6 @@
 [build]
   publish = "frontend"
-  base = "."
+  command = ""
 
 # Custom redirects for each HTML page
 [[redirects]]
@@ -75,8 +75,23 @@
 
 # Serve static assets from public directory
 [[redirects]]
+  from = "/"
+  to = "/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/views/*"
+  to = "/views/:splat"
+  status = 200
+
+[[redirects]]
+  from = "/public/views/*"
+  to = "/views/:splat"
+  status = 200
+
+[[redirects]]
   from = "/public/*"
-  to = "/public/:splat"
+  to = "/:splat"
   status = 200
 
 # Fallback for SPA-like behavior (optional)

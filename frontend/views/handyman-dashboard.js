@@ -18,7 +18,7 @@ window.showSection = function(sectionId) {
 window.logout = function() {
   if (confirm('Are you sure you want to logout?')) {
     localStorage.clear();
-    window.location.href = './login-handyman.html';
+    window.location.href = '/public/views/login-handyman.html';
   }
 };
 
@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', async function() {
   const token = localStorage.getItem('token');
   if (!token) {
     alert('Please log in to access your dashboard.');
-    window.location.href = './login-handyman.html';
+    window.location.href = '/public/views/login-handyman.html';
     return;
   }
 
@@ -39,7 +39,7 @@ async function fetchCurrentUserData() {
   const token = localStorage.getItem('token');
   if (!token) {
     alert('Please log in.');
-    window.location.href = './login-handyman.html';
+    window.location.href = '/public/views/login-handyman.html';
     return null;
   }
   
@@ -52,7 +52,7 @@ async function fetchCurrentUserData() {
       if (res.status === 401) {
         localStorage.removeItem('token');
         alert('Session expired. Please login again.');
-        window.location.href = './login-handyman.html';
+        window.location.href = '/public/views/login-handyman.html';
         return null;
       }
       throw new Error('Failed to fetch user data');
@@ -63,7 +63,7 @@ async function fetchCurrentUserData() {
     console.error('Error fetching user data:', err);
     alert('Failed to load user data. Please login again.');
     localStorage.removeItem('token');
-    window.location.href = './login-handyman.html';
+    window.location.href = '/public/views/login-handyman.html';
     return null;
   }
 }
@@ -344,7 +344,7 @@ async function handleBookingAction(bookingId, action, rowElement) {
   const token = localStorage.getItem('token');
   if (!token) {
     alert('Please login again.');
-    window.location.href = './login-handyman.html';
+    window.location.href = '/public/views/login-handyman.html';
     return;
   }
 
@@ -419,7 +419,7 @@ async function saveProfile() {
   const token = localStorage.getItem('token');
   if (!token) {
     alert('Please login again.');
-    window.location.href = './login-handyman.html';
+    window.location.href = '/public/views/login-handyman.html';
     return;
   }
 
@@ -478,7 +478,7 @@ async function updatePassword() {
   const token = localStorage.getItem('token');
   if (!token) {
     alert('Please login again.');
-    window.location.href = './login-handyman.html';
+    window.location.href = '/public/views/login-handyman.html';
     return;
   }
 

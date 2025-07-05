@@ -117,7 +117,7 @@ class MyHandymanProfile {
         const token = localStorage.getItem('token');
         if (!token) {
             this.showNotification('Please login to access your profile', 'error');
-            window.location.href = './login-selection.html';
+            window.location.href = '/public/views/login-selection.html';
             return;
         }
 
@@ -135,7 +135,7 @@ class MyHandymanProfile {
             if (!token) {
                 console.log('No token found in localStorage');
                 this.showNotification('Please login to access your profile', 'error');
-                window.location.href = './login-selection.html';
+                window.location.href = '/public/views/login-selection.html';
                 return;
             }
             
@@ -155,7 +155,7 @@ class MyHandymanProfile {
                     console.log('Token expired or invalid');
                     localStorage.removeItem('token');
                     this.showNotification('Session expired. Please login again.', 'error');
-                    window.location.href = './login-selection.html';
+                    window.location.href = '/public/views/login-selection.html';
                     return;
                 }
                 throw new Error(`HTTP ${response.status}: ${response.statusText}`);
@@ -335,7 +335,7 @@ class MyHandymanProfile {
                     console.log('Token expired for appointments');
                     localStorage.removeItem('token');
                     this.showNotification('Session expired. Please login again.', 'error');
-                    window.location.href = './login-selection.html';
+                    window.location.href = '/public/views/login-selection.html';
                     return;
                 }
                 throw new Error(`HTTP ${response.status}: ${response.statusText}`);

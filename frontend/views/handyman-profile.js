@@ -200,7 +200,7 @@ class HandymanProfile {
     if (bookNowBtn) {
       bookNowBtn.addEventListener('click', () => {
         localStorage.setItem('handyman', JSON.stringify(this.handyman));
-        window.location.href = `booking.html?handymanId=${this.handyman._id}`;
+        window.location.href = `/public/views/booking.html?handymanId=${this.handyman._id}`;
       });
       console.log('Booking button set up');
     }
