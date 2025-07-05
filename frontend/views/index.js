@@ -295,8 +295,8 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 
-const style = document.createElement('style');
-style.textContent = `
+const customStyle = document.createElement('style');
+customStyle.textContent = `
   @keyframes shake {
     0%, 100% { transform: translateX(0); }
     25% { transform: translateX(-5px); }
@@ -326,5 +326,5 @@ style.textContent = `
     transition: border-color 0.3s ease;
   }
 `;
-document.head.appendChild(style);
+document.head.appendChild(customStyle);
 
