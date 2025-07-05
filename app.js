@@ -372,4 +372,58 @@ app.post('/test-handyman-login', async (req, res) => {
   }
 });
 
+// Error handling middleware
+app.use((err, req, res, next) => {
+  console.error('Error:', err);
+  
+  // Handle multer errors
+  if (err.code === 'LIMIT_FILE_SIZE') {
+    return res.status(400).json({ 
+      message: 'File too large. Maximum size is 5MB.' 
+    });
+  }
+  
+  if (err.code === 'LIMIT_UNEXPECTED_FILE') {
+    return res.status(400).json({ 
+      message: 'Unexpected file field.' 
+    });
+  }
+  
+  // Handle validation errors
+  if (err.name === 'ValidationError') {
+    const errors = Object.values(err.errors).map(error => error.message);
+    return res.status(400).json({ 
+      message: 'Validation failed', 
+      errors 
+    });
+  }
+  
+  // Handle JWT errors
+  if (err.name === 'JsonWebTokenError') {
+    return res.status(401).json({ 
+      message: 'Invalid token' 
+    });
+  }
+  
+  if (err.name === 'TokenExpiredError') {
+    return res.status(401).json({ 
+      message: 'Token expired' 
+    });
+  }
+  
+  // Default error
+  res.status(500).json({ 
+    message: 'Internal server error',
+    ...(process.env.NODE_ENV === 'development' && { error: err.message })
+  });
+});
+
+// 404 handler
+app.use('*', (req, res) => {
+  res.status(404).json({ 
+    message: 'Route not found',
+    path: req.originalUrl 
+  });
+});
+
 module.exports = app;

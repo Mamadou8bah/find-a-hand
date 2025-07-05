@@ -22,17 +22,19 @@
   "author": "Find-A-Hand Team",
   "license": "MIT",
   "dependencies": {
+    "axios": "^1.10.0",
     "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
+    "express-rate-limit": "^7.5.1",
     "express-validator": "^7.0.1",
     "jsonwebtoken": "^9.0.0",
     "mongoose": "^7.0.3",
-    "multer": "^1.4.5-lts.1"
+    "multer": "^2.0.0-rc.3"
   },
   "devDependencies": {
-    "nodemon": "^2.0.22"
+    "nodemon": "^3.1.10"
   },
   "engines": {
     "node": ">=14.0.0",
@@ -46,4 +48,4 @@
     "url": "https://github.com/your-username/find-a-hand/issues"
   },
   "homepage": "https://github.com/your-username/find-a-hand#readme"
-} 
+}
