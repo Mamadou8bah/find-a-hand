@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="my-handyman-profile.js"></script>
     <style>
-        /* Additional styles for new elements */
+        
         .action-buttons {
             display: flex;
             justify-content: center;
@@ -199,22 +199,22 @@
     if (!response.ok) throw new Error('Failed to fetch handyman data');
     const handyman = await response.json();
 
-    // Update profile image
+   
     const img = document.querySelector('.image-container img');
     img.src = handyman.profileImage
       ? `http://localhost:5000/${handyman.profileImage}`
       : '../public/images/handyman-profiles/default-profile.jpg';
     img.alt = `${handyman.firstName} ${handyman.lastName}`;
 
-    // Update name, job
+   
     document.querySelector('.handyman-name').textContent = `${handyman.firstName} ${handyman.lastName}`;
     document.querySelector('.handyman-job').textContent = handyman.profession || handyman.job || 'No profession set';
 
-    // Update rating stars and value
+  
     const ratingSpan = document.querySelector('.rating');
     ratingSpan.innerHTML = generateStars(handyman.ratingAverage || 0) + ` <span>${(handyman.ratingAverage || 0).toFixed(1)}</span>`;
 
-    // Update services (assumed handyman.services is an array of strings)
+    
     const servicesGrid = document.querySelector('.services-grid');
     if (servicesGrid && handyman.services && handyman.services.length) {
       servicesGrid.innerHTML = '';
@@ -272,7 +272,7 @@
       });
     }
 
-    // **Set the Book Now button link with handymanId**
+   
     const bookNowBtn = document.getElementById('bookNowBtn');
     if (bookNowBtn) {
       localStorage.setItem('handyman', JSON.stringify(handyman));
@@ -287,7 +287,7 @@
   }
 });
 
-// Helper to generate stars (unchanged)
+
 function generateStars(rating) {
   let stars = '';
   for (let i = 1; i <= 5; i++) {

@@ -18,7 +18,7 @@ document.querySelector('.login-form').addEventListener('submit', async (e) => {
       return;
     }
 
-    // Save token
+    
     localStorage.setItem('token', result.token);
 
     // Get user profile
@@ -37,15 +37,15 @@ document.querySelector('.login-form').addEventListener('submit', async (e) => {
 
     alert('Login successful!');
     
-    // Check for pending handyman booking
+ 
     const pendingHandyman = localStorage.getItem('pendingHandyman');
     const redirectUrl = localStorage.getItem('redirectAfterLogin');
     
-    // Clear redirect info
+   
     localStorage.removeItem('redirectAfterLogin');
     localStorage.removeItem('pendingHandyman');
 
-    // If there was a pending handyman booking, restore it
+    
     if (pendingHandyman) {
       try {
         const handyman = JSON.parse(pendingHandyman);
@@ -55,11 +55,11 @@ document.querySelector('.login-form').addEventListener('submit', async (e) => {
       }
     }
 
-    // Redirect to the original URL or booking page
+  
     if (redirectUrl) {
       window.location.href = redirectUrl;
     } else if (pendingHandyman) {
-      // If there was a pending booking, go to booking page
+
       window.location.href = './booking.html';
     } else {
       window.location.href = './customer-dashboard.html';

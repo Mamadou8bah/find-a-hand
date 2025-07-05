@@ -259,12 +259,10 @@
     let filteredHandymen = [];
     let currentFilter = 'all';
 
-    // Enhanced search and filter functionality
     document.addEventListener('DOMContentLoaded', async () => {
       await loadHandymen();
       setupEventListeners();
-      
-      // Handle search parameters from homepage
+     
       handleSearchFromHomepage();
     });
 
@@ -319,7 +317,7 @@
         `;
       }).join('');
 
-      // Add click handlers to store handyman data
+      
       container.querySelectorAll('.plumber-card').forEach(card => {
         card.addEventListener('click', (e) => {
           const handymanData = JSON.parse(card.dataset.handyman);
@@ -371,7 +369,6 @@
         });
       });
 
-      // Enter key support
       searchInput.addEventListener('keypress', (e) => {
         if (e.key === 'Enter') performSearch();
       });
@@ -401,42 +398,38 @@
       const searchInput = document.getElementById('searchInput');
       const locationInput = document.getElementById('locationInput');
       
-      // Pre-fill search inputs if parameters exist
       if (searchTerm) {
         searchInput.value = searchTerm;
-        localStorage.removeItem('searchTerm'); // Clear after use
+        localStorage.removeItem('searchTerm'); 
       }
       
       if (searchLocation) {
         locationInput.value = searchLocation;
-        localStorage.removeItem('searchLocation'); // Clear after use
+        localStorage.removeItem('searchLocation'); 
       }
       
-      // Handle service selection from homepage
+     
       if (selectedService) {
         searchInput.value = selectedService;
-        localStorage.removeItem('selectedService'); // Clear after use
+        localStorage.removeItem('selectedService'); 
         
-        // Auto-trigger search
         setTimeout(() => {
           const searchBtn = document.getElementById('searchBtn');
           if (searchBtn) searchBtn.click();
         }, 500);
       }
       
-      // Handle project selection from homepage
       if (selectedProject) {
         searchInput.value = selectedProject;
-        localStorage.removeItem('selectedProject'); // Clear after use
+        localStorage.removeItem('selectedProject');
         
-        // Auto-trigger search
         setTimeout(() => {
           const searchBtn = document.getElementById('searchBtn');
           if (searchBtn) searchBtn.click();
         }, 500);
       }
       
-      // Show welcome message if search was performed
+    
       if (searchTerm || searchLocation || selectedService || selectedProject) {
         showWelcomeMessage(searchTerm || selectedService || selectedProject, searchLocation);
       }
@@ -470,7 +463,7 @@
       welcomeDiv.textContent = message;
       header.parentNode.insertBefore(welcomeDiv, header.nextSibling);
       
-      // Remove welcome message after 3 seconds
+      
       setTimeout(() => {
         if (welcomeDiv.parentNode) {
           welcomeDiv.remove();

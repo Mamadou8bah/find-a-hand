@@ -60,18 +60,18 @@
       const form = e.target;
       const formData = new FormData(form);
       
-      // Show loading state
+      
       const submitButton = form.querySelector('button[type="submit"]');
       const originalText = submitButton.textContent;
       submitButton.textContent = 'Submitting...';
       submitButton.disabled = true;
 
-      // Set a timeout to redirect even if there's a network issue
+      
       const redirectTimeout = setTimeout(() => {
         console.log('Timeout reached, redirecting to dashboard...');
         alert("Registration may have been successful. Redirecting to dashboard...");
         window.location.href = "../views/handyman-dashboard.html";
-      }, 5000); // 5 second timeout
+      }, 20000); 
 
       try {
         console.log('Submitting handyman registration...');
@@ -80,12 +80,11 @@
           body: formData
         });
 
-        // Clear the timeout since we got a response
+        
         clearTimeout(redirectTimeout);
 
         console.log('Response status:', response.status);
 
-        // Check if response is ok first
         if (response.ok) {
           try {
             const data = await response.json();
@@ -97,7 +96,7 @@
               alert("Registration successful! Redirecting to dashboard...");
               window.location.href = "../views/handyman-dashboard.html";
             } else {
-              // If no token but still successful, redirect anyway
+             
               alert("Registration successful! Redirecting to dashboard...");
               window.location.href = "../views/handyman-dashboard.html";
             }
@@ -107,7 +106,7 @@
             window.location.href = "../views/handyman-dashboard.html";
           }
         } else {
-          // Handle error responses
+          
           try {
             const errorData = await response.json();
             console.log('Registration failed:', errorData);
@@ -120,28 +119,27 @@
           }
         }
       } catch (error) {
-        // Clear the timeout since we're handling the error
+        
         clearTimeout(redirectTimeout);
         
         console.error("Network error:", error);
         
-        // Check if the error is due to CORS or network issues
+        
         if (error.name === 'TypeError' && error.message.includes('fetch')) {
-          // This might be a network issue, but the form could still be submitted
-          // Let's check if we can access the dashboard
+         
           alert("Registration may have been successful. Redirecting to dashboard...");
           window.location.href = "../views/handyman-dashboard.html";
         } else {
           alert("Network error: " + (error.message || error));
         }
       } finally {
-        // Reset button state
+     
         submitButton.textContent = originalText;
         submitButton.disabled = false;
       }
     });
 
-    // Add real-time validation feedback
+ 
     const inputs = document.querySelectorAll('.form-input');
     inputs.forEach(input => {
       input.addEventListener('blur', function() {

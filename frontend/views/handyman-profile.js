@@ -36,32 +36,28 @@ class HandymanProfile {
   displayHandymanDetails() {
     if (!this.handyman) return;
 
-    // Update profile image
     const imageElement = document.getElementById('handymanImage');
     if (this.handyman.profileImage) {
       imageElement.src = `http://localhost:5000/${this.handyman.profileImage}`;
     }
 
-    // Update basic info
     document.getElementById('handymanName').textContent = `${this.handyman.firstName} ${this.handyman.lastName}`;
     document.getElementById('handymanProfession').textContent = this.handyman.profession || 'No profession specified';
     document.getElementById('handymanLocation').textContent = this.handyman.location || 'Location not specified';
 
-    // Update rating
+
     this.displayRating(this.handyman.rating || 0, this.handyman.reviews?.length || 0);
 
-    // Update about section
     document.getElementById('handymanAbout').textContent = 
       `Professional ${this.handyman.profession || 'handyman'} with expertise in various home services.`;
 
-    // Update skills
+ 
     this.displaySkills(this.handyman.skills || []);
 
-    // Update experience
     document.getElementById('handymanExperience').textContent = 
       `${this.handyman.experience || 0} years of experience`;
 
-    // Update hourly rate
+   
     document.getElementById('handymanRate').textContent = 
       this.handyman.hourlyRate ? `$${this.handyman.hourlyRate}/hour` : 'Rate not specified';
   }
@@ -70,10 +66,10 @@ class HandymanProfile {
     const starsContainer = document.getElementById('stars');
     const ratingText = document.getElementById('ratingText');
 
-    // Clear existing stars
+   
     starsContainer.innerHTML = '';
 
-    // Add stars
+  
     for (let i = 1; i <= 5; i++) {
       const star = document.createElement('i');
       if (rating >= i) {
@@ -115,19 +111,19 @@ class HandymanProfile {
       this.handleBookNow();
     });
 
-    // View Reviews button
+   
     document.getElementById('viewReviewsBtn').addEventListener('click', () => {
       this.toggleReviews();
     });
   }
 
   handleBookNow() {
-    // Store handyman info in localStorage
+   
     if (this.handyman) {
       localStorage.setItem('handyman', JSON.stringify(this.handyman));
     }
 
-    // Check if user is logged in
+
     const token = localStorage.getItem('token');
     if (!token) {
       // Store current URL for redirect after login
@@ -195,7 +191,7 @@ class HandymanProfile {
   }
 }
 
-// Initialize when DOM is loaded
+
 document.addEventListener('DOMContentLoaded', () => {
   new HandymanProfile();
 }); 

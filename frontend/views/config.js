@@ -45,7 +45,6 @@ const ENDPOINTS = {
 
 // Utility Functions
 const API = {
-  // Generic API call function
   async call(endpoint, options = {}) {
     const token = localStorage.getItem(STORAGE_KEYS.TOKEN);
     
@@ -94,7 +93,6 @@ const API = {
   }
 };
 
-// Storage utility functions
 const Storage = {
   set(key, value) {
     try {
@@ -163,10 +161,9 @@ const Alert = {
     alertDiv.className = `alert alert-${type}`;
     alertDiv.textContent = message;
     
-    // Add to page
+    
     document.body.appendChild(alertDiv);
     
-    // Auto remove after 5 seconds
     setTimeout(() => {
       if (alertDiv.parentNode) {
         alertDiv.parentNode.removeChild(alertDiv);
@@ -208,7 +205,6 @@ const Validation = {
   }
 };
 
-// Expose to global scope
 window.CONFIG = {
   API,
   Storage,

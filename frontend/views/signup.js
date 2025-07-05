@@ -73,11 +73,11 @@ document.getElementById('signup-form').addEventListener('submit',async (e)=>{
                     }
                 }
 
-                // Redirect to the original URL or booking page
+              
                 if (redirectUrl) {
                     window.location.href = redirectUrl;
                 } else if (pendingHandyman) {
-                    // If there was a pending booking, go to booking page
+                    
                     window.location.href = './booking.html';
                 } else {
                     window.location.href = './search-handyman.html';

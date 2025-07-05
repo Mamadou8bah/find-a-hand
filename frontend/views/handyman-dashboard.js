@@ -1,4 +1,4 @@
-// Global function for section toggling
+
 window.showSection = function(sectionId) {
   const sections = document.querySelectorAll('div[id$="-section"]');
   sections.forEach(sec => sec.classList.add('hidden'));
@@ -16,7 +16,6 @@ window.showSection = function(sectionId) {
   }
 };
 
-// Logout function
 window.logout = function() {
   if (confirm('Are you sure you want to logout?')) {
     localStorage.clear();
@@ -24,7 +23,7 @@ window.logout = function() {
   }
 };
 
-// Check authentication on page load
+
 document.addEventListener('DOMContentLoaded', async function() {
   const token = localStorage.getItem('token');
   if (!token) {
@@ -33,7 +32,7 @@ document.addEventListener('DOMContentLoaded', async function() {
     return;
   }
 
-  // Load handyman data and populate dashboard
+  
   await loadAndPopulateAllSections();
 });
 
@@ -92,7 +91,7 @@ async function fetchHandymanBookings() {
 async function updateHeaderAndSidebar(user) {
   const fullName = `${user.firstName || ''} ${user.lastName || ''}`.trim();
   
-  // Update profile images
+
   document.querySelectorAll('.profile-image').forEach(img => {
     if (user.profileImage) {
       img.src = `http://localhost:5000/${user.profileImage}`;
@@ -101,20 +100,20 @@ async function updateHeaderAndSidebar(user) {
     }
   });
   
-  // Update all user names throughout the dashboard
+  
   document.querySelectorAll('.user-profile span, .sidebar-title').forEach(el => {
     el.textContent = fullName;
   });
   
-  // Update sidebar subtitle
+
   document.querySelectorAll('.sidebar-subtitle').forEach(el => el.textContent = user.profession || 'Handyman');
 
-  // Update dashboard stats
+
   const pendingRequests = document.getElementById('pending-request');
   const confirmedBookings = document.getElementById('confirmed-bookings');
   const monthlyEarnings = document.getElementById('monthly-earnings');
   
-  // Calculate real stats from bookings
+
   const bookings = await fetchHandymanBookings();
   console.log('Total bookings found:', bookings.length);
   
@@ -129,7 +128,7 @@ async function updateHeaderAndSidebar(user) {
   if (monthlyEarnings) monthlyEarnings.innerText = `GMD ${(user.monthlyEarnings || 0).toFixed(2)}`;
 }
 
-// Populate Account Settings form fields
+
 function updateAccountSection(user) {
   const setValue = (id, val) => {
     const el = document.getElementById(id);
@@ -146,19 +145,19 @@ function updateAccountSection(user) {
   setValue('hourlyRate', user.hourlyRate);
   setValue('workRadius', user.workRadius);
 
-  // Update profession dropdown
+
   const professionSelect = document.getElementById('profession');
   if (professionSelect) {
     professionSelect.value = user.profession || '';
   }
 
-  // Update skills
+ 
   const skillsInput = document.getElementById('skills');
   if (skillsInput && user.skills) {
     skillsInput.value = Array.isArray(user.skills) ? user.skills.join(', ') : user.skills;
   }
 
-  // Update experience
+
   const experienceInput = document.getElementById('experience');
   if (experienceInput) {
     experienceInput.value = user.experience || '';
@@ -179,12 +178,12 @@ function updateAccountSection(user) {
   }
 }
 
-// Dynamically populate Reviews section
+
 function updateReviewsSection(user) {
   const reviewsContainer = document.querySelector('#reviews-section .reviews-section');
   if (!reviewsContainer) return;
 
-  // Clear existing content
+  
   const sectionHeader = reviewsContainer.querySelector('.section-header');
   reviewsContainer.innerHTML = '';
   if (sectionHeader) reviewsContainer.appendChild(sectionHeader);
@@ -236,7 +235,6 @@ function generateStars(rating) {
   return starsHTML;
 }
 
-// Populate portfolio items
 function updatePortfolioSection(user) {
   const portfolioContainer = document.getElementById('portfolio-items');
   if (!portfolioContainer) return;
@@ -268,7 +266,7 @@ function updatePortfolioSection(user) {
     newItem.querySelector('.btn-delete').addEventListener('click', () => {
       if (confirm('Delete this portfolio item?')) {
         newItem.remove();
-        // TODO: Add API call to delete backend if needed
+        
       }
     });
 
@@ -276,11 +274,11 @@ function updatePortfolioSection(user) {
   });
 }
 
-// Populate Bookings section dynamically
+
 async function updateBookingsSection() {
   const bookings = await fetchHandymanBookings();
   
-  // Update both booking tables (dashboard overview and full bookings section)
+
   const bookingTables = document.querySelectorAll('.bookings-section table tbody');
   
   bookingTables.forEach(tbody => {
@@ -293,7 +291,6 @@ async function updateBookingsSection() {
       return;
     }
 
-    // For dashboard overview, show only recent bookings (first 3)
     const bookingsToShow = tbody.closest('#dashboard-section') ? bookings.slice(0, 3) : bookings;
 
     bookingsToShow.forEach(booking => {
@@ -305,7 +302,6 @@ async function updateBookingsSection() {
       const formattedDate = dateObj.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
       const formattedTime = booking.time || 'N/A';
       
-      // Get customer name from populated user data
       const customerName = booking.user ? `${booking.user.firstName} ${booking.user.lastName}` : 'Unknown Customer';
 
     tr.innerHTML = `
@@ -401,7 +397,7 @@ async function handleBookingAction(bookingId, action, rowElement) {
     console.log('Success response:', result);
     alert(result.message || 'Booking status updated successfully');
 
-    // Update the status in the UI
+
       const statusSpan = rowElement.querySelector('.status');
     if (statusSpan) {
       const newStatus = action === 'confirm' ? 'Confirmed' : 
@@ -411,7 +407,7 @@ async function handleBookingAction(bookingId, action, rowElement) {
       statusSpan.className = `status status-${newStatus.toLowerCase()}`;
     }
 
-    // Refresh bookings section
+
     await updateBookingsSection();
 
   } catch (error) {
@@ -430,7 +426,7 @@ async function saveProfile() {
 
   const formData = new FormData();
   
-  // Get form values
+
   const firstName = document.getElementById('firstName').value;
   const lastName = document.getElementById('lastName').value;
   const phone = document.getElementById('phone').value;
@@ -440,13 +436,13 @@ async function saveProfile() {
   const experience = document.getElementById('experience').value;
   const hourlyRate = document.getElementById('hourlyRate').value;
 
-  // Add profile image if selected
+
   const profileImage = document.getElementById('profileImage').files[0];
   if (profileImage) {
     formData.append('profileImage', profileImage);
   }
 
-  // Add other fields
+ 
   formData.append('firstName', firstName);
   formData.append('lastName', lastName);
   formData.append('phone', phone);
@@ -470,7 +466,7 @@ async function saveProfile() {
     const result = await response.json();
     alert('Profile updated successfully!');
     
-    // Reload user data to reflect changes
+ 
     await loadAndPopulateAllSections();
 
   } catch (error) {
@@ -537,7 +533,7 @@ async function updatePassword() {
   }
 }
 
-// Render the schedule calendar dynamically
+
 async function renderScheduleCalendar() {
   const calendarContainer = document.getElementById('schedule-calendar');
   if (!calendarContainer) return;
@@ -548,12 +544,12 @@ async function renderScheduleCalendar() {
   const year = now.getFullYear();
   const month = now.getMonth();
 
-  // Get first and last day of the month
+
   const firstDay = new Date(year, month, 1);
   const lastDay = new Date(year, month + 1, 0);
   const daysInMonth = lastDay.getDate();
 
-  // Get the weekday index of the first day (0=Sun, 6=Sat)
+
   const startDay = firstDay.getDay();
 
   // Add weekday headers
@@ -565,14 +561,12 @@ async function renderScheduleCalendar() {
     calendarContainer.appendChild(header);
   });
 
-  // Fill in blank days before the 1st
   for (let i = 0; i < startDay; i++) {
     const blank = document.createElement('div');
     blank.className = 'calendar-day blank';
     calendarContainer.appendChild(blank);
   }
 
-  // Group bookings by day
   const bookingsByDay = {};
   bookings.forEach(b => {
     const d = new Date(b.date);
@@ -583,7 +577,6 @@ async function renderScheduleCalendar() {
     }
   });
 
-  // Render each day
   for (let day = 1; day <= daysInMonth; day++) {
     const dayDiv = document.createElement('div');
     dayDiv.className = 'calendar-day';
@@ -591,7 +584,7 @@ async function renderScheduleCalendar() {
     if (bookingsByDay[day]) dayDiv.classList.add('has-bookings');
     dayDiv.textContent = day;
 
-    // Add booking events
+
     if (bookingsByDay[day]) {
       bookingsByDay[day].forEach(b => {
         const eventDiv = document.createElement('div');
@@ -604,7 +597,6 @@ async function renderScheduleCalendar() {
   }
 }
 
-// Render today's bookings in the table
 async function renderTodaysBookings() {
   const tbody = document.getElementById('todays-bookings');
   if (!tbody) return;
@@ -662,9 +654,9 @@ function calculateEarnings(bookings) {
       const bookingMonth = bookingDate.getMonth();
       const bookingYear = bookingDate.getFullYear();
       
-      // Calculate earnings based on hourly rate (assuming $75/hour as default)
-      const hourlyRate = 75; // This could come from handyman profile
-      const duration = 2; // Default 2 hours per booking, could be stored in booking
+    
+      const hourlyRate = 75; 
+      const duration = 2; 
       const earnings = hourlyRate * duration;
       
       totalEarnings += earnings;
@@ -684,7 +676,7 @@ function calculateEarnings(bookings) {
   };
 }
 
-// Update earnings cards
+
 function updateEarningsCards(earnings) {
   const thisMonthEl = document.getElementById('this-month-earnings');
   const lastMonthEl = document.getElementById('last-month-earnings');
@@ -695,14 +687,14 @@ function updateEarningsCards(earnings) {
   if (totalEl) totalEl.textContent = `$${earnings.total.toFixed(2)}`;
 }
 
-// Render earnings history table
+
 function renderEarningsHistory(bookings) {
   const tbody = document.getElementById('earnings-history');
   if (!tbody) return;
   
   tbody.innerHTML = '';
   
-  // Filter completed bookings and sort by date
+
   const completedBookings = bookings
     .filter(b => b.status === 'Completed')
     .sort((a, b) => new Date(b.date) - new Date(a.date));
@@ -719,7 +711,7 @@ function renderEarningsHistory(bookings) {
     const bookingDate = new Date(booking.date);
     const customer = booking.user ? `${booking.user.firstName} ${booking.user.lastName}` : 'Unknown';
     
-    // Calculate earnings (assuming $75/hour, 2 hours per booking)
+    
     const hourlyRate = 75;
     const duration = 2;
     const earnings = hourlyRate * duration;
@@ -737,7 +729,7 @@ function renderEarningsHistory(bookings) {
   });
 }
 
-// Update earnings section
+
 async function updateEarningsSection() {
   const bookings = await fetchHandymanBookings();
   const earnings = calculateEarnings(bookings);
@@ -774,9 +766,9 @@ async function loadAndPopulateAllSections() {
   await updateEarningsSection();
 }
 
-// Add event listeners for form submissions
+
 document.addEventListener('DOMContentLoaded', function() {
-  // Profile form submission
+  
   const profileForm = document.getElementById('profileForm');
   if (profileForm) {
     profileForm.addEventListener('submit', function(e) {
@@ -785,7 +777,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
 
-  // Password form submission
+
   const passwordForm = document.getElementById('passwordForm');
   if (passwordForm) {
     passwordForm.addEventListener('submit', function(e) {

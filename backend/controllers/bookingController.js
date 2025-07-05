@@ -66,7 +66,7 @@ const getBookingById = async (req, res) => {
   try {
     const bookingId = req.params.id;
 
-    // Find booking by ID and user to ensure authorization
+  
     const booking = await Booking.findOne({ _id: bookingId, user: req.user._id });
 
     if (!booking) {

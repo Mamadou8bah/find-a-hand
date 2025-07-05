@@ -1,7 +1,7 @@
 window.addEventListener('DOMContentLoaded', () => {
   const token = localStorage.getItem('token');
   if (!token) {
-    // Store current URL and handyman info for redirect after login
+  
     const handyman = JSON.parse(localStorage.getItem('handyman') || '{}');
     localStorage.setItem('redirectAfterLogin', window.location.href);
     if (handyman._id) {
@@ -43,7 +43,7 @@ class FormValidator {
   }
 
   async init() {
-    // Check if we have handyman info from localStorage
+    
     const handyman = JSON.parse(localStorage.getItem('handyman') || '{}');
     if (!handyman._id && !this.handymanId) {
       alert('No handyman specified for booking.');
@@ -51,7 +51,7 @@ class FormValidator {
       return;
     }
 
-    // Use handymanId from URL or localStorage
+    
     if (!this.handymanId && handyman._id) {
       this.handymanId = handyman._id;
     }
@@ -80,7 +80,7 @@ class FormValidator {
       return;
     }
 
-    // Pre-fill user phone if available
+   
     if (this.userInfo.phone) {
       this.fields.phone.value = this.userInfo.phone;
     }
@@ -259,10 +259,10 @@ class FormValidator {
         this.form.reset();
         this.updateCharCount();
         this.toggleSubmit();
-        // Clear handyman info after successful booking
+        
         localStorage.removeItem('handyman');
         localStorage.removeItem('pendingHandyman');
-        // Redirect to user dashboard or home
+       
         window.location.href = './index.html';
       } else {
         alert(data.message || 'Failed to create booking');

@@ -42,7 +42,6 @@
     const data = await response.json();
 
     if (response.ok) {
-      // Save token to localStorage and redirect
       localStorage.setItem("token", data.token);
       window.location.href = "../views/handyman-dashboard.html";
     } else {

@@ -27,7 +27,7 @@ function hideSidebar(){
   sidebar.style.display = 'none'
 }
 
-// Enhanced search functionality
+
 function performSearch() {
   const searchInput = document.getElementById('searchInput');
   const locationInput = document.getElementById('locationInput');
@@ -37,41 +37,40 @@ function performSearch() {
   const searchTerm = searchInput.value.trim();
   const location = locationInput.value.trim();
   
-  // Add loading state to search button
+
   const originalButtonContent = searchButton.innerHTML;
   searchButton.innerHTML = '<div class="loading-spinner"></div>';
   searchButton.disabled = true;
   
-  // Validate search input
   if (!searchTerm && !location) {
-    // Show error message
+   
     showSearchError('Please enter a service or location to search');
     searchButton.innerHTML = originalButtonContent;
     searchButton.disabled = false;
     return;
   }
   
-  // Store search parameters
+
   localStorage.setItem('searchTerm', searchTerm);
   localStorage.setItem('searchLocation', location);
   
-  // Show success feedback
+ 
   showSearchSuccess('Searching for handymen...');
   
-  // Redirect to search page after a brief delay
+ 
   setTimeout(() => {
     window.location.href = 'search-handyman.html';
   }, 1000);
 }
 
 function showSearchError(message) {
-  // Remove existing messages
+  
   const existingError = document.querySelector('.search-error');
   const existingSuccess = document.querySelector('.search-success');
   if (existingError) existingError.remove();
   if (existingSuccess) existingSuccess.remove();
   
-  // Create error message
+ 
   const errorDiv = document.createElement('div');
   errorDiv.className = 'search-error';
   errorDiv.textContent = message;
@@ -89,7 +88,7 @@ function showSearchError(message) {
   const searchWrapper = document.querySelector('.search-wrapper');
   searchWrapper.parentNode.insertBefore(errorDiv, searchWrapper.nextSibling);
   
-  // Remove error after 3 seconds
+ 
   setTimeout(() => {
     if (errorDiv.parentNode) {
       errorDiv.remove();
@@ -98,13 +97,13 @@ function showSearchError(message) {
 }
 
 function showSearchSuccess(message) {
-  // Remove existing messages
+  
   const existingError = document.querySelector('.search-error');
   const existingSuccess = document.querySelector('.search-success');
   if (existingError) existingError.remove();
   if (existingSuccess) existingSuccess.remove();
   
-  // Create success message
+ 
   const successDiv = document.createElement('div');
   successDiv.className = 'search-success';
   successDiv.textContent = message;
@@ -127,7 +126,7 @@ async function loadHandymen() {
   try {
     const container = document.getElementById('handymenContainer');
     
-    // Show loading state
+   
     container.innerHTML = '<div style="text-align: center; padding: 20px; color: #666;">Loading handymen...</div>';
     
     const response = await fetch('http://localhost:5000/api/handymen');
@@ -135,13 +134,13 @@ async function loadHandymen() {
 
     const handymen = await response.json();
 
-    container.innerHTML = ''; // clear loading content
+    container.innerHTML = ''; 
 
-    // Limit to only 6 handymen
+    
     const limitedHandymen = handymen.slice(0, 6);
 
     limitedHandymen.forEach(handyman => {
-      // Build star rating HTML
+     
       let stars = '';
       for (let i = 1; i <= 5; i++) {
         if (handyman.rating >= i) {
@@ -185,15 +184,15 @@ async function loadHandymen() {
 document.addEventListener('DOMContentLoaded', function() {
   loadHandymen();
   
-  // Enhanced search functionality
+  
   const searchButton = document.querySelector('.search-button');
   const searchInput = document.getElementById('searchInput');
   const locationInput = document.getElementById('locationInput');
   
-  // Add click handler for search button
+  
   searchButton.addEventListener('click', performSearch);
   
-  // Add enter key support for search
+ 
   searchInput.addEventListener('keypress', function(e) {
     if (e.key === 'Enter') {
       performSearch();
@@ -241,7 +240,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   });
   
-  // Enhanced project card interactions
+  
   const projectLinks = document.querySelectorAll('.project-link');
   projectLinks.forEach(link => {
     link.addEventListener('click', function(e) {
@@ -249,7 +248,7 @@ document.addEventListener('DOMContentLoaded', function() {
       const projectTitle = this.querySelector('.home-project-title').textContent;
       localStorage.setItem('selectedProject', projectTitle);
       
-      // Show feedback
+      
       showSearchSuccess(`Searching for ${projectTitle}...`);
       
       setTimeout(() => {
@@ -258,7 +257,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   });
   
-  // Add smooth scroll for navigation links
+
   const navLinks = document.querySelectorAll('a[href^="#"]');
   navLinks.forEach(link => {
     link.addEventListener('click', function(e) {
@@ -271,7 +270,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   });
   
-  // Add intersection observer for animations
+  
   const observerOptions = {
     threshold: 0.1,
     rootMargin: '0px 0px -50px 0px'
@@ -286,7 +285,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }, observerOptions);
   
-  // Observe elements for scroll animations
+  
   const animatedElements = document.querySelectorAll('.service-item, .home-project, .handyman-near-you');
   animatedElements.forEach(el => {
     el.style.opacity = '0';
@@ -295,7 +294,7 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 });
 
-// Add enhanced styles for search functionality
+
 const style = document.createElement('style');
 style.textContent = `
   @keyframes shake {
