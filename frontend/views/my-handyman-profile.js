@@ -185,6 +185,12 @@ class MyHandymanProfile {
         if (this.handyman.profileImage) {
             profileImage.src = `${CONFIG.API_BASE_URL}/${this.handyman.profileImage}`;
             console.log('Setting profile image:', profileImage.src);
+            
+            // Add error handling for image loading
+            profileImage.onerror = () => {
+                console.log('Profile image failed to load, using fallback');
+                profileImage.src = '../public/images/handyman-profiles/default-profile.jpg';
+            };
         } else {
             profileImage.src = '../public/images/handyman-profiles/default-profile.jpg';
             console.log('Using default profile image');

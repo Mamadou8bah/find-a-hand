@@ -95,6 +95,12 @@ async function updateHeaderAndSidebar(user) {
     if (user.profileImage) {
       img.src = `${CONFIG.API_BASE_URL}/${user.profileImage}`;
       console.log('Setting profile image:', img.src);
+      
+      // Add error handling for image loading
+      img.onerror = () => {
+        console.log('Profile image failed to load, using fallback');
+        img.src = './public/images/handyman-profiles/default-profile.jpg';
+      };
     } else {
       img.src = './public/images/handyman-profiles/default-profile.jpg';
       console.log('Using default profile image');
