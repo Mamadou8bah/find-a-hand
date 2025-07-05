@@ -383,6 +383,8 @@ class HandymanProfile {
     try {
       console.log('Submitting review to:', `${CONFIG.API_BASE_URL}/api/handymen/reviews`);
       console.log('Review data:', { rating, comment, handymanId: this.handymanId });
+      console.log('User type:', userType);
+      console.log('Token (first 20 chars):', token ? token.substring(0, 20) + '...' : 'No token');
       
       const response = await fetch(`${CONFIG.API_BASE_URL}/api/handymen/reviews`, {
         method: 'POST',

@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const handymanController = require('../controllers/handymanController');
 const auth = require('../middlewares/handymanAuthMiddleware');
+const customerAuth = require('../middlewares/authMiddleware');
 const { check } = require('express-validator');
 const upload = require('../middlewares/uploadMiddleware'); 
 
@@ -90,7 +91,7 @@ router.get('/:id', handymanController.getHandymanById);
 router.post(
   '/reviews',
   [
-    auth, // This should be customer auth, not handyman auth
+    customerAuth, // Use customer authentication middleware
     check('rating', 'Rating is required and must be between 1 and 5').isInt({ min: 1, max: 5 }),
     check('comment', 'Comment is required').not().isEmpty(),
     check('handymanId', 'Handyman ID is required').not().isEmpty()
