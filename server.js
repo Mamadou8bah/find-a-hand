@@ -6,7 +6,7 @@ connectDB().then(() => {
   console.log('✅ Database connected successfully');
 }).catch((error) => {
   console.error('❌ Database connection failed:', error.message);
-  // Don't exit the process, let the app start without DB for health checks
+  
 });
 
 const PORT = process.env.PORT || 5000;
