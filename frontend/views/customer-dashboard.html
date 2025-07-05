@@ -37,11 +37,12 @@
         
         /* Sidebar Styles */
         .sidebar {
-            width: 200px;
+            width: 250px;
             background-color: var(--primary-color);
             color: white;
             padding: 20px 0;
             transition: all 0.3s;
+            position: relative;
         }
         
         .sidebar-header {
@@ -51,10 +52,11 @@
         
         .sidebar-header h3 {
             margin-bottom: 5px;
+            font-size: 1.2rem;
         }
         
         .sidebar-header p {
-            font-size: 0.8rem;
+            font-size: 0.9rem;
             opacity: 0.8;
         }
         
@@ -63,11 +65,12 @@
         }
         
         .menu-item {
-            padding: 10px 20px;
+            padding: 12px 20px;
             cursor: pointer;
             transition: all 0.2s;
             display: flex;
             align-items: center;
+            font-size: 0.95rem;
         }
         
         .menu-item:hover {
@@ -80,14 +83,17 @@
         }
         
         .menu-item i {
-            margin-right: 10px;
+            margin-right: 12px;
             font-size: 1.1rem;
+            width: 20px;
+            text-align: center;
         }
         
         /* Main Content Styles */
         .main-content {
             flex: 1;
             padding: 20px;
+            overflow-x: hidden;
         }
         
         .header {
@@ -97,47 +103,101 @@
             margin-bottom: 30px;
             padding-bottom: 15px;
             border-bottom: 1px solid #ddd;
+            flex-wrap: wrap;
+            gap: 15px;
         }
         
         .header h1 {
             color: var(--secondary-color);
+            font-size: 1.8rem;
         }
         
         .user-profile {
             display: flex;
             align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
         }
         
         .user-profile img {
             width: 40px;
             height: 40px;
             border-radius: 50%;
-            margin-right: 10px;
+        }
+        
+        .profile-avatar {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #f7931e, #e79004);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 15px rgba(247, 147, 30, 0.3);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .profile-avatar::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.2) 50%, transparent 70%);
+            transform: translateX(-100%);
+            transition: transform 0.6s ease;
+        }
+        
+        .profile-avatar:hover::before {
+            transform: translateX(100%);
+        }
+        
+        .profile-avatar:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 20px rgba(247, 147, 30, 0.4);
+        }
+        
+        .profile-avatar i {
+            color: white;
+            font-size: 20px;
+            font-weight: 500;
+            z-index: 1;
         }
         
         /* Dashboard Cards */
         .dashboard-cards {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 20px;
             margin-bottom: 30px;
         }
         
         .card {
             background-color: white;
-            border-radius: 8px;
-            padding: 20px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+        
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
         }
         
         .card h3 {
             font-size: 1rem;
             color: #666;
-            margin-bottom: 10px;
+            margin-bottom: 15px;
+            font-weight: 500;
         }
         
         .card p {
-            font-size: 1.8rem;
+            font-size: 2rem;
             font-weight: bold;
             color: var(--secondary-color);
         }
@@ -145,79 +205,101 @@
         /* Bookings Table */
         .bookings-section, .account-section {
             background-color: white;
-            border-radius: 8px;
-            padding: 20px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
             margin-bottom: 30px;
+            border: 1px solid rgba(0, 0, 0, 0.05);
         }
         
         .section-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+            gap: 15px;
         }
         
         .section-header h2 {
             color: var(--secondary-color);
+            font-size: 1.5rem;
         }
         
         .btn {
-            padding: 8px 15px;
+            padding: 10px 18px;
             border: none;
-            border-radius: 4px;
+            border-radius: 8px;
             cursor: pointer;
             font-weight: 500;
             transition: all 0.2s;
+            font-size: 0.9rem;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
         }
         
         .btn-primary {
             background-color: var(--primary-color);
             color: white;
-            text-decoration: none;
         }
         
         .btn-primary:hover {
             background-color: var(--secondary-color);
+            transform: translateY(-1px);
         }
         
         .btn-outline {
             background-color: transparent;
-            border: 1px solid var(--primary-color);
+            border: 2px solid var(--primary-color);
             color: var(--primary-color);
         }
         
         .btn-outline:hover {
             background-color: var(--primary-color);
             color: white;
+            transform: translateY(-1px);
+        }
+        
+        /* Responsive Table */
+        .table-container {
+            overflow-x: auto;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
         }
         
         table {
             width: 100%;
             border-collapse: collapse;
+            min-width: 600px;
         }
         
         th, td {
-            padding: 12px 15px;
+            padding: 15px 12px;
             text-align: left;
-            border-bottom: 1px solid #ddd;
+            border-bottom: 1px solid #eee;
         }
         
         th {
             background-color: #f8f9fa;
             font-weight: 600;
             color: #555;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
         
         tr:hover {
-            background-color: #f5f5f5;
+            background-color: #f8f9fa;
         }
         
         .status {
-            padding: 5px 10px;
+            padding: 6px 12px;
             border-radius: 20px;
             font-size: 0.8rem;
             font-weight: 500;
+            display: inline-block;
         }
         
         .status-pending {
@@ -240,36 +322,50 @@
             color: #721c24;
         }
         
+        /* Action Buttons */
+        .action-buttons {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        
+        .action-buttons .btn {
+            padding: 6px 12px;
+            font-size: 0.8rem;
+        }
+        
         /* Account Form */
         .account-form {
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
         }
         
         .form-group {
-            margin-bottom: 15px;
+            margin-bottom: 20px;
         }
         
         .form-group label {
             display: block;
-            margin-bottom: 5px;
+            margin-bottom: 8px;
             font-weight: 500;
             color: #555;
+            font-size: 0.95rem;
         }
         
         .form-control {
             width: 100%;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
+            padding: 12px 15px;
+            border: 2px solid #e1e5e9;
+            border-radius: 8px;
             font-size: 1rem;
+            transition: all 0.2s;
         }
         
         .form-control:focus {
             outline: none;
             border-color: var(--accent-color);
-            box-shadow: 0 0 0 2px rgba(79, 195, 247, 0.2);
+            box-shadow: 0 0 0 3px rgba(79, 195, 247, 0.1);
         }
         
         .full-width {
@@ -280,7 +376,8 @@
             grid-column: 1 / -1;
             display: flex;
             justify-content: flex-end;
-            gap: 10px;
+            gap: 15px;
+            margin-top: 20px;
         }
         
         /* Hidden sections */
@@ -288,14 +385,208 @@
             display: none;
         }
         
-        /* Responsive */
-        @media (max-width: 992px) {
+        /* Help & Support Styles */
+        .help-section, .support-section, .contact-section {
+            background-color: white;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            margin-bottom: 30px;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+        
+        /* FAQ Styles */
+        .faq-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .faq-item {
+            border: 1px solid #e1e5e9;
+            border-radius: 8px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .faq-item:hover {
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        .faq-question {
+            padding: 20px;
+            background-color: #f8f9fa;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+        
+        .faq-question:hover {
+            background-color: #e9ecef;
+        }
+        
+        .faq-question h3 {
+            margin: 0;
+            font-size: 1rem;
+            color: var(--dark-color);
+            font-weight: 500;
+        }
+        
+        .faq-question i {
+            color: var(--primary-color);
+            transition: transform 0.3s ease;
+        }
+        
+        .faq-item.active .faq-question i {
+            transform: rotate(180deg);
+        }
+        
+        .faq-answer {
+            padding: 0 20px;
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .faq-item.active .faq-answer {
+            padding: 20px;
+            max-height: 200px;
+        }
+        
+        .faq-answer p {
+            margin: 0;
+            color: #666;
+            line-height: 1.6;
+        }
+        
+        /* Support Cards */
+        .support-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        
+        .support-card {
+            background: linear-gradient(135deg, #f8f9fa, #ffffff);
+            border: 1px solid #e1e5e9;
+            border-radius: 12px;
+            padding: 25px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        
+        .support-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+        }
+        
+        .support-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px;
+        }
+        
+        .support-icon i {
+            color: white;
+            font-size: 24px;
+        }
+        
+        .support-card h3 {
+            margin: 0 0 10px 0;
+            color: var(--dark-color);
+            font-size: 1.1rem;
+        }
+        
+        .support-card p {
+            margin: 0 0 20px 0;
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        /* Contact Information */
+        .contact-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+        
+        .contact-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            padding: 20px;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+        
+        .contact-item:hover {
+            background-color: #e9ecef;
+            transform: translateY(-1px);
+        }
+        
+        .contact-item i {
+            color: var(--primary-color);
+            font-size: 20px;
+            margin-top: 5px;
+        }
+        
+        .contact-item h4 {
+            margin: 0 0 8px 0;
+            color: var(--dark-color);
+            font-size: 1rem;
+        }
+        
+        .contact-item p {
+            margin: 0;
+            color: #666;
+            line-height: 1.5;
+            font-size: 0.9rem;
+        }
+        
+        /* Mobile Menu Toggle */
+        .mobile-menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 10px;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 1200px) {
             .dashboard-cards {
-                grid-template-columns: 1fr 1fr;
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            }
+        }
+        
+        @media (max-width: 992px) {
+            .sidebar {
+                width: 220px;
             }
             
-            .account-form {
-                grid-template-columns: 1fr;
+            .main-content {
+                padding: 15px;
+            }
+            
+            .header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+            
+            .user-profile {
+                width: 100%;
+                justify-content: space-between;
             }
         }
         
@@ -306,27 +597,131 @@
             
             .sidebar {
                 width: 100%;
-                padding: 10px;
+                padding: 15px;
+                position: relative;
+            }
+            
+            .mobile-menu-toggle {
+                display: block;
+                position: absolute;
+                top: 15px;
+                right: 15px;
             }
             
             .sidebar-menu {
+                display: none;
+                flex-direction: column;
+                padding: 15px 0;
+            }
+            
+            .sidebar-menu.active {
                 display: flex;
-                overflow-x: auto;
-                padding: 10px 0;
             }
             
             .menu-item {
-                white-space: nowrap;
-                padding: 10px 15px;
+                padding: 12px 15px;
+                border-radius: 8px;
+                margin-bottom: 5px;
+            }
+            
+            .main-content {
+                padding: 15px;
+            }
+            
+            .header {
+                margin-bottom: 20px;
+            }
+            
+            .header h1 {
+                font-size: 1.5rem;
             }
             
             .dashboard-cards {
                 grid-template-columns: 1fr;
+                gap: 15px;
             }
             
-            table {
-                display: block;
-                overflow-x: auto;
+            .card {
+                padding: 20px;
+            }
+            
+            .card h3 {
+                font-size: 0.9rem;
+            }
+            
+            .card p {
+                font-size: 1.8rem;
+            }
+            
+            .bookings-section, .account-section {
+                padding: 20px;
+            }
+            
+            .section-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+            
+            .table-container {
+                margin: 0 -20px;
+                border-radius: 0;
+            }
+            
+            .action-buttons {
+                flex-direction: column;
+                gap: 5px;
+            }
+            
+            .action-buttons .btn {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .account-form {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .form-actions {
+                flex-direction: column;
+            }
+            
+            .form-actions .btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .main-content {
+                padding: 10px;
+            }
+            
+            .header {
+                padding-bottom: 10px;
+            }
+            
+            .dashboard-cards {
+                gap: 10px;
+            }
+            
+            .card {
+                padding: 15px;
+            }
+            
+            .bookings-section, .account-section {
+                padding: 15px;
+            }
+            
+            .btn {
+                padding: 8px 12px;
+                font-size: 0.85rem;
+            }
+            
+            th, td {
+                padding: 10px 8px;
+                font-size: 0.85rem;
             }
         }
     </style>
@@ -336,6 +731,9 @@
     <div class="container">
         <!-- Sidebar -->
         <div class="sidebar">
+            <button class="mobile-menu-toggle" onclick="toggleMobileMenu()">
+                <i class="fas fa-bars"></i>
+            </button>
             <div class="sidebar-header">
                 <h3>Alassan Saine</h3>
                 <p>Customer</p>
@@ -349,15 +747,19 @@
                     <i class="fas fa-calendar-check"></i>
                     <span>My Bookings</span>
                 </div>
+                <div class="menu-item" onclick="window.location.href='search-handyman.html'">
+                    <i class="fas fa-search"></i>
+                    <span>Search Services</span>
+                </div>
                 <div class="menu-item" onclick="showSection('account')">
                     <i class="fas fa-user-cog"></i>
                     <span>Account Settings</span>
                 </div>
-                <div class="menu-item">
+                <div class="menu-item" onclick="showSection('help')">
                     <i class="fas fa-question-circle"></i>
                     <span>Help & Support</span>
                 </div>
-                <div class="menu-item">
+                <div class="menu-item" onclick="logout()">
                     <i class="fas fa-sign-out-alt"></i>
                     <span>Logout</span>
                 </div>
@@ -371,9 +773,13 @@
                 <div class="header">
                     <h1>Dashboard Overview</h1>
                     <div class="user-profile">
-                        <i class="fas fa-user" style="font-size: 40px;"></i>
-
+                        <div class="profile-avatar">
+                            <i class="fas fa-user"></i>
+                        </div>
                         <span>Alassan Saine</span>
+                        <a href="search-handyman.html" class="btn btn-primary" style="margin-left: 15px;">
+                            <i class="fas fa-search"></i> Search Services
+                        </a>
                     </div>
                 </div>
                 
@@ -390,6 +796,10 @@
                         <h3>Favorite Handymen</h3>
                         <p>2</p>
                     </div>
+                    <div class="card" style="cursor: pointer; background: linear-gradient(135deg, #f7931e, #e79004); color: white;" onclick="window.location.href='search-handyman.html'">
+                        <h3 style="color: white;">Search Services</h3>
+                        <p style="color: white;"><i class="fas fa-search" style="font-size: 2rem;"></i></p>
+                    </div>
                 </div>
                 
                 <div class="bookings-section">
@@ -398,44 +808,58 @@
                         <button class="btn btn-outline" onclick="showSection('bookings')">View All</button>
                     </div>
                     
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Service</th>
-                                <th>Handyman</th>
-                                <th>Date</th>
-                                <th>Time</th>
-                                <th>Status</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Plumbing Repair</td>
-                                <td>Mike Johnson</td>
-                                <td>Jun 15, 2023</td>
-                                <td>10:00 AM</td>
-                                <td><span class="status status-completed">Completed</span></td>
-                                <td><button class="btn btn-outline">Details</button></td>
-                            </tr>
-                            <tr>
-                                <td>Electrical Wiring</td>
-                                <td>David Smith</td>
-                                <td>Jun 20, 2023</td>
-                                <td>2:00 PM</td>
-                                <td><span class="status status-confirmed">Confirmed</span></td>
-                                <td><button class="btn btn-outline">Details</button></td>
-                            </tr>
-                            <tr>
-                                <td>Furniture Assembly</td>
-                                <td>Robert Brown</td>
-                                <td>Jun 25, 2023</td>
-                                <td>9:00 AM</td>
-                                <td><span class="status status-pending">Pending</span></td>
-                                <td><button class="btn btn-outline">Details</button></td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Service</th>
+                                    <th>Handyman</th>
+                                    <th>Date</th>
+                                    <th>Time</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Plumbing Repair</td>
+                                    <td>Mike Johnson</td>
+                                    <td>Jun 15, 2023</td>
+                                    <td>10:00 AM</td>
+                                    <td><span class="status status-completed">Completed</span></td>
+                                    <td>
+                                        <div class="action-buttons">
+                                            <button class="btn btn-outline">Details</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Electrical Wiring</td>
+                                    <td>David Smith</td>
+                                    <td>Jun 20, 2023</td>
+                                    <td>2:00 PM</td>
+                                    <td><span class="status status-confirmed">Confirmed</span></td>
+                                    <td>
+                                        <div class="action-buttons">
+                                            <button class="btn btn-outline">Details</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Furniture Assembly</td>
+                                    <td>Robert Brown</td>
+                                    <td>Jun 25, 2023</td>
+                                    <td>9:00 AM</td>
+                                    <td><span class="status status-pending">Pending</span></td>
+                                    <td>
+                                        <div class="action-buttons">
+                                            <button class="btn btn-outline">Details</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
             
@@ -444,9 +868,9 @@
                 <div class="header">
                     <h1>My Bookings</h1>
                     <div class="user-profile">
-                       <i class="fas fa-user" style="font-size: 40px;"></i>
-
-
+                       <div class="profile-avatar">
+                           <i class="fas fa-user"></i>
+                       </div>
                         <span>Alassan Saine</span>
                     </div>
                 </div>
@@ -454,80 +878,97 @@
                 <div class="bookings-section">
                     <div class="section-header">
                         <h2>All Bookings</h2>
-                        <a href="../views/booking.html" class="btn btn-primary" >
-                            <i class="fas fa-plus"></i> New Booking
-                        </a>
+                        <div style="display: flex; gap: 10px;">
+                            <a href="search-handyman.html" class="btn btn-outline">
+                                <i class="fas fa-search"></i> Search Services
+                            </a>
+                            <a href="../views/booking.html" class="btn btn-primary" >
+                                <i class="fas fa-plus"></i> New Booking
+                            </a>
+                        </div>
                     </div>
                     
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Service</th>
-                                <th>Handyman</th>
-                                <th>Date</th>
-                                <th>Time</th>
-                                <th>Status</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Plumbing Repair</td>
-                                <td>Mamadou Bah</td>
-                                <td>Jun 15, 2023</td>
-                                <td>10:00 AM</td>
-                                <td><span class="status status-completed">Completed</span></td>
-                                <td>
-                                    <button class="btn btn-outline">Details</button>
-                                    <button class="btn btn-outline">Review</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Electrical Wiring</td>
-                                <td>Fatim Faal</td>
-                                <td>Jun 20, 2023</td>
-                                <td>2:00 PM</td>
-                                <td><span class="status status-confirmed">Confirmed</span></td>
-                                <td>
-                                    <button class="btn btn-outline">Details</button>
-                                    <button class="btn btn-outline">Reschedule</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Furniture Assembly</td>
-                                <td>Assiah Awoke</td>
-                                <td>Jun 25, 2023</td>
-                                <td>9:00 AM</td>
-                                <td><span class="status status-pending">Pending</span></td>
-                                <td>
-                                    <button class="btn btn-outline">Details</button>
-                                    <button class="btn btn-outline">Cancel</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>AC Maintenance</td>
-                                <td>Assan Leigh</td>
-                                <td>May 10, 2023</td>
-                                <td>11:00 AM</td>
-                                <td><span class="status status-completed">Completed</span></td>
-                                <td>
-                                    <button class="btn btn-outline">Details</button>
-                                    <button class="btn btn-outline">Review</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Painting Service</td>
-                                <td>Mariama John</td>
-                                <td>Apr 28, 2023</td>
-                                <td>8:00 AM</td>
-                                <td><span class="status status-cancelled">Cancelled</span></td>
-                                <td>
-                                    <button class="btn btn-outline">Details</button>
-                                    <button class="btn btn-outline">Re-book</button>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Service</th>
+                                    <th>Handyman</th>
+                                    <th>Date</th>
+                                    <th>Time</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Plumbing Repair</td>
+                                    <td>Mamadou Bah</td>
+                                    <td>Jun 15, 2023</td>
+                                    <td>10:00 AM</td>
+                                    <td><span class="status status-completed">Completed</span></td>
+                                    <td>
+                                        <div class="action-buttons">
+                                            <button class="btn btn-outline">Details</button>
+                                            <button class="btn btn-outline">Review</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Electrical Wiring</td>
+                                    <td>Fatim Faal</td>
+                                    <td>Jun 20, 2023</td>
+                                    <td>2:00 PM</td>
+                                    <td><span class="status status-confirmed">Confirmed</span></td>
+                                    <td>
+                                        <div class="action-buttons">
+                                            <button class="btn btn-outline">Details</button>
+                                            <button class="btn btn-outline">Reschedule</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Furniture Assembly</td>
+                                    <td>Assiah Awoke</td>
+                                    <td>Jun 25, 2023</td>
+                                    <td>9:00 AM</td>
+                                    <td><span class="status status-pending">Pending</span></td>
+                                    <td>
+                                        <div class="action-buttons">
+                                            <button class="btn btn-outline">Details</button>
+                                            <button class="btn btn-outline">Cancel</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>AC Maintenance</td>
+                                    <td>Assan Leigh</td>
+                                    <td>May 10, 2023</td>
+                                    <td>11:00 AM</td>
+                                    <td><span class="status status-completed">Completed</span></td>
+                                    <td>
+                                        <div class="action-buttons">
+                                            <button class="btn btn-outline">Details</button>
+                                            <button class="btn btn-outline">Review</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Painting Service</td>
+                                    <td>Mariama John</td>
+                                    <td>Apr 28, 2023</td>
+                                    <td>8:00 AM</td>
+                                    <td><span class="status status-cancelled">Cancelled</span></td>
+                                    <td>
+                                        <div class="action-buttons">
+                                            <button class="btn btn-outline">Details</button>
+                                            <button class="btn btn-outline">Re-book</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
             
@@ -536,8 +977,9 @@
                 <div class="header">
                     <h1>Account Settings</h1>
                     <div class="user-profile">
-                        <i class="fas fa-user" style="font-size: 20px;"></i>
-
+                        <div class="profile-avatar">
+                            <i class="fas fa-user"></i>
+                        </div>
                         <span>Alassan Saine</span>
                     </div>
                 </div>
@@ -606,14 +1048,186 @@
                     </form>
                 </div>
             </div>
+            
+            <!-- Help & Support Section (Hidden by default) -->
+            <div id="help-section" class="hidden">
+                <div class="header">
+                    <h1>Help & Support</h1>
+                    <div class="user-profile">
+                        <div class="profile-avatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <span>Alassan Saine</span>
+                    </div>
+                </div>
+                
+                <div class="help-section">
+                    <div class="section-header">
+                        <h2>Frequently Asked Questions</h2>
+                    </div>
+                    
+                    <div class="faq-container">
+                        <div class="faq-item">
+                            <div class="faq-question" onclick="toggleFAQ(this)">
+                                <h3>How do I book a handyman service?</h3>
+                                <i class="fas fa-chevron-down"></i>
+                            </div>
+                            <div class="faq-answer">
+                                <p>To book a handyman service, go to "Search Services" in the sidebar, browse available handymen, and click on their profile to book. You can also use the "New Booking" button in the My Bookings section.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="faq-item">
+                            <div class="faq-question" onclick="toggleFAQ(this)">
+                                <h3>How do I cancel a booking?</h3>
+                                <i class="fas fa-chevron-down"></i>
+                            </div>
+                            <div class="faq-answer">
+                                <p>You can cancel a booking by going to "My Bookings" and clicking the "Cancel" button next to any pending or confirmed booking. Cancellations are free up to 24 hours before the scheduled service.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="faq-item">
+                            <div class="faq-question" onclick="toggleFAQ(this)">
+                                <h3>What payment methods are accepted?</h3>
+                                <i class="fas fa-chevron-down"></i>
+                            </div>
+                            <div class="faq-answer">
+                                <p>We currently accept cash payments upon service completion. Payment is made directly to the handyman after the work is done and you're satisfied with the service.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="faq-item">
+                            <div class="faq-question" onclick="toggleFAQ(this)">
+                                <h3>How do I rate and review a handyman?</h3>
+                                <i class="fas fa-chevron-down"></i>
+                            </div>
+                            <div class="faq-answer">
+                                <p>After a completed service, you can rate and review the handyman by visiting their profile page. Look for the "Review" button in your completed bookings or visit the handyman's profile directly.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="faq-item">
+                            <div class="faq-question" onclick="toggleFAQ(this)">
+                                <h3>What if I'm not satisfied with the service?</h3>
+                                <i class="fas fa-chevron-down"></i>
+                            </div>
+                            <div class="faq-answer">
+                                <p>If you're not satisfied with the service, please contact our support team immediately. We work with our handymen to ensure quality service and will help resolve any issues.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="support-section">
+                    <div class="section-header">
+                        <h2>Contact Support</h2>
+                    </div>
+                    
+                    <div class="support-cards">
+                        <div class="support-card">
+                            <div class="support-icon">
+                                <i class="fas fa-phone"></i>
+                            </div>
+                            <h3>Phone Support</h3>
+                            <p>Call us for immediate assistance</p>
+                            <a href="tel:+2203281914" class="btn btn-primary">Call Now</a>
+                        </div>
+                        
+                        <div class="support-card">
+                            <div class="support-icon">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <h3>Email Support</h3>
+                            <p>Send us an email for detailed help</p>
+                            <a href="mailto:support@findahand.gm" class="btn btn-outline">Send Email</a>
+                        </div>
+                        
+                        <div class="support-card">
+                            <div class="support-icon">
+                                <i class="fas fa-comments"></i>
+                            </div>
+                            <h3>Live Chat</h3>
+                            <p>Chat with our support team</p>
+                            <button class="btn btn-primary" onclick="startLiveChat()">Start Chat</button>
+                        </div>
+                        
+                        <div class="support-card">
+                            <div class="support-icon">
+                                <i class="fas fa-map-marker-alt"></i>
+                            </div>
+                            <h3>Visit Us</h3>
+                            <p>Find our office location</p>
+                            <a href="https://maps.google.com/?q=Banjul,Gambia" target="_blank" class="btn btn-outline">Get Directions</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="contact-section">
+                    <div class="section-header">
+                        <h2>Contact Information</h2>
+                    </div>
+                    
+                    <div class="contact-info">
+                        <div class="contact-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <div>
+                                <h4>Address</h4>
+                                <p>123 Kairaba Avenue, Fajara<br>Banjul, The Gambia</p>
+                            </div>
+                        </div>
+                        
+                        <div class="contact-item">
+                            <i class="fas fa-phone"></i>
+                            <div>
+                                <h4>Phone</h4>
+                                <p>+220 3281914<br>+220 2181733</p>
+                            </div>
+                        </div>
+                        
+                        <div class="contact-item">
+                            <i class="fas fa-envelope"></i>
+                            <div>
+                                <h4>Email</h4>
+                                <p>support@findahand.gm<br>info@findahand.gm</p>
+                            </div>
+                        </div>
+                        
+                        <div class="contact-item">
+                            <i class="fas fa-clock"></i>
+                            <div>
+                                <h4>Business Hours</h4>
+                                <p>Monday - Friday: 8:00 AM - 6:00 PM<br>Saturday: 9:00 AM - 4:00 PM</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
     <script>
+    // Mobile menu toggle function
+    function toggleMobileMenu() {
+        const sidebarMenu = document.querySelector('.sidebar-menu');
+        sidebarMenu.classList.toggle('active');
+    }
+
+    document.addEventListener('click', function(event) {
+        const sidebar = document.querySelector('.sidebar');
+        const mobileToggle = document.querySelector('.mobile-menu-toggle');
+        
+        if (!sidebar.contains(event.target) && window.innerWidth <= 768) {
+            const sidebarMenu = document.querySelector('.sidebar-menu');
+            sidebarMenu.classList.remove('active');
+        }
+    });
+
     function showSection(sectionId) {
         document.getElementById('dashboard-section').classList.add('hidden');
         document.getElementById('bookings-section').classList.add('hidden');
         document.getElementById('account-section').classList.add('hidden');
+        document.getElementById('help-section').classList.add('hidden');
         document.getElementById(sectionId + '-section').classList.remove('hidden');
 
         const menuItems = document.querySelectorAll('.menu-item');
@@ -624,6 +1238,12 @@
                 item.classList.add('active');
                 break;
             }
+        }
+
+        // Close mobile menu after navigation
+        if (window.innerWidth <= 768) {
+            const sidebarMenu = document.querySelector('.sidebar-menu');
+            sidebarMenu.classList.remove('active');
         }
     }
 
@@ -775,36 +1395,36 @@ function viewBookingDetails(id) {
     alert(`Show details for booking ${id}`);
 }
 
-function cancelBooking(id) {
-    if (!confirm('Are you sure you want to cancel this booking?')) return;
-
+async function cancelBooking(id) {
     const token = localStorage.getItem('token');
-    fetch(`http://localhost:5000/api/bookings/${id}/cancel`, {
-        method: 'POST',
-        headers: {
-            'Authorization': `Bearer ${token}`,
-            'Content-Type': 'application/json',
-        },
-    })
-        .then(async res => {
-            if (!res.ok) {
-                const errorData = await res.json();
-                throw new Error(errorData.message || 'Failed to cancel booking');
-            }
-            return res.json();
-        })
-        .then(data => {
-            if (data.success) {
-                alert('Booking cancelled successfully');
-                loadUserBookings();
-            } else {
-                alert(data.message || 'Failed to cancel booking');
-            }
-        })
-        .catch(err => {
-            console.error(err);
-            alert('Error cancelling booking: ' + err.message);
+    if (!token) {
+        alert('Please log in.');
+        return;
+    }
+
+    if (!confirm('Are you sure you want to cancel this booking?')) {
+        return;
+    }
+
+    try {
+        const response = await fetch(`http://localhost:5000/api/bookings/${id}/cancel`, {
+            method: 'PUT',
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json',
+            },
         });
+
+        if (!response.ok) {
+            throw new Error('Failed to cancel booking');
+        }
+
+        alert('Booking cancelled successfully');
+        loadUserBookings(); 
+    } catch (error) {
+        console.error(error);
+        alert('Failed to cancel booking');
+    }
 }
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -828,6 +1448,14 @@ document.addEventListener('DOMContentLoaded', function () {
     loadUserProfile();
     loadUserBookings();
 });
+
+function logout() {
+    localStorage.removeItem('token');
+    localStorage.removeItem('userType');
+    localStorage.removeItem('user');
+    alert('Logged out successfully');
+    window.location.href = './login-selection.html';
+}
 
 </script>
 

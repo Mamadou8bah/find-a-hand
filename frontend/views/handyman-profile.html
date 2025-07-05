@@ -25,7 +25,7 @@
       <div class="profile-card">
         <div class="profile-header">
           <div class="profile-image">
-            <img id="handymanImage" src="../public/images/handyman-profiles/default-profile.jpg" alt="Handyman Profile">
+            <img id="handymanImage" src="https://via.placeholder.com/140x140/f7931e/ffffff?text=Profile" alt="Handyman Profile">
           </div>
           <div class="profile-info">
             <h2 id="handymanName">Loading...</h2>
@@ -72,10 +72,40 @@
         </div>
       </div>
 
-      <div id="reviewsSection" class="reviews-section" style="display: none;">
-        <h3>Reviews</h3>
-        <div id="reviewsList" class="reviews-list">
-         
+      <div class="tab-content hidden" id="reviews">
+        <div class="reviews-section">
+          <h3>Customer Reviews</h3>
+          
+          <!-- Review Form for Customers -->
+          <div class="review-form-container" id="reviewFormContainer" style="display: none;">
+            <h4>Leave a Review</h4>
+            <form id="reviewForm" class="review-form">
+              <div class="rating-input">
+                <label>Your Rating:</label>
+                <div class="star-rating">
+                  <input type="radio" name="rating" value="5" id="star5">
+                  <label for="star5" class="star">★</label>
+                  <input type="radio" name="rating" value="4" id="star4">
+                  <label for="star4" class="star">★</label>
+                  <input type="radio" name="rating" value="3" id="star3">
+                  <label for="star3" class="star">★</label>
+                  <input type="radio" name="rating" value="2" id="star2">
+                  <label for="star2" class="star">★</label>
+                  <input type="radio" name="rating" value="1" id="star1">
+                  <label for="star1" class="star">★</label>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="reviewComment">Your Review:</label>
+                <textarea id="reviewComment" name="comment" rows="4" placeholder="Share your experience with this handyman..." required></textarea>
+              </div>
+              <button type="submit" class="submit-review-btn">Submit Review</button>
+            </form>
+          </div>
+          
+          <div id="reviewsList">
+            <!-- Reviews will be loaded here -->
+          </div>
         </div>
       </div>
     </main>

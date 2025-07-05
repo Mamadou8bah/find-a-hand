@@ -241,7 +241,7 @@ class MyHandymanProfile {
         const rateElement = document.getElementById('handymanRate');
         if (rateElement) {
             const rate = this.handyman.hourlyRate || 0;
-            rateElement.textContent = rate > 0 ? `$${rate}/hour` : 'Rate not specified';
+            rateElement.textContent = rate > 0 ? `GMD ${rate}/hour` : 'Rate not specified';
         }
 
         // Update Location
@@ -665,8 +665,8 @@ class MyHandymanProfile {
 
             case 'hourlyRate':
                 const rate = parseInt(value);
-                if (isNaN(rate) || rate < 10 || rate > 100) {
-                    errorMessage = 'Hourly rate must be between $10 and $100';
+                if (isNaN(rate) || rate < 10 || rate > 1000) {
+                    errorMessage = 'Hourly rate must be between GMD 10 and GMD 1000';
                     isValid = false;
                 }
                 break;

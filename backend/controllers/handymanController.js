@@ -276,7 +276,15 @@ exports.updateBookingStatus = async (req, res) => {
 exports.getAllHandymen = async (req, res) => {
   try {
     const handymen = await Handyman.find().select('-password');
-    res.json(handymen);
+    
+    // Add review count to each handyman
+    const handymenWithReviewCount = handymen.map(handyman => {
+      const handymanObj = handyman.toObject();
+      handymanObj.ratingCount = handyman.reviews ? handyman.reviews.length : 0;
+      return handymanObj;
+    });
+    
+    res.json(handymenWithReviewCount);
   } catch (err) {
     console.error(err.message);
     res.status(500).send('Server error');
@@ -286,7 +294,9 @@ exports.getAllHandymen = async (req, res) => {
 // Get handyman by ID
 exports.getHandymanById = async (req, res) => {
   try {
-    const handyman = await Handyman.findById(req.params.id).select('-password');
+    const handyman = await Handyman.findById(req.params.id)
+      .select('-password')
+      .populate('reviews.userId', 'firstName lastName');
     
     if (!handyman) {
       return res.status(404).json({ message: 'Handyman not found' });
@@ -304,26 +314,50 @@ exports.getHandymanById = async (req, res) => {
 
 // Add review to handyman
 exports.addReview = async (req, res) => {
-  const { rating, comment } = req.body;
+  const { rating, comment, handymanId } = req.body;
 
   try {
     console.log('=== addReview called ===');
-    console.log('Request handyman:', req.handyman);
-    console.log('Handyman ID:', req.handyman?.id);
+    console.log('Request user:', req.user);
+    console.log('User ID:', req.user?.id);
     
-    if (!req.handyman || !req.handyman.id) {
-      console.log('No handyman data in request');
+    if (!req.user || !req.user.id) {
+      console.log('No user data in request');
       return res.status(401).json({ message: 'Authentication required' });
     }
     
-    const handyman = await Handyman.findById(req.params.id);
+    const handyman = await Handyman.findById(handymanId);
 
     if (!handyman) {
       return res.status(404).json({ message: 'Handyman not found' });
     }
 
+    // Check if user has already reviewed this handyman
+    const existingReview = handyman.reviews.find(
+      review => review.userId.toString() === req.user.id
+    );
+
+    if (existingReview) {
+      return res.status(400).json({ 
+        message: 'You have already reviewed this handyman',
+        existingReview 
+      });
+    }
+
+    // Optional: Check if user has booked this handyman (for validation)
+    const Booking = require('../models/bookingModel');
+    const hasBooked = await Booking.findOne({
+      user: req.user.id,
+      handymanId: handymanId,
+      status: { $in: ['confirmed', 'completed'] }
+    });
+
+    if (!hasBooked) {
+      console.log('User has not booked this handyman, but allowing review anyway');
+    }
+
     const newReview = {
-      userId: req.handyman.id,
+      userId: req.user.id,
       rating,
       comment,
       createdAt: new Date()
@@ -337,7 +371,21 @@ exports.addReview = async (req, res) => {
 
     await handyman.save();
 
-    res.json(handyman.reviews);
+    // Populate user data for the new review
+    const User = require('../models/userModel');
+    const user = await User.findById(req.user.id).select('firstName lastName');
+    
+    const reviewWithUser = {
+      ...newReview,
+      user: user
+    };
+
+    res.json({ 
+      message: 'Review added successfully',
+      review: reviewWithUser,
+      newAverageRating: handyman.rating,
+      totalReviews: handyman.reviews.length
+    });
   } catch (err) {
     console.error('addReview error:', err.message);
     res.status(500).send('Server error');

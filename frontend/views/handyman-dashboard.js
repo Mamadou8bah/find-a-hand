@@ -1,4 +1,3 @@
-
 window.showSection = function(sectionId) {
   const sections = document.querySelectorAll('div[id$="-section"]');
   sections.forEach(sec => sec.classList.add('hidden'));
@@ -682,9 +681,9 @@ function updateEarningsCards(earnings) {
   const lastMonthEl = document.getElementById('last-month-earnings');
   const totalEl = document.getElementById('total-earnings');
   
-  if (thisMonthEl) thisMonthEl.textContent = `$${earnings.thisMonth.toFixed(2)}`;
-  if (lastMonthEl) lastMonthEl.textContent = `$${earnings.lastMonth.toFixed(2)}`;
-  if (totalEl) totalEl.textContent = `$${earnings.total.toFixed(2)}`;
+  if (thisMonthEl) thisMonthEl.textContent = `GMD ${earnings.thisMonth.toFixed(2)}`;
+  if (lastMonthEl) lastMonthEl.textContent = `GMD ${earnings.lastMonth.toFixed(2)}`;
+  if (totalEl) totalEl.textContent = `GMD ${earnings.total.toFixed(2)}`;
 }
 
 
@@ -721,7 +720,7 @@ function renderEarningsHistory(bookings) {
       <td>${customer}</td>
       <td>${booking.service}</td>
       <td>${duration} hours</td>
-      <td>$${earnings.toFixed(2)}</td>
+      <td>GMD ${earnings.toFixed(2)}</td>
       <td><span class="status status-completed">Paid</span></td>
     `;
     

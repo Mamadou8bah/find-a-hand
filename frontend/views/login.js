@@ -20,6 +20,7 @@ document.querySelector('.login-form').addEventListener('submit', async (e) => {
 
     
     localStorage.setItem('token', result.token);
+    localStorage.setItem('userType', 'customer');
 
     // Get user profile
     const userRes = await fetch('http://localhost:5000/api/users/profile', {

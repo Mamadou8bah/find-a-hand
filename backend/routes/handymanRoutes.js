@@ -84,15 +84,16 @@ router.post('/me/test-booking', auth, handymanController.createTestBooking);
 // @access  Public
 router.get('/:id', handymanController.getHandymanById);
 
-// @route   POST api/handymen/:id/reviews
-// @desc    Add review to handyman
+// @route   POST api/handymen/reviews
+// @desc    Add review to handyman (customer only)
 // @access  Private
 router.post(
-  '/:id/reviews',
+  '/reviews',
   [
-    auth,
+    auth, // This should be customer auth, not handyman auth
     check('rating', 'Rating is required and must be between 1 and 5').isInt({ min: 1, max: 5 }),
-    check('comment', 'Comment is required').not().isEmpty()
+    check('comment', 'Comment is required').not().isEmpty(),
+    check('handymanId', 'Handyman ID is required').not().isEmpty()
   ],
   handymanController.addReview
 );
