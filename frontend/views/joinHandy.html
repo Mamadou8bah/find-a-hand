@@ -69,7 +69,7 @@
       
       const redirectTimeout = setTimeout(() => {
         console.log('Timeout reached, redirecting to dashboard...');
-        alert("⏰ Registration may have been successful. Redirecting to your dashboard...");
+        alert("⏰ Registration is taking longer than expected. Redirecting to your dashboard...");
         window.location.href = "./handyman-dashboard.html";
       }, 20000);
 
@@ -128,7 +128,7 @@
         
         if (error.name === 'TypeError' && error.message.includes('fetch')) {
          
-          alert("🌐 Registration may have been successful. Redirecting to your dashboard...");
+          alert("🌐 Network connection issue. Please check your internet connection and try again.");
           window.location.href = "./handyman-dashboard.html";
         } else {
           alert("Network error: " + (error.message || error));
