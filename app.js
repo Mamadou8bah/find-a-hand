@@ -10,7 +10,7 @@ const app = express();
 // CORS configuration for production
 const corsOptions = {
   origin: function (origin, callback) {
-    // Allow requests with no origin (like mobile apps or curl requests)
+    
     if (!origin) return callback(null, true);
     
     const allowedOrigins = [
@@ -44,16 +44,30 @@ app.use('/api/bookings', bookingRoutes);
 app.use('/api/customers', customerRoutes);
 
 app.get('/', (req, res) => {
-  res.send('Find-A-Hand API is running...');
+  res.status(200).send('Find-A-Hand API is running...');
+});
+
+// Test endpoint for deployment verification
+app.get('/test', (req, res) => {
+  res.status(200).json({
+    message: 'Find-A-Hand API is working!',
+    timestamp: new Date().toISOString(),
+    version: '1.0.0'
+  });
 });
 
 // Health check endpoint
 app.get('/health', (req, res) => {
-  res.json({ 
-    status: 'OK', 
+  const healthCheck = {
+    status: 'OK',
     timestamp: new Date().toISOString(),
-    environment: process.env.NODE_ENV || 'development'
-  });
+    environment: process.env.NODE_ENV || 'development',
+    uptime: process.uptime(),
+    memory: process.memoryUsage(),
+    database: 'connected' // We'll handle DB status separately
+  };
+  
+  res.status(200).json(healthCheck);
 });
 
 module.exports = app;
