@@ -126,8 +126,8 @@ async function loadHandymen() {
   try {
     const container = document.getElementById('handymenContainer');
     
-   
-    container.innerHTML = '<div style="text-align: center; padding: 20px; color: #666;">Loading handymen...</div>';
+    // Show loading state
+    container.innerHTML = '<div class="handymen-loading"><div class="spinner"><i class="fas fa-spinner fa-spin"></i></div><p>Loading handymen...</p></div>';
     
     const response = await fetch(`${CONFIG.API_BASE_URL}/api/handymen`);
     if (!response.ok) throw new Error('Failed to fetch handymen');
@@ -136,32 +136,38 @@ async function loadHandymen() {
 
     container.innerHTML = ''; 
 
-    
+    // Limit to 6 handymen for the homepage
     const limitedHandymen = handymen.slice(0, 6);
 
     limitedHandymen.forEach(handyman => {
-     
+      // Generate dynamic star ratings based on actual rating
       let stars = '';
-      const rating = handyman.rating || 0; // Ensure rating is a number
+      const rating = parseFloat(handyman.rating) || 0; // Ensure rating is a number
       
       console.log(`Handyman ${handyman.firstName} ${handyman.lastName}: rating = ${handyman.rating}, normalized = ${rating}`);
       
+      // Generate 5 stars based on actual rating
       for (let i = 1; i <= 5; i++) {
         if (rating >= i) {
-          stars += '<i class="fas fa-star" style="color: orange;"></i>';
+          // Full star
+          stars += '<i class="fas fa-star" style="color: #f7931e;"></i>';
         } else if (rating >= i - 0.5) {
-          stars += '<i class="fas fa-star-half-alt" style="color: orange;"></i>';
+          // Half star
+          stars += '<i class="fas fa-star-half-alt" style="color: #f7931e;"></i>';
         } else {
-          stars += '<i class="far fa-star" style="color: orange;"></i>';
+          // Empty star
+          stars += '<i class="far fa-star" style="color: #f7931e;"></i>';
         }
       }
 
-      // Create handyman item
+      // Create handyman item with dynamic data
       const handymanHTML = `
         <a href="/public/views/handyman-profile.html?handymanId=${handyman._id}" class="handyman-link" data-handyman='${JSON.stringify(handyman)}'>
           <div class="handyman-near-you">
             <div class="handyman-image">
-              <img src="${handyman.profileImage ? CONFIG.API_BASE_URL + '/' + handyman.profileImage : './public/images/handyman-profiles/profile1.jpeg'}" alt="${handyman.firstName} ${handyman.lastName}">
+              <img src="${handyman.profileImage ? CONFIG.API_BASE_URL + '/' + handyman.profileImage : './public/images/handyman-profiles/profile1.jpeg'}" 
+                   alt="${handyman.firstName} ${handyman.lastName}"
+                   onerror="this.src='./public/images/handyman-profiles/profile1.jpeg'">
             </div>
             <div class="handyman-details">
               <p class="handyman-name">${handyman.firstName} ${handyman.lastName}</p>
@@ -189,7 +195,8 @@ async function loadHandymen() {
 
   } catch (error) {
     console.error('Error loading handymen:', error);
-    document.getElementById('handymenContainer').innerHTML = '<div style="text-align: center; padding: 20px; color: #dc3545;">Failed to load handymen. Please try again later.</div>';
+    const container = document.getElementById('handymenContainer');
+    container.innerHTML = '<div class="handymen-error"><p>Failed to load handymen. Please try again later.</p></div>';
   }
 }
 
