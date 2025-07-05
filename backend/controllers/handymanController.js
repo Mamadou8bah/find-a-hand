@@ -2,6 +2,7 @@ const Handyman = require('../models/HandymanModel');
 const jwt = require('jsonwebtoken');
 const { validationResult } = require('express-validator');
 const Booking = require('../models/bookingModel');
+const mongoose = require('mongoose');
 
 // Register a new handyman
 exports.register = async (req, res) => {
@@ -272,7 +273,11 @@ exports.updateBookingStatus = async (req, res) => {
 // Get all handymen
 exports.getAllHandymen = async (req, res) => {
   try {
+    console.log('=== getAllHandymen called ===');
+    console.log('MongoDB connection state:', mongoose.connection.readyState);
+    
     const handymen = await Handyman.find().select('-password');
+    console.log('Found handymen:', handymen.length);
     
     // Add review count to each handyman
     const handymenWithReviewCount = handymen.map(handyman => {
@@ -281,10 +286,16 @@ exports.getAllHandymen = async (req, res) => {
       return handymanObj;
     });
     
+    console.log('Returning handymen with review counts');
     res.json(handymenWithReviewCount);
   } catch (err) {
-    console.error(err.message);
-    res.status(500).send('Server error');
+    console.error('getAllHandymen error:', err.message);
+    console.error('Error stack:', err.stack);
+    res.status(500).json({ 
+      message: 'Server error', 
+      error: err.message,
+      timestamp: new Date().toISOString()
+    });
   }
 };
 

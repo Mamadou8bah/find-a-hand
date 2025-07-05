@@ -145,6 +145,40 @@ app.get('/cors-test', (req, res) => {
   });
 });
 
+// Database test endpoint
+app.get('/db-test', async (req, res) => {
+  try {
+    const Handyman = require('./backend/models/HandymanModel');
+    const count = await Handyman.countDocuments();
+    res.status(200).json({
+      message: 'Database connection successful!',
+      handymanCount: count,
+      timestamp: new Date().toISOString()
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: 'Database connection failed!',
+      error: error.message,
+      timestamp: new Date().toISOString()
+    });
+  }
+});
+
+// Environment check endpoint
+app.get('/env-check', (req, res) => {
+  const requiredEnvVars = ['MONGO_URI', 'JWT_SECRET', 'NODE_ENV'];
+  const missingVars = requiredEnvVars.filter(varName => !process.env[varName]);
+  
+  res.status(200).json({
+    message: 'Environment check',
+    nodeEnv: process.env.NODE_ENV,
+    mongoUri: process.env.MONGO_URI ? 'Set' : 'Missing',
+    jwtSecret: process.env.JWT_SECRET ? 'Set' : 'Missing',
+    missingVariables: missingVars,
+    timestamp: new Date().toISOString()
+  });
+});
+
 // Health check endpoint
 app.get('/health', (req, res) => {
   const healthCheck = {
