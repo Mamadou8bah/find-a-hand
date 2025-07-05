@@ -2,11 +2,84 @@
   publish = "frontend/views"
   base = "."
 
+# Custom redirects for each HTML page
+[[redirects]]
+  from = "/login"
+  to = "/login.html"
+  status = 200
+
+[[redirects]]
+  from = "/signup"
+  to = "/signup.html"
+  status = 200
+
+[[redirects]]
+  from = "/login-selection"
+  to = "/login-selection.html"
+  status = 200
+
+[[redirects]]
+  from = "/login-handyman"
+  to = "/login-handyman.html"
+  status = 200
+
+[[redirects]]
+  from = "/joinHandy"
+  to = "/joinHandy.html"
+  status = 200
+
+[[redirects]]
+  from = "/search-handyman"
+  to = "/search-handyman.html"
+  status = 200
+
+[[redirects]]
+  from = "/handyman-profile"
+  to = "/handyman-profile.html"
+  status = 200
+
+[[redirects]]
+  from = "/booking"
+  to = "/booking.html"
+  status = 200
+
+[[redirects]]
+  from = "/customer-dashboard"
+  to = "/customer-dashboard.html"
+  status = 200
+
+[[redirects]]
+  from = "/handyman-dashboard"
+  to = "/handyman-dashboard.html"
+  status = 200
+
+[[redirects]]
+  from = "/my-handyman-profile"
+  to = "/my-handyman-profile.html"
+  status = 200
+
+[[redirects]]
+  from = "/view-handymen"
+  to = "/view-handymen.html"
+  status = 200
+
+[[redirects]]
+  from = "/all-home-projects"
+  to = "/all-home-projects.html"
+  status = 200
+
+[[redirects]]
+  from = "/debug"
+  to = "/debug.html"
+  status = 200
+
+# Serve static assets from public directory
 [[redirects]]
   from = "/public/*"
   to = "/public/:splat"
   status = 200
 
+# Fallback for SPA-like behavior (optional)
 [[redirects]]
   from = "/*"
   to = "/index.html"

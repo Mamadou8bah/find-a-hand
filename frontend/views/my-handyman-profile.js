@@ -183,7 +183,7 @@ class MyHandymanProfile {
         // Update profile image
         const profileImage = document.getElementById('profileImage');
         if (this.handyman.profileImage) {
-            profileImage.src = `http://localhost:5000/${this.handyman.profileImage}`;
+            profileImage.src = `${CONFIG.API_BASE_URL}/${this.handyman.profileImage}`;
         }
 
         // Update profile info
@@ -276,7 +276,7 @@ class MyHandymanProfile {
             const portfolioItem = document.createElement('div');
             portfolioItem.className = 'portfolio-item';
             portfolioItem.innerHTML = `
-                <img src="http://localhost:5000/${imageUrl}" alt="Portfolio work ${index + 1}" class="portfolio-image">
+                <img src="${CONFIG.API_BASE_URL}/${imageUrl}" alt="Portfolio work ${index + 1}" class="portfolio-image">
                 <div class="portfolio-overlay">
                     <i class="fas fa-eye"></i>
                 </div>
