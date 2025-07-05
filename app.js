@@ -10,42 +10,47 @@ const app = express();
 // CORS configuration for production
 const corsOptions = {
   origin: function (origin, callback) {
-    
+    // Allow requests with no origin (like mobile apps or curl requests)
     if (!origin) return callback(null, true);
     
-    const allowedOrigins = [
-      'http://localhost:3000',
-      'http://localhost:5000',
-      'http://127.0.0.1:3000',
-      'http://127.0.0.1:5000',
-      // Add your production frontend URLs here
+    // Allow all localhost origins for development
+    if (origin.startsWith('http://localhost:') || origin.startsWith('http://127.0.0.1:')) {
+      return callback(null, true);
+    }
+    
+    // Allow all Netlify domains
+    if (origin.includes('netlify.app')) {
+      return callback(null, true);
+    }
+    
+    // Allow all Vercel domains
+    if (origin.includes('vercel.app')) {
+      return callback(null, true);
+    }
+    
+    // Allow specific production domains
+    const allowedDomains = [
       'https://find-a-hand.netlify.app',
       'https://find-a-hand.vercel.app',
-      'https://your-frontend-domain.com', // Replace with your actual frontend domain
-      // Add any Netlify preview URLs
-      'https://*.netlify.app',
-      'https://*.vercel.app'
+      'https://golden-gaufre-857914.netlify.app'
     ];
     
-    // Check if origin matches any allowed pattern
-    const isAllowed = allowedOrigins.some(allowed => {
-      if (allowed.includes('*')) {
-        // Handle wildcard patterns
-        const pattern = allowed.replace('*', '.*');
-        return new RegExp(pattern).test(origin);
-      }
-      return allowed === origin;
-    });
-    
-    if (isAllowed) {
-      callback(null, true);
-    } else {
-      console.log('CORS blocked origin:', origin);
-      callback(new Error('Not allowed by CORS'));
+    // Add domains from environment variable
+    if (process.env.CORS_ORIGIN) {
+      const envDomains = process.env.CORS_ORIGIN.split(',').map(domain => domain.trim());
+      allowedDomains.push(...envDomains);
     }
+    
+    if (allowedDomains.includes(origin)) {
+      return callback(null, true);
+    }
+    
+    console.log('CORS blocked origin:', origin);
+    console.log('Allowed domains:', allowedDomains);
+    callback(new Error('Not allowed by CORS'));
   },
   credentials: true,
-  optionsSuccessStatus: 200 // Some legacy browsers (IE11, various SmartTVs) choke on 204
+  optionsSuccessStatus: 200
 };
 
 app.use(cors(corsOptions));
@@ -128,6 +133,15 @@ app.get('/test', (req, res) => {
     message: 'Find-A-Hand API is working!',
     timestamp: new Date().toISOString(),
     version: '1.0.0'
+  });
+});
+
+// CORS test endpoint
+app.get('/cors-test', (req, res) => {
+  res.status(200).json({
+    message: 'CORS is working correctly!',
+    origin: req.headers.origin,
+    timestamp: new Date().toISOString()
   });
 });
 

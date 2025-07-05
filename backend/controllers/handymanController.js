@@ -62,9 +62,6 @@ exports.register = async (req, res) => {
     
     // Set proper headers
     res.setHeader('Content-Type', 'application/json');
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
-    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
     
     res.json({ token, message: 'Registration successful' });
     console.log('Response sent successfully');
