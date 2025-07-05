@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Debug Test</title>
+    <script src="config.js"></script>
+</head>
+<body>
+    <h1>API Debug Test</h1>
+    <div id="results"></div>
+    
+    <script>
+        const resultsDiv = document.getElementById('results');
+        
+        async function testAPI() {
+            resultsDiv.innerHTML = '<p>Testing API connectivity...</p>';
+            
+            try {
+                // Test 1: Health endpoint
+                console.log('Testing health endpoint...');
+                const healthResponse = await fetch(`${CONFIG.API_BASE_URL}/health`);
+                const healthData = await healthResponse.json();
+                resultsDiv.innerHTML += `<p>✅ Health check: ${JSON.stringify(healthData)}</p>`;
+                
+                // Test 2: Handymen endpoint
+                console.log('Testing handymen endpoint...');
+                const handymenResponse = await fetch(`${CONFIG.API_BASE_URL}/api/handymen`);
+                const handymenData = await handymenResponse.json();
+                resultsDiv.innerHTML += `<p>✅ Handymen API: ${JSON.stringify(handymenData)}</p>`;
+                
+                // Test 3: CORS test
+                console.log('Testing CORS...');
+                const corsResponse = await fetch(`${CONFIG.API_BASE_URL}/test`, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+                const corsData = await corsResponse.json();
+                resultsDiv.innerHTML += `<p>✅ CORS test: ${JSON.stringify(corsData)}</p>`;
+                
+            } catch (error) {
+                console.error('API test failed:', error);
+                resultsDiv.innerHTML += `<p>❌ Error: ${error.message}</p>`;
+            }
+        }
+        
+        // Run test when page loads
+        testAPI();
+    </script>
+</body>
+</html> 

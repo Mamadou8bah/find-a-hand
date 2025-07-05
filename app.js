@@ -118,6 +118,10 @@ app.get('/all-home-projects', (req, res) => {
   res.sendFile(__dirname + '/frontend/views/all-home-projects.html');
 });
 
+app.get('/debug', (req, res) => {
+  res.sendFile(__dirname + '/frontend/views/debug.html');
+});
+
 // Test endpoint for deployment verification
 app.get('/test', (req, res) => {
   res.status(200).json({
