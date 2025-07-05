@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Profile</title>
-    <link rel="stylesheet" href="./public/css/my-handyman-profile.css">
-    <link rel="stylesheet" href="./public/css/style.css">
+    <link rel="stylesheet" href="../public/css/my-handyman-profile.css">
+    <link rel="stylesheet" href="../public/css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script src="/public/views/my-handyman-profile.js"></script>
+    <script src="./my-handyman-profile.js"></script>
     <style>
         
         .action-buttons {
@@ -96,11 +96,11 @@
 </head>
 <body>
     <div class="back-header">
-        <a class="back-btn" href="/public/index.html">&lt;Back</a>
+        <a class="back-btn" href="../index.html">&lt;Back</a>
     </div>
     <section class="profile-header"> 
         <div class="image-container">
-            <img src="./public/images/handyman-profiles/profile4.jpeg" alt="my profile">
+            <img src="../public/images/handyman-profiles/profile4.jpeg" alt="my profile">
         </div>
         <p class="handyman-name">Mamadou Bah</p>
         <p class="handyman-job">Electrician</p>
@@ -113,7 +113,7 @@
             <span>4.5</span>
         </span>
         
-        <!-- Added Call and Message buttons -->
+      
         <div class="action-buttons">
        <a id="bookNowBtn" href="#" class="btn btn-call">Book Now</a>
 
@@ -121,14 +121,14 @@
         </div>
     </section>
     
-    <!-- Changed tab names and content -->
+  
     <div class="tabs">
         <button class="tab active" onclick="switchTab('about')">About</button>
         <button class="tab" onclick="switchTab('portfolio')">Portfolio</button>
         <button class="tab" onclick="switchTab('reviews')">Reviews</button>
     </div>
 
-    <!-- About Tab Content -->
+   
     <div class="tab-content" id="about">
         <h3>Services Offered</h3>
         <div class="services-grid">
