@@ -17,7 +17,9 @@ router.post(
     check('phone', 'Phone number must be at least 7 digits').isLength({ min: 7 }),
     check('location', 'Location is required').not().isEmpty(),
     check('password', 'Please enter a password with 6 or more characters').isLength({ min: 6 }),
-    check('profession', 'Profession is required').not().isEmpty()
+    check('profession', 'Profession is required').not().isEmpty(),
+    check('skills', 'Skills are required').not().isEmpty(),
+    check('experience', 'Experience is required').isInt({ min: 0 })
   ],
   handymanController.register
 );
@@ -39,8 +41,6 @@ router.post(
 // @access  Public
 router.get('/', handymanController.getAllHandymen);
 
-
-
 // @route   GET api/handymen/me
 // @desc    Get current handyman's profile
 // @access  Private
@@ -50,6 +50,34 @@ router.get('/me', auth, handymanController.getProfile);
 // @desc    Update handyman profile
 // @access  Private
 router.put('/me', auth, upload.single('profileImage'), handymanController.updateProfile);
+
+// @route   PUT api/handymen/me/password
+// @desc    Update handyman password
+// @access  Private
+router.put('/me/password', auth, [
+  check('currentPassword', 'Current password is required').exists(),
+  check('newPassword', 'New password must be at least 6 characters').isLength({ min: 6 })
+], handymanController.updatePassword);
+
+// @route   GET api/handymen/me/bookings
+// @desc    Get current handyman's bookings
+// @access  Private
+router.get('/me/bookings', auth, handymanController.getMyBookings);
+
+// @route   PUT api/handymen/me/bookings/:id/status
+// @desc    Update booking status
+// @access  Private
+router.put('/me/bookings/:id/status', auth, handymanController.updateBookingStatus);
+
+// @route   DELETE api/handymen/me/bookings/:id
+// @desc    Delete booking
+// @access  Private
+router.delete('/me/bookings/:id', auth, handymanController.deleteBooking);
+
+// @route   POST api/handymen/me/test-booking
+// @desc    Create a test booking for debugging
+// @access  Private
+router.post('/me/test-booking', auth, handymanController.createTestBooking);
 
 // @route   GET api/handymen/:id
 // @desc    Get handyman by ID

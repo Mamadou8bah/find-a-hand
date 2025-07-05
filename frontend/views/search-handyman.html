@@ -4,129 +4,480 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="stylesheet" href="../public/css/search-handyman.css">
-  <title>Plumbing Services</title>
-  <script src="index.js"></script>
+  <title>Findahand - Search Handymen</title>
+  <style>
+    /* Enhanced filtering styles while keeping original design */
+    .filters {
+      max-width: 1200px;
+      margin: 2rem auto;
+      padding: 0 2rem;
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
 
+    .filter-btn {
+      background: white;
+      border: 2px solid #e1e5e9;
+      padding: 0.5rem 1rem;
+      border-radius: 25px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-size: 0.9rem;
+      font-weight: 500;
+    }
+
+    .filter-btn:hover,
+    .filter-btn.active {
+      background: #f7931e;
+      color: white;
+      border-color: #f7931e;
+    }
+
+    .stats {
+      max-width: 1200px;
+      margin: 2rem auto;
+      padding: 0 2rem;
+      text-align: center;
+      color: #666;
+      font-size: 0.9rem;
+    }
+
+    .loading {
+      text-align: center;
+      padding: 3rem;
+      color: #666;
+      font-size: 1.1rem;
+    }
+
+    .loading::after {
+      content: '';
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      border: 2px solid #f7931e;
+      border-radius: 50%;
+      border-top-color: transparent;
+      animation: spin 1s linear infinite;
+      margin-left: 0.5rem;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .error-message {
+      text-align: center;
+      padding: 3rem;
+      color: #dc3545;
+      background: #f8d7da;
+      border-radius: 12px;
+      margin: 2rem;
+    }
+
+    /* Enhanced search input styles */
+    .search-input:focus {
+      outline: 2px solid #f7931e;
+      outline-offset: 2px;
+    }
+
+    .search-button:hover {
+      background-color: #e79004;
+    }
+
+    /* Enhanced card styles */
+    .plumber-card {
+      background: white;
+      border-radius: 15px;
+      padding: 1.5rem;
+      text-decoration: none;
+      color: inherit;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      transition: all 0.3s ease;
+      display: flex;
+      gap: 1.2rem;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+      border: 1px solid #f0f0f0;
+    }
+
+    .plumber-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+      border-color: #f7931e;
+    }
+
+    .plumber-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, #f7931e, #e79004);
+      transform: scaleX(0);
+      transition: transform 0.3s ease;
+    }
+
+    .plumber-card:hover::before {
+      transform: scaleX(1);
+    }
+
+    .plumber-img {
+      flex-shrink: 0;
+      width: 85px;
+      height: 85px;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 3px solid #f0f0f0;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+
+    .plumber-card:hover .plumber-img {
+      border-color: #f7931e;
+      transform: scale(1.05);
+    }
+
+    .customer-profile {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .plumber-info {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+
+    .plumber-name {
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: #1a1a1a;
+      margin-bottom: 0.2rem;
+    }
+
+    .plumber-location {
+      color: #666;
+      font-size: 0.95rem;
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+      margin-bottom: 0.3rem;
+    }
+
+    .rating {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.9rem;
+      color: #666;
+      margin-bottom: 0.3rem;
+    }
+
+    .star {
+      color: #ffd700;
+      font-size: 1.1rem;
+    }
+
+    .handyman-service {
+      color: #f7931e;
+      font-weight: 500;
+      font-size: 0.9rem;
+      background: #fff5e6;
+      padding: 0.2rem 0.6rem;
+      border-radius: 12px;
+      display: inline-block;
+    }
+
+    @media (max-width: 768px) {
+      .plumber-card {
+        padding: 1rem;
+        gap: 1rem;
+      }
+
+      .plumber-img {
+        width: 70px;
+        height: 70px;
+      }
+
+      .plumber-name {
+        font-size: 1.1rem;
+      }
+
+      .handyman-details {
+        margin-top: 0.3rem;
+      }
+    }
+  </style>
 </head>
 <body>
 
   <div class="header">
     <div class="search">
-       <h2 class="search-description">Search Handymen by Service</h2>
-    <div class="search-wrapper">
-      <div class="search-container">
-        <input type="text" id="searchInput" class="search-input search-text" placeholder="What can we help you with ?" />
-        <div class="divider"></div>
-        <div class="location-input">
-          <span class="location-icon"><img class="location" src="../public/images/icons/location-icon.svg" alt=""></span>
-          <input type="text" id="locationInput" class="search-input location-text" placeholder="Enter Location" />
+      <h2 class="search-description">Search Handymen by Service</h2>
+      <div class="search-wrapper">
+        <div class="search-container">
+          <input type="text" id="searchInput" class="search-input search-text" placeholder="What can we help you with ?" />
+          <div class="divider"></div>
+          <div class="location-input">
+            <span class="location-icon"><img class="location" src="../public/images/icons/location-icon.svg" alt=""></span>
+            <input type="text" id="locationInput" class="search-input location-text" placeholder="Enter Location" />
+          </div>
         </div>
-      </div>
-      <button class="search-button">
+        <button class="search-button" id="searchBtn">
           <img src="../public/images/icons/search-icon.svg" alt="">
-      </button>
+        </button>
+      </div>
     </div>
-    </div>
-   
   </div>
 
-  <div class="container">
-
-    <a href="handymen-profile.html" class="plumber-card">
-      <div class="plumber-img"><img src="../public/images/user-profiles/user6.jpg" alt="" class="customer-profile"></div>
-      <div class="plumber-info">
-        <div class="plumber-name">John Doe</div>
-        <div class="plumber-location">Bakau Newtown</div>
-        <div class="rating">0.0 <span class="star">★</span> (0) • <span class="distance">5.5 km away</span></div>
-      </div>
-    </a>
-
-    <a href="#" class="plumber-card">
-      <div class="plumber-img"><img src="../public/images/user-profiles/user1.jpg" alt="" class="customer-profile"></div>
-      <div class="plumber-info">
-        <div class="plumber-name">Mariama John</div>
-        <div class="plumber-location">Serekunda</div>
-        <div class="rating">4.5 <span class="star">★</span> (34) • <span class="distance">5.5 km away</span></div>
-      </div>
-    </a>
-
-    <a href="#" class="plumber-card">
-      <div class="plumber-img"><img src="../public/images/user-profiles/user2.jpg" alt="" class="customer-profile"></div>
-      <div class="plumber-info">
-        <div class="plumber-name">Fatim Faal</div>
-        <div class="plumber-location">Bakau Newtown</div>
-        <div class="rating">3.4 <span class="star">★</span> (10) • <span class="distance">5.5 km away</span></div>
-      </div>
-    </a>
-
-    <a href="#" class="plumber-card">
-      <div class="plumber-img"><img src="../public/images/user-profiles/user3.jpg" alt="" class="customer-profile"></div>
-      <div class="plumber-info">
-        <div class="plumber-name">Assan Leigh</div>
-        <div class="plumber-location">Latrikunda</div>
-        <div class="rating">4.0 <span class="star">★</span> (27) • <span class="distance">104.52 km away</span></div>
-      </div>
-    </a>
-
-    <a href="#" class="plumber-card">
-      <div class="plumber-img"><img src="../public/images/user-profiles/user4.jpg" alt="" class="customer-profile"></div>
-      <div class="plumber-info">
-        <div class="plumber-name">Assiah Awoke</div>
-        <div class="plumber-location">Senegambia</div>
-        <div class="rating">3.4 <span class="star">★</span> (14) • <span class="distance">106.72 km away</span></div>
-      </div>
-    </a>
-
-    <a href="#" class="plumber-card">
-      <div class="plumber-img"><img src="../public/images/user-profiles/user5.jpg" alt="" class="customer-profile"></div>
-      <div class="plumber-info">
-        <div class="plumber-name">John Doe</div>
-        <div class="plumber-location">Bakau Newtown</div>
-        <div class="rating">0.0 <span class="star">★</span> (0) • <span class="distance">5.5 km away</span></div>
-      </div>
-    </a>
-<script>
-  document.addEventListener('DOMContentLoaded', async () => {
-  const container = document.querySelector('.container');
-  container.innerHTML = ''; // Clear default cards
-
-  try {
-    const response = await fetch('http://localhost:5000/api/handymen');
-    if (!response.ok) throw new Error('Failed to fetch handymen');
-    const handymen = await response.json();
-
-   handymen.forEach(handyman => {
-  const card = document.createElement('a');
-  card.className = 'plumber-card';
-  card.href = `view-handymen.html?handymanId=${handyman._id}`;
-
-  card.addEventListener('click', () => {
-    localStorage.setItem('handyman', JSON.stringify(handyman));
-  });
-
-  card.innerHTML = `
-    <div class="plumber-img">
-      <img src="${handyman.profileImage ? 'http://localhost:5000/' + handyman.profileImage : '../public/images/handyman-profiles/default-profile.jpg'}" alt="Profile" class="customer-profile">
-    </div>
-    <div class="plumber-info">
-      <div class="plumber-name">${handyman.firstName} ${handyman.lastName}</div>
-      <div class="plumber-location">${handyman.location || 'Unknown Location'}</div>
-      <div class="rating">${handyman.ratingAverage?.toFixed(1) ?? '0.0'} <span class="star">★</span> (${handyman.reviewCount ?? 0})</div>
-    </div>
-  `;
-  container.appendChild(card);
-});
-
-  } catch (error) {
-    console.error(error);
-    container.innerHTML = '<p>Error loading handymen.</p>';
-  }
-});
-
-</script>
-
-
+  <div class="filters">
+    <button class="filter-btn active" data-filter="all">All Services</button>
+    <button class="filter-btn" data-filter="Electrician">Electrician</button>
+    <button class="filter-btn" data-filter="Plumber">Plumber</button>
+    <button class="filter-btn" data-filter="Carpenter">Carpenter</button>
+    <button class="filter-btn" data-filter="Painter">Painter</button>
+    <button class="filter-btn" data-filter="Mechanic">Mechanic</button>
+    <button class="filter-btn" data-filter="AC Technician">AC Technician</button>
   </div>
+
+  <div class="stats" id="stats">
+    <span id="handymanCount">Loading...</span> handymen available
+  </div>
+
+  <div class="container" id="handymanContainer">
+    <div class="loading">Loading handymen...</div>
+  </div>
+
+  <script>
+    let allHandymen = [];
+    let filteredHandymen = [];
+    let currentFilter = 'all';
+
+    // Enhanced search and filter functionality
+    document.addEventListener('DOMContentLoaded', async () => {
+      await loadHandymen();
+      setupEventListeners();
+      
+      // Handle search parameters from homepage
+      handleSearchFromHomepage();
+    });
+
+    async function loadHandymen() {
+      const container = document.getElementById('handymanContainer');
+      const stats = document.getElementById('stats');
+      
+      try {
+        container.innerHTML = '<div class="loading">Loading handymen...</div>';
+        
+        const response = await fetch('http://localhost:5000/api/handymen');
+        if (!response.ok) throw new Error('Failed to fetch handymen');
+        
+        allHandymen = await response.json();
+        filteredHandymen = [...allHandymen];
+        
+        displayHandymen();
+        updateStats();
+        
+      } catch (error) {
+        console.error('Error loading handymen:', error);
+        container.innerHTML = '<div class="error-message">Failed to load handymen. Please try again later.</div>';
+        stats.innerHTML = 'Error loading data';
+      }
+    }
+
+    function displayHandymen() {
+      const container = document.getElementById('handymanContainer');
+      
+      if (filteredHandymen.length === 0) {
+        container.innerHTML = '<div class="error-message">No handymen found matching your criteria.</div>';
+        return;
+      }
+
+      container.innerHTML = filteredHandymen.map(handyman => {
+        return `
+          <a href="handyman-profile.html?handymanId=${handyman._id}" class="plumber-card" data-handyman='${JSON.stringify(handyman)}'>
+            <div class="plumber-img">
+              <img src="${handyman.profileImage ? 'http://localhost:5000/' + handyman.profileImage : '../public/images/handyman-profiles/default-profile.jpg'}" 
+                   alt="${handyman.firstName} ${handyman.lastName}" class="customer-profile">
+            </div>
+            <div class="plumber-info">
+              <div class="plumber-name">${handyman.firstName} ${handyman.lastName}</div>
+              <div class="plumber-location">${handyman.location || 'Location not specified'}</div>
+              <div class="rating">
+                ${(handyman.rating || 0).toFixed(1)} <span class="star">★</span> 
+                (${handyman.reviews?.length || 0})
+              </div>
+              <div class="handyman-service">${handyman.profession || 'General Handyman'}</div>
+            </div>
+          </a>
+        `;
+      }).join('');
+
+      // Add click handlers to store handyman data
+      container.querySelectorAll('.plumber-card').forEach(card => {
+        card.addEventListener('click', (e) => {
+          const handymanData = JSON.parse(card.dataset.handyman);
+          localStorage.setItem('handyman', JSON.stringify(handymanData));
+        });
+      });
+    }
+
+    function setupEventListeners() {
+      // Search functionality
+      const searchInput = document.getElementById('searchInput');
+      const locationInput = document.getElementById('locationInput');
+      const searchBtn = document.getElementById('searchBtn');
+
+      const performSearch = () => {
+        const searchTerm = searchInput.value.toLowerCase();
+        const locationTerm = locationInput.value.toLowerCase();
+
+        filteredHandymen = allHandymen.filter(handyman => {
+          const matchesSearch = !searchTerm || 
+            handyman.firstName.toLowerCase().includes(searchTerm) ||
+            handyman.lastName.toLowerCase().includes(searchTerm) ||
+            handyman.profession?.toLowerCase().includes(searchTerm) ||
+            handyman.skills?.some(skill => skill.toLowerCase().includes(searchTerm));
+
+          const matchesLocation = !locationTerm || 
+            handyman.location?.toLowerCase().includes(locationTerm);
+
+          return matchesSearch && matchesLocation && 
+                 (currentFilter === 'all' || handyman.profession === currentFilter);
+        });
+
+        displayHandymen();
+        updateStats();
+      };
+
+      searchInput.addEventListener('input', performSearch);
+      locationInput.addEventListener('input', performSearch);
+      searchBtn.addEventListener('click', performSearch);
+
+      // Filter functionality
+      const filterBtns = document.querySelectorAll('.filter-btn');
+      filterBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          filterBtns.forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          currentFilter = btn.dataset.filter;
+          performSearch();
+        });
+      });
+
+      // Enter key support
+      searchInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') performSearch();
+      });
+      locationInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') performSearch();
+      });
+    }
+
+    function updateStats() {
+      const stats = document.getElementById('stats');
+      const count = filteredHandymen.length;
+      const total = allHandymen.length;
+      
+      if (currentFilter === 'all') {
+        stats.innerHTML = `${count} handymen available`;
+      } else {
+        stats.innerHTML = `${count} ${currentFilter}${count !== 1 ? 's' : ''} available (${total} total)`;
+      }
+    }
+
+    function handleSearchFromHomepage() {
+      const searchTerm = localStorage.getItem('searchTerm');
+      const searchLocation = localStorage.getItem('searchLocation');
+      const selectedService = localStorage.getItem('selectedService');
+      const selectedProject = localStorage.getItem('selectedProject');
+      
+      const searchInput = document.getElementById('searchInput');
+      const locationInput = document.getElementById('locationInput');
+      
+      // Pre-fill search inputs if parameters exist
+      if (searchTerm) {
+        searchInput.value = searchTerm;
+        localStorage.removeItem('searchTerm'); // Clear after use
+      }
+      
+      if (searchLocation) {
+        locationInput.value = searchLocation;
+        localStorage.removeItem('searchLocation'); // Clear after use
+      }
+      
+      // Handle service selection from homepage
+      if (selectedService) {
+        searchInput.value = selectedService;
+        localStorage.removeItem('selectedService'); // Clear after use
+        
+        // Auto-trigger search
+        setTimeout(() => {
+          const searchBtn = document.getElementById('searchBtn');
+          if (searchBtn) searchBtn.click();
+        }, 500);
+      }
+      
+      // Handle project selection from homepage
+      if (selectedProject) {
+        searchInput.value = selectedProject;
+        localStorage.removeItem('selectedProject'); // Clear after use
+        
+        // Auto-trigger search
+        setTimeout(() => {
+          const searchBtn = document.getElementById('searchBtn');
+          if (searchBtn) searchBtn.click();
+        }, 500);
+      }
+      
+      // Show welcome message if search was performed
+      if (searchTerm || searchLocation || selectedService || selectedProject) {
+        showWelcomeMessage(searchTerm || selectedService || selectedProject, searchLocation);
+      }
+    }
+
+    function showWelcomeMessage(searchTerm, location) {
+      const header = document.querySelector('.header');
+      const welcomeDiv = document.createElement('div');
+      welcomeDiv.className = 'welcome-message';
+      welcomeDiv.style.cssText = `
+        background: linear-gradient(135deg, #f7931e, #ff6b35);
+        color: white;
+        padding: 1rem 2rem;
+        text-align: center;
+        margin: 1rem auto;
+        max-width: 1200px;
+        border-radius: 10px;
+        font-size: 1.1rem;
+        box-shadow: 0 4px 15px rgba(247, 147, 30, 0.2);
+      `;
+      
+      let message = 'Searching for handymen';
+      if (searchTerm) {
+        message += ` for "${searchTerm}"`;
+      }
+      if (location) {
+        message += ` in "${location}"`;
+      }
+      message += '...';
+      
+      welcomeDiv.textContent = message;
+      header.parentNode.insertBefore(welcomeDiv, header.nextSibling);
+      
+      // Remove welcome message after 3 seconds
+      setTimeout(() => {
+        if (welcomeDiv.parentNode) {
+          welcomeDiv.remove();
+        }
+      }, 3000);
+    }
+  </script>
 
 </body>
 </html>

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Handyman Profile</title>
+  <link rel="stylesheet" href="../public/css/style.css">
+  <link rel="stylesheet" href="../public/css/handyman-profile.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script src="config.js"></script>
+  <script src="handyman-profile.js"></script>
+</head>
+<body>
+  <div class="container">
+    <header class="header">
+      <div class="header-content">
+        <a href="index.html" class="back-btn">
+          <i class="fas fa-arrow-left"></i> Back to Home
+        </a>
+        <h1>Handyman Profile</h1>
+      </div>
+    </header>
+
+    <main class="profile-container">
+      <div class="profile-card">
+        <div class="profile-header">
+          <div class="profile-image">
+            <img id="handymanImage" src="../public/images/handyman-profiles/default-profile.jpg" alt="Handyman Profile">
+          </div>
+          <div class="profile-info">
+            <h2 id="handymanName">Loading...</h2>
+            <div class="rating">
+              <div id="stars"></div>
+              <span id="ratingText">0 reviews</span>
+            </div>
+            <p id="handymanProfession">Loading...</p>
+            <p id="handymanLocation">Loading...</p>
+          </div>
+        </div>
+
+        <div class="profile-details">
+          <div class="detail-section">
+            <h3>About</h3>
+            <p id="handymanAbout">Loading...</p>
+          </div>
+
+          <div class="detail-section">
+            <h3>Skills & Services</h3>
+            <div id="handymanSkills" class="skills-list">
+              <span class="loading">Loading...</span>
+            </div>
+          </div>
+
+          <div class="detail-section">
+            <h3>Experience</h3>
+            <p id="handymanExperience">Loading...</p>
+          </div>
+
+          <div class="detail-section">
+            <h3>Hourly Rate</h3>
+            <p id="handymanRate">Loading...</p>
+          </div>
+        </div>
+
+        <div class="action-buttons">
+          <button id="bookNowBtn" class="btn btn-primary">
+            <i class="fas fa-calendar-plus"></i> Book Now
+          </button>
+          <button id="viewReviewsBtn" class="btn btn-secondary">
+            <i class="fas fa-star"></i> View Reviews
+          </button>
+        </div>
+      </div>
+
+      <div id="reviewsSection" class="reviews-section" style="display: none;">
+        <h3>Reviews</h3>
+        <div id="reviewsList" class="reviews-list">
+          <!-- Reviews will be loaded here -->
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    // Handle back button
+    document.querySelector('.back-btn').addEventListener('click', (e) => {
+      e.preventDefault();
+      window.history.back();
+    });
+  </script>
+</body>
+</html> 

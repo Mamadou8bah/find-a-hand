@@ -1,3 +1,19 @@
+window.addEventListener('DOMContentLoaded', () => {
+  const token = localStorage.getItem('token');
+  if (!token) {
+    // Store current URL and handyman info for redirect after login
+    const handyman = JSON.parse(localStorage.getItem('handyman') || '{}');
+    localStorage.setItem('redirectAfterLogin', window.location.href);
+    if (handyman._id) {
+      localStorage.setItem('pendingHandyman', JSON.stringify(handyman));
+    }
+    window.location.href = './login-selection.html';
+    return;
+  }
+  new FormValidator();
+});
+
+
 class FormValidator {
   constructor() {
     this.form = document.getElementById('booking-form');
@@ -27,19 +43,27 @@ class FormValidator {
   }
 
   async init() {
-
-    const handyman = JSON.parse(localStorage.getItem('handyman'));
-    if (!handyman || !handyman._id) {
+    // Check if we have handyman info from localStorage
+    const handyman = JSON.parse(localStorage.getItem('handyman') || '{}');
+    if (!handyman._id && !this.handymanId) {
       alert('No handyman specified for booking.');
       this.submitButton.disabled = true;
       return;
+    }
+
+    // Use handymanId from URL or localStorage
+    if (!this.handymanId && handyman._id) {
+      this.handymanId = handyman._id;
     }
 
     const token = localStorage.getItem('token');
     if (!token) {
       const currentUrl = window.location.href;
       localStorage.setItem('redirectAfterLogin', currentUrl);
-      window.location.href = './login.html';
+      if (handyman._id) {
+        localStorage.setItem('pendingHandyman', JSON.stringify(handyman));
+      }
+      window.location.href = './login-selection.html';
       return;
     }
 
@@ -49,10 +73,14 @@ class FormValidator {
       alert('Could not load user info. Please login again.');
       localStorage.removeItem('token');
       localStorage.setItem('redirectAfterLogin', window.location.href);
-      window.location.href = './login.html';
+      if (handyman._id) {
+        localStorage.setItem('pendingHandyman', JSON.stringify(handyman));
+      }
+      window.location.href = './login-selection.html';
       return;
     }
 
+    // Pre-fill user phone if available
     if (this.userInfo.phone) {
       this.fields.phone.value = this.userInfo.phone;
     }
@@ -67,38 +95,36 @@ class FormValidator {
   }
 
   async loadUserInfo() {
-  const userJson = localStorage.getItem('user');
-  
-  // Try parsing only if it is a valid string
-  if (userJson) {
+    const userJson = localStorage.getItem('user');
+    
+    if (userJson) {
+      try {
+        this.userInfo = JSON.parse(userJson);
+        return;
+      } catch (e) {
+        console.error('Invalid JSON found in localStorage for "user":', userJson);
+        localStorage.removeItem('user');
+      }
+    }
+
+    const token = localStorage.getItem('token');
+    if (!token) return;
+
     try {
-      this.userInfo = JSON.parse(userJson);
-      return;
-    } catch (e) {
-      console.error('Invalid JSON found in localStorage for "user":', userJson);
-      localStorage.removeItem('user'); // remove the corrupted value
+      const response = await fetch('http://localhost:5000/api/users/profile', {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+
+      if (!response.ok) throw new Error('Failed to fetch user info');
+
+      const userData = await response.json(); 
+      this.userInfo = userData;
+      localStorage.setItem('user', JSON.stringify(userData)); 
+    } catch (error) {
+      console.error('Error loading user info:', error);
+      this.userInfo = null;
     }
   }
-
-  const token = localStorage.getItem('token');
-  if (!token) return;
-
-  try {
-    const response = await fetch('http://localhost:5000/api/users/profile', {
-      headers: { Authorization: `Bearer ${token}` }
-    });
-
-    if (!response.ok) throw new Error('Failed to fetch user info');
-
-    const userData = await response.json(); 
-    this.userInfo = userData;
-
-    localStorage.setItem('user', JSON.stringify(userData)); 
-  } catch (error) {
-    console.error('Error loading user info:', error);
-    this.userInfo = null;
-  }
-}
 
   attachListeners() {
     Object.keys(this.fields).forEach(key => {
@@ -115,6 +141,20 @@ class FormValidator {
 
     this.form.addEventListener('submit', async (e) => {
       e.preventDefault();
+
+      const token = localStorage.getItem('token');
+      if (!token) {
+        const currentUrl = window.location.href;
+        localStorage.setItem('redirectAfterLogin', currentUrl);
+        const handyman = JSON.parse(localStorage.getItem('handyman') || '{}');
+        if (handyman._id) {
+          localStorage.setItem('pendingHandyman', JSON.stringify(handyman));
+        }
+        alert('Please login to make a booking.');
+        window.location.href = './login.html';
+        return;
+      }
+
       if (this.validateForm()) {
         await this.submitForm();
       }
@@ -196,11 +236,13 @@ class FormValidator {
       date: this.fields.date.value,
       time: this.fields.time.value,
       phone: this.fields.phone.value.trim(),
-      location: this.fields.location.value.trim(),
-      userId: this.userInfo?._id || this.userInfo?.id || null
+      location: this.fields.location.value.trim()
     };
 
     try {
+      this.submitButton.textContent = 'Booking...';
+      this.submitButton.disabled = true;
+
       const response = await fetch('http://localhost:5000/api/bookings', {
         method: 'POST',
         headers: {
@@ -209,9 +251,6 @@ class FormValidator {
         },
         body: JSON.stringify(bookingPayload)
       });
-      this.submitButton.textContent = 'Booking...';
-       this.submitButton.disabled = true;
-
 
       const data = await response.json();
 
@@ -220,13 +259,21 @@ class FormValidator {
         this.form.reset();
         this.updateCharCount();
         this.toggleSubmit();
-        localStorage.removeItem('handyman'); // Clear handyman info after booking
+        // Clear handyman info after successful booking
+        localStorage.removeItem('handyman');
+        localStorage.removeItem('pendingHandyman');
+        // Redirect to user dashboard or home
+        window.location.href = './index.html';
       } else {
         alert(data.message || 'Failed to create booking');
+        this.submitButton.textContent = 'Book Now';
+        this.submitButton.disabled = false;
       }
     } catch (err) {
       console.error(err);
       alert('Error submitting booking');
+      this.submitButton.textContent = 'Book Now';
+      this.submitButton.disabled = false;
     }
   }
 }

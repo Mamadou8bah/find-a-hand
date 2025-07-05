@@ -5,8 +5,14 @@ const Booking = require('../models/bookingModel');
 
 // Register a new handyman
 exports.register = async (req, res) => {
+  console.log('=== Handyman Registration ===');
+  console.log('Request body:', req.body);
+  console.log('Request file:', req.file);
+  console.log('Request headers:', req.headers);
+  
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
+    console.log('Validation errors:', errors.array());
     return res.status(400).json({ errors: errors.array() });
   }
 
@@ -16,9 +22,12 @@ exports.register = async (req, res) => {
     // Check if user already exists
     let handyman = await Handyman.findOne({ email });
     if (handyman) {
+      console.log('Handyman already exists:', email);
       return res.status(400).json({ message: 'Handyman already exists' });
     }
 
+    console.log('Creating new handyman...');
+    
     // Create new handyman
     handyman = new Handyman({
       firstName,
@@ -35,8 +44,9 @@ exports.register = async (req, res) => {
     });
 
     await handyman.save();
+    console.log('Handyman saved successfully:', handyman._id);
 
-    // Create JWT token
+    // Create JWT token using async/await
     const payload = {
       handyman: {
         id: handyman.id,
@@ -44,17 +54,22 @@ exports.register = async (req, res) => {
       }
     };
 
-    jwt.sign(
-      payload,
-      process.env.JWT_SECRET,
-      { expiresIn: '7d' },
-      (err, token) => {
-        if (err) throw err;
-        res.json({ token });
-      }
-    );
+    const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '7d' });
+    
+    console.log('JWT token created successfully');
+    console.log('Handyman registered successfully:', handyman.email);
+    console.log('Sending response with token...');
+    
+    // Set proper headers
+    res.setHeader('Content-Type', 'application/json');
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+    
+    res.json({ token, message: 'Registration successful' });
+    console.log('Response sent successfully');
   } catch (err) {
-    console.error(err.message);
+    console.error('Registration error:', err.message);
     res.status(500).send('Server error');
   }
 };
@@ -81,7 +96,7 @@ exports.login = async (req, res) => {
       return res.status(400).json({ message: 'Invalid credentials' });
     }
 
-    // Create JWT token
+    // Create JWT token using async/await
     const payload = {
       handyman: {
         id: handyman.id,
@@ -89,17 +104,12 @@ exports.login = async (req, res) => {
       }
     };
 
-    jwt.sign(
-      payload,
-      process.env.JWT_SECRET,
-      { expiresIn: '7d' },
-      (err, token) => {
-        if (err) throw err;
-        res.json({ token });
-      }
-    );
+    const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '7d' });
+    
+    console.log('Handyman logged in successfully:', handyman.email);
+    res.json({ token, message: 'Login successful' });
   } catch (err) {
-    console.error(err.message);
+    console.error('Login error:', err.message);
     res.status(500).send('Server error');
   }
 };
@@ -107,10 +117,46 @@ exports.login = async (req, res) => {
 // Get handyman profile
 exports.getProfile = async (req, res) => {
   try {
+    console.log('=== getProfile called ===');
+    console.log('Request handyman:', req.handyman);
+    console.log('Handyman ID:', req.handyman?.id);
+    
+    if (!req.handyman || !req.handyman.id) {
+      console.log('No handyman data in request');
+      return res.status(401).json({ message: 'Authentication required' });
+    }
+    
     const handyman = await Handyman.findById(req.handyman.id).select('-password');
+    
+    if (!handyman) {
+      console.log('Handyman not found for ID:', req.handyman.id);
+      return res.status(404).json({ message: 'Handyman not found' });
+    }
+    
+    console.log('Handyman found:', handyman._id);
+    
+    // Populate user data for reviews if reviews exist
+    if (handyman.reviews && handyman.reviews.length > 0) {
+      const User = require('../models/userModel');
+      const userIds = handyman.reviews.map(review => review.userId);
+      const users = await User.find({ _id: { $in: userIds } }).select('firstName lastName');
+      
+      // Create a map of user data
+      const userMap = {};
+      users.forEach(user => {
+        userMap[user._id.toString()] = user;
+      });
+      
+      // Add user data to reviews
+      handyman.reviews = handyman.reviews.map(review => ({
+        ...review.toObject(),
+        user: userMap[review.userId.toString()]
+      }));
+    }
+    
     res.json(handyman);
   } catch (err) {
-    console.error(err.message);
+    console.error('getProfile error:', err.message);
     res.status(500).send('Server error');
   }
 };
@@ -165,27 +211,63 @@ exports.updateProfile = async (req, res) => {
 };
 
 exports.updateBookingStatus = async (req, res) => {
+  console.log('=== updateBookingStatus called ===');
+  console.log('Request params:', req.params);
+  console.log('Request body:', req.body);
+  console.log('Handyman ID:', req.handyman.id);
+
   const { status } = req.body;
 
-  if (!['confirmed', 'cancelled', 'completed'].includes(status)) {
+  // Map lowercase status to proper case
+  const statusMap = {
+    'confirmed': 'Confirmed',
+    'cancelled': 'Cancelled', 
+    'completed': 'Completed'
+  };
+
+  const mappedStatus = statusMap[status];
+  if (!mappedStatus) {
+    console.log('Invalid status received:', status);
     return res.status(400).json({ message: 'Invalid status' });
   }
 
   try {
+    console.log('Updating booking status:', {
+      bookingId: req.params.id,
+      handymanId: req.handyman.id,
+      status: mappedStatus
+    });
+
+    // Validate ObjectId format
+    if (!require('mongoose').Types.ObjectId.isValid(req.params.id)) {
+      console.log('Invalid ObjectId format:', req.params.id);
+      return res.status(400).json({ message: 'Invalid booking ID format' });
+    }
+
     const booking = await Booking.findOne({
       _id: req.params.id,
       handymanId: req.handyman.id
     });
 
-    if (!booking) return res.status(404).json({ message: 'Booking not found' });
+    if (!booking) {
+      console.log('Booking not found for ID:', req.params.id);
+      return res.status(404).json({ message: 'Booking not found' });
+    }
 
-    booking.status = status;
+    console.log('Found booking:', booking._id, 'Current status:', booking.status);
+    
+    booking.status = mappedStatus;
     await booking.save();
 
-    res.json({ message: `Booking marked as ${status}`, booking });
+    console.log('Booking status updated successfully to:', booking.status);
+
+    res.json({ message: `Booking marked as ${mappedStatus}`, booking });
   } catch (err) {
-    console.error(err.message);
-    res.status(500).send('Server error');
+    console.error('Error updating booking status:', err.message);
+    if (err.kind === 'ObjectId') {
+      return res.status(400).json({ message: 'Invalid booking ID format' });
+    }
+    res.status(500).json({ message: 'Server error', error: err.message });
   }
 };
 
@@ -225,6 +307,15 @@ exports.addReview = async (req, res) => {
   const { rating, comment } = req.body;
 
   try {
+    console.log('=== addReview called ===');
+    console.log('Request handyman:', req.handyman);
+    console.log('Handyman ID:', req.handyman?.id);
+    
+    if (!req.handyman || !req.handyman.id) {
+      console.log('No handyman data in request');
+      return res.status(401).json({ message: 'Authentication required' });
+    }
+    
     const handyman = await Handyman.findById(req.params.id);
 
     if (!handyman) {
@@ -232,7 +323,7 @@ exports.addReview = async (req, res) => {
     }
 
     const newReview = {
-      userId: req.user.id,
+      userId: req.handyman.id,
       rating,
       comment,
       createdAt: new Date()
@@ -248,7 +339,7 @@ exports.addReview = async (req, res) => {
 
     res.json(handyman.reviews);
   } catch (err) {
-    console.error(err.message);
+    console.error('addReview error:', err.message);
     res.status(500).send('Server error');
   }
 };
@@ -256,13 +347,120 @@ exports.addReview = async (req, res) => {
 
 exports.getMyBookings = async (req, res) => {
   try {
+    console.log('=== getMyBookings called ===');
+    console.log('Request handyman:', req.handyman);
+    console.log('Handyman ID:', req.handyman?.id);
+    
+    if (!req.handyman || !req.handyman.id) {
+      console.log('No handyman data in request');
+      return res.status(401).json({ message: 'Authentication required' });
+    }
+    
     const bookings = await Booking.find({ handymanId: req.handyman.id })
-      .populate('userId', 'firstName lastName phone') // Show who booked
+      .populate('user', 'firstName lastName phone') // Show who booked
       .sort({ createdAt: -1 });
 
+    console.log('Found bookings:', bookings.length);
     res.json(bookings);
   } catch (err) {
-    console.error(err.message);
+    console.error('getMyBookings error:', err.message);
     res.status(500).json({ message: 'Server error' });
+  }
+};
+
+// Delete booking
+exports.deleteBooking = async (req, res) => {
+  try {
+    console.log('=== deleteBooking called ===');
+    console.log('Request params:', req.params);
+    console.log('Handyman ID:', req.handyman.id);
+
+    // Validate ObjectId format
+    if (!require('mongoose').Types.ObjectId.isValid(req.params.id)) {
+      console.log('Invalid ObjectId format:', req.params.id);
+      return res.status(400).json({ message: 'Invalid booking ID format' });
+    }
+
+    const booking = await Booking.findOne({
+      _id: req.params.id,
+      handymanId: req.handyman.id
+    });
+
+    if (!booking) {
+      console.log('Booking not found for ID:', req.params.id);
+      return res.status(404).json({ message: 'Booking not found' });
+    }
+
+    console.log('Found booking:', booking._id, 'Current status:', booking.status);
+    
+    await Booking.findByIdAndDelete(req.params.id);
+
+    console.log('Booking deleted successfully');
+
+    res.json({ message: 'Booking deleted successfully' });
+  } catch (err) {
+    console.error('Error deleting booking:', err.message);
+    if (err.kind === 'ObjectId') {
+      return res.status(400).json({ message: 'Invalid booking ID format' });
+    }
+    res.status(500).json({ message: 'Server error', error: err.message });
+  }
+};
+
+// Update handyman password
+exports.updatePassword = async (req, res) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
+
+  const { currentPassword, newPassword } = req.body;
+
+  try {
+    const handyman = await Handyman.findById(req.handyman.id);
+    if (!handyman) {
+      return res.status(404).json({ message: 'Handyman not found' });
+    }
+
+    // Check current password
+    const isMatch = await handyman.comparePassword(currentPassword);
+    if (!isMatch) {
+      return res.status(400).json({ message: 'Current password is incorrect' });
+    }
+
+    // Update password
+    handyman.password = newPassword;
+    await handyman.save();
+
+    res.json({ message: 'Password updated successfully' });
+  } catch (err) {
+    console.error('Password update error:', err.message);
+    res.status(500).send('Server error');
+  }
+};
+
+// Create a test booking for debugging
+exports.createTestBooking = async (req, res) => {
+  try {
+    console.log('Creating test booking for handyman:', req.handyman.id);
+
+    // Create a test booking
+    const testBooking = await Booking.create({
+      user: req.handyman.id, // Use handyman as user for testing
+      handymanId: req.handyman.id,
+      service: 'Test Service',
+      taskDescription: 'This is a test booking for debugging',
+      date: new Date(Date.now() + 24 * 60 * 60 * 1000), // Tomorrow
+      time: '10:00 AM',
+      phone: '1234567890',
+      location: 'Test Location',
+      status: 'Pending'
+    });
+
+    console.log('Test booking created:', testBooking._id);
+    res.json({ message: 'Test booking created', booking: testBooking });
+  } catch (err) {
+    console.error('Error creating test booking:', err.message);
+    res.status(500).json({ message: 'Server error creating test booking', error: err.message });
   }
 };

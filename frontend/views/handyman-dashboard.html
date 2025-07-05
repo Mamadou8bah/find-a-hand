@@ -617,7 +617,7 @@
                     <i class="fas fa-user-cog menu-icon"></i>
                     <span>Account Settings</span>
                 </div>
-                <div class="menu-item">
+                <div class="menu-item" onclick="logout()">
                     <i class="fas fa-sign-out-alt menu-icon"></i>
                     <span>Logout</span>
                 </div>
@@ -668,42 +668,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>Babucarr Saine</td>
-                                <td>Pipe Leak Repair</td>
-                                <td>Today, 2:00 PM</td>
-                                <td><span class="status status-pending">Pending</span></td>
-                                <td>
-                                    <div class="action-buttons">
-                                        <button class="btn btn-success">Approve</button>
-                                        <button class="btn btn-danger">Reject</button>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Isatou Touray</td>
-                                <td>Bathroom Installation</td>
-                                <td>Tomorrow, 10:00 AM</td>
-                                <td><span class="status status-confirmed">Confirmed</span></td>
-                                <td>
-                                    <div class="action-buttons">
-                                        <button class="btn btn-outline">Reschedule</button>
-                                        <button class="btn btn-danger">Cancel</button>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Muhammed Jabbi</td>
-                                <td>Water Heater Repair</td>
-                                <td>Jun 28, 9:00 AM</td>
-                                <td><span class="status status-pending">Pending</span></td>
-                                <td>
-                                    <div class="action-buttons">
-                                        <button class="btn btn-success">Approve</button>
-                                        <button class="btn btn-danger">Reject</button>
-                                    </div>
-                                </td>
-                            </tr>
+                            <!-- Dynamic booking data will be populated here -->
                         </tbody>
                     </table>
                 </div>
@@ -744,69 +709,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>Babucarr Saine</td>
-                                <td>Pipe Leak Repair</td>
-                                <td>Today, 2:00 PM</td>
-                                <td>3.2 miles away</td>
-                                <td><span class="status status-pending">Pending</span></td>
-                                <td>
-                                    <div class="action-buttons">
-                                        <button class="btn btn-success">Approve</button>
-                                        <button class="btn btn-danger">Reject</button>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Sheikh Sowe</td>
-                                <td>Bathroom Installation</td>
-                                <td>Tomorrow, 10:00 AM</td>
-                                <td>5.1 miles away</td>
-                                <td><span class="status status-confirmed">Confirmed</span></td>
-                                <td>
-                                    <div class="action-buttons">
-                                        <button class="btn btn-outline">Reschedule</button>
-                                        <button class="btn btn-danger">Cancel</button>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Muhammed Njie</td>
-                                <td>Water Heater Repair</td>
-                                <td>Jun 28, 9:00 AM</td>
-                                <td>1.5 miles away</td>
-                                <td><span class="status status-pending">Pending</span></td>
-                                <td>
-                                    <div class="action-buttons">
-                                        <button class="btn btn-success">Approve</button>
-                                        <button class="btn btn-danger">Reject</button>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Oumie Bojang</td>
-                                <td>Kitchen Sink Installation</td>
-                                <td>Jun 30, 1:00 PM</td>
-                                <td>7.3 miles away</td>
-                                <td><span class="status status-rejected">Rejected</span></td>
-                                <td>
-                                    <div class="action-buttons">
-                                        <button class="btn btn-outline">View</button>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Mustapha Darboe</td>
-                                <td>Toilet Repair</td>
-                                <td>Jul 2, 11:00 AM</td>
-                                <td>2.8 miles away</td>
-                                <td><span class="status status-completed">Completed</span></td>
-                                <td>
-                                    <div class="action-buttons">
-                                        <button class="btn btn-outline">Details</button>
-                                    </div>
-                                </td>
-                            </tr>
+                            <!-- Dynamic booking data will be populated here -->
                         </tbody>
                     </table>
                 </div>
@@ -838,64 +741,7 @@
                         </div>
                     </div>
                     
-                    <div class="calendar">
-                        <div class="calendar-header">Sun</div>
-                        <div class="calendar-header">Mon</div>
-                        <div class="calendar-header">Tue</div>
-                        <div class="calendar-header">Wed</div>
-                        <div class="calendar-header">Thu</div>
-                        <div class="calendar-header">Fri</div>
-                        <div class="calendar-header">Sat</div>
-                        
-                        <!-- Calendar days would be generated dynamically in a real app -->
-                        <div class="calendar-day">25</div>
-                        <div class="calendar-day">26</div>
-                        <div class="calendar-day">27</div>
-                        <div class="calendar-day">28</div>
-                        <div class="calendar-day">29</div>
-                        <div class="calendar-day">30</div>
-                        <div class="calendar-day today has-bookings">
-                            1
-                            <div class="booking-event">Pipe Repair - 9am</div>
-                            <div class="booking-event">Installation - 2pm</div>
-                        </div>
-                        <div class="calendar-day">2</div>
-                        <div class="calendar-day">3</div>
-                        <div class="calendar-day">4</div>
-                        <div class="calendar-day has-bookings">
-                            5
-                            <div class="booking-event">Maintenance - 11am</div>
-                        </div>
-                        <div class="calendar-day">6</div>
-                        <div class="calendar-day">7</div>
-                        <div class="calendar-day">8</div>
-                        <div class="calendar-day has-bookings">
-                            9
-                            <div class="booking-event">Inspection - 10am</div>
-                        </div>
-                        <div class="calendar-day">10</div>
-                        <div class="calendar-day">11</div>
-                        <div class="calendar-day">12</div>
-                        <div class="calendar-day">13</div>
-                        <div class="calendar-day">14</div>
-                        <div class="calendar-day">15</div>
-                        <div class="calendar-day">16</div>
-                        <div class="calendar-day">17</div>
-                        <div class="calendar-day">18</div>
-                        <div class="calendar-day">19</div>
-                        <div class="calendar-day">20</div>
-                        <div class="calendar-day">21</div>
-                        <div class="calendar-day">22</div>
-                        <div class="calendar-day">23</div>
-                        <div class="calendar-day">24</div>
-                        <div class="calendar-day">25</div>
-                        <div class="calendar-day">26</div>
-                        <div class="calendar-day">27</div>
-                        <div class="calendar-day">28</div>
-                        <div class="calendar-day">29</div>
-                        <div class="calendar-day">30</div>
-                        <div class="calendar-day">31</div>
-                    </div>
+                    <div class="calendar" id="schedule-calendar"></div>
                 </div>
                 
                 <div class="bookings-section">
@@ -915,34 +761,7 @@
                                 <th>Action</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            <tr>
-                                <td>9:00 AM - 11:00 AM</td>
-                                <td>Babucarr Saine</td>
-                                <td>Pipe Repair</td>
-                                <td>3.2 miles away</td>
-                                <td><span class="status status-confirmed">Confirmed</span></td>
-                                <td>
-                                    <div class="action-buttons">
-                                        <button class="btn btn-outline">Details</button>
-                                        <button class="btn btn-danger">Cancel</button>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>2:00 PM - 4:00 PM</td>
-                                <td>Sheikh Sowe</td>
-                                <td>Installation</td>
-                                <td>4.5 miles away</td>
-                                <td><span class="status status-confirmed">Confirmed</span></td>
-                                <td>
-                                    <div class="action-buttons">
-                                        <button class="btn btn-outline">Details</button>
-                                        <button class="btn btn-danger">Cancel</button>
-                                    </div>
-                                </td>
-                            </tr>
-                        </tbody>
+                        <tbody id="todays-bookings"></tbody>
                     </table>
                 </div>
             </div>
@@ -1150,18 +969,18 @@
                     </div>
                 </div>
                 
-                <div class="dashboard-cards">
+                <div class="dashboard-cards" id="earnings-cards">
                     <div class="card">
                         <h3 class="card-title">This Month</h3>
-                        <p class="card-value">$2,450</p>
+                        <p class="card-value" id="this-month-earnings">$0</p>
                     </div>
                     <div class="card">
                         <h3 class="card-title">Last Month</h3>
-                        <p class="card-value">$3,120</p>
+                        <p class="card-value" id="last-month-earnings">$0</p>
                     </div>
                     <div class="card">
                         <h3 class="card-title">Total Balance</h3>
-                        <p class="card-value">$8,760</p>
+                        <p class="card-value" id="total-earnings">$0</p>
                     </div>
                 </div>
                 
@@ -1189,47 +1008,8 @@
                                 <th>Status</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            <tr>
-                                <td>Jun 28, 2023</td>
-                                <td>Fanta Tamba</td>
-                                <td>Water Heater Repair</td>
-                                <td>2.5 hours</td>
-                                <td>$187.50</td>
-                                <td><span class="status status-completed">Paid</span></td>
-                            </tr>
-                            <tr>
-                                <td>Jun 25, 2023</td>
-                                <td>Yahya Sarr</td>
-                                <td>Pipe Installation</td>
-                                <td>4 hours</td>
-                                <td>$300.00</td>
-                                <td><span class="status status-completed">Paid</span></td>
-                            </tr>
-                            <tr>
-                                <td>Jun 20, 2023</td>
-                                <td>Nyima Gomez</td>
-                                <td>Toilet Repair</td>
-                                <td>1.5 hours</td>
-                                <td>$112.50</td>
-                                <td><span class="status status-completed">Paid</span></td>
-                            </tr>
-                            <tr>
-                                <td>Jun 15, 2023</td>
-                                <td>Ebrima Sarr</td>
-                                <td>Bathroom Installation</td>
-                                <td>8 hours</td>
-                                <td>$600.00</td>
-                                <td><span class="status status-completed">Paid</span></td>
-                            </tr>
-                            <tr>
-                                <td>Jun 10, 2023</td>
-                                <td>James Mendy</td>
-                                <td>Kitchen Sink Installation</td>
-                                <td>3 hours</td>
-                                <td>$225.00</td>
-                                <td><span class="status status-completed">Paid</span></td>
-                            </tr>
+                        <tbody id="earnings-history">
+                            <!-- Dynamic earnings history will be populated here -->
                         </tbody>
                     </table>
                 </div>
@@ -1469,6 +1249,7 @@
         </div>
     </div>
 
+    <script src="config.js"></script>
     <script>
         function showSection(sectionId) {
             // Hide all sections

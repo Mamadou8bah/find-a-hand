@@ -4,9 +4,14 @@ const createBooking = async (req, res) => {
   try {
     const { handymanId, service, taskDescription, date, time, phone, location } = req.body;
 
-    
-    if (! handymanId||!service || !taskDescription || !date || !time || !phone || !location) {
+    if (!handymanId || !service || !taskDescription || !date || !time || !phone || !location) {
       return res.status(400).json({ message: 'Please fill in all fields' });
+    }
+
+    // Validate date is not in the past
+    const bookingDate = new Date(date);
+    if (bookingDate < new Date()) {
+      return res.status(400).json({ message: 'Booking date cannot be in the past' });
     }
 
     const booking = await Booking.create({
@@ -14,7 +19,7 @@ const createBooking = async (req, res) => {
       handymanId,
       service,
       taskDescription,
-      date,
+      date: bookingDate,
       time,
       phone,
       location,
@@ -23,7 +28,7 @@ const createBooking = async (req, res) => {
 
     res.status(201).json(booking);
   } catch (error) {
-    console.error(error);
+    console.error('Booking creation error:', error);
     res.status(500).json({ message: 'Server error creating booking' });
   }
 };
@@ -78,7 +83,7 @@ const getBookingById = async (req, res) => {
 
 const getBookingsForCurrentHandyman = async (req, res) => {
   try {
-    const bookings = await Booking.find({ handyman: req.user._id }).sort({ createdAt: -1 });
+    const bookings = await Booking.find({ handymanId: req.user._id }).sort({ createdAt: -1 });
     res.json(bookings);
   } catch (error) {
     res.status(500).json({ message: 'Failed to fetch bookings' });

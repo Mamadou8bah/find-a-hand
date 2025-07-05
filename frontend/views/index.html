@@ -7,7 +7,254 @@
     <link rel="stylesheet" href="../public/css/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="config.js"></script>
     <script src="index.js"></script>
+    <style>
+        /* Enhanced hover effects and micro-interactions */
+        .service-item {
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .service-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(247, 147, 30, 0.15);
+        }
+        
+        .service-item img {
+            transition: transform 0.3s ease;
+        }
+        
+        .service-item:hover img {
+            transform: scale(1.1);
+        }
+        
+        .project-link {
+            transition: all 0.3s ease;
+        }
+        
+        .project-link:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .home-project-img-container {
+            overflow: hidden;
+        }
+        
+        .home-project-img {
+            transition: transform 0.3s ease;
+        }
+        
+        .project-link:hover .home-project-img {
+            transform: scale(1.05);
+        }
+        
+        .handyman-link {
+            transition: all 0.3s ease;
+        }
+        
+        .handyman-link:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .handyman-image {
+            overflow: hidden;
+        }
+        
+        .handyman-image img {
+            transition: transform 0.3s ease;
+        }
+        
+        .handyman-link:hover .handyman-image img {
+            transform: scale(1.05);
+        }
+        
+        .search-button {
+            transition: all 0.3s ease;
+        }
+        
+        .search-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 15px rgba(247, 147, 30, 0.3);
+        }
+        
+        .search-input {
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .search-input:focus {
+            border-color: #f7931e;
+            box-shadow: 0 0 0 3px rgba(247, 147, 30, 0.1);
+        }
+        
+        .becomehy-btn, .login, .signup {
+            transition: all 0.3s ease;
+        }
+        
+        .becomehy-btn:hover, .login:hover, .signup:hover {
+            transform: translateY(-2px);
+        }
+        
+        .dropdown-link {
+            transition: all 0.3s ease;
+        }
+        
+        .dropdown-link:hover {
+            color: #f7931e;
+        }
+        
+        .dropdown-list-link {
+            transition: all 0.2s ease;
+        }
+        
+        .dropdown-list-link:hover {
+            background-color: rgba(247, 147, 30, 0.1);
+            color: #f7931e;
+        }
+        
+        /* Smooth scroll behavior */
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        /* Loading animation for handymen */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .handyman-near-you {
+            animation: fadeInUp 0.6s ease forwards;
+        }
+        
+        .handyman-near-you:nth-child(1) { animation-delay: 0.1s; }
+        .handyman-near-you:nth-child(2) { animation-delay: 0.2s; }
+        .handyman-near-you:nth-child(3) { animation-delay: 0.3s; }
+        .handyman-near-you:nth-child(4) { animation-delay: 0.4s; }
+        .handyman-near-you:nth-child(5) { animation-delay: 0.5s; }
+        .handyman-near-you:nth-child(6) { animation-delay: 0.6s; }
+        
+        /* Enhanced service grid animation */
+        .service-item {
+            animation: fadeInUp 0.6s ease forwards;
+        }
+        
+        .service-item:nth-child(1) { animation-delay: 0.1s; }
+        .service-item:nth-child(2) { animation-delay: 0.2s; }
+        .service-item:nth-child(3) { animation-delay: 0.3s; }
+        .service-item:nth-child(4) { animation-delay: 0.4s; }
+        .service-item:nth-child(5) { animation-delay: 0.5s; }
+        .service-item:nth-child(6) { animation-delay: 0.6s; }
+        .service-item:nth-child(7) { animation-delay: 0.7s; }
+        
+        /* Enhanced project cards animation */
+        .home-project {
+            animation: fadeInUp 0.6s ease forwards;
+        }
+        
+        .home-project:nth-child(1) { animation-delay: 0.1s; }
+        .home-project:nth-child(2) { animation-delay: 0.2s; }
+        .home-project:nth-child(3) { animation-delay: 0.3s; }
+        
+        /* Improved focus states for accessibility */
+        .search-input:focus,
+        .dropdown-link:focus,
+        .becomehy-btn:focus,
+        .login:focus,
+        .signup:focus {
+            outline: 2px solid #f7931e;
+            outline-offset: 2px;
+        }
+        
+        /* Enhanced rating stars */
+        .rating i {
+            transition: transform 0.2s ease;
+        }
+        
+        .rating:hover i {
+            transform: scale(1.2);
+        }
+        
+        /* Smooth transitions for all interactive elements */
+        * {
+            transition: all 0.2s ease;
+        }
+        
+        /* Enhanced hero section */
+        .hero-main-text {
+            animation: fadeInUp 0.8s ease forwards;
+        }
+        
+        .hero-subtext {
+            animation: fadeInUp 0.8s ease forwards;
+            animation-delay: 0.2s;
+        }
+        
+        .search-wrapper {
+            animation: fadeInUp 0.8s ease forwards;
+            animation-delay: 0.4s;
+        }
+        
+        /* Enhanced section headings */
+        .sub-section-text,
+        .popular-home-project {
+            position: relative;
+        }
+        
+        .sub-section-text::after,
+        .popular-home-project::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background: linear-gradient(90deg, #f7931e, #fb8600);
+            border-radius: 2px;
+            transition: width 0.3s ease;
+        }
+        
+        .sub-section-text:hover::after,
+        .popular-home-project:hover::after {
+            width: 80px;
+        }
+        
+        /* Enhanced see more links */
+        .see-more {
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .see-more:hover {
+            color: #f7931e;
+            transform: translateX(5px);
+        }
+        
+
+        
+        /* Enhanced mobile responsiveness */
+        @media (max-width: 768px) {
+            .service-item:hover {
+                transform: translateY(-3px);
+            }
+            
+            .project-link:hover {
+                transform: translateY(-2px);
+            }
+            
+            .handyman-link:hover {
+                transform: translateY(-2px);
+            }
+        }
+    </style>
 </head>
 <body>
    <header class="navbar">
@@ -17,7 +264,7 @@
         </div>
         <div class="dropdown service-menu">
           <a href="#" class="dropdown-link">
-            All Services <span class="dropdown-arrow">&#8964;</span>
+            All Services
           </a>
 
           
@@ -79,7 +326,7 @@
 
         <div class="nav-links">
             <a class="becomehy-btn" href="joinHandy.html">Become a handyman</a>
-            <a href="../views/login.html" class="login">Login</a>
+            <a href="login-selection.html" class="login">Login</a>
             <a href="../views/signup.html" class="signup">Sign up</a>
         </div>
         <div class="nav-burger-menu">
@@ -90,7 +337,7 @@
 
         <ul class="sidebar">
           <li class="sidebar-li"><a class="sidebar-link" href="#" onclick=hideSidebar()><svg xmlns="http://www.w3.org/2000/svg" height="16px" viewBox="0 -960 960 960" width="16px" fill="#333"><path d="M400-80 0-480l400-400 71 71-329 329 329 329-71 71Z"/></svg>Close</a></li>
-          <li class="sidebar-li"><a href="../views/login.html" class="sidebar-link">Log in/ Sign up</a></li>
+          <li class="sidebar-li"><a href="login-selection.html" class="sidebar-link">Log in/ Sign up</a></li>
           <li class="sidebar-li"><a href="joinHandy.html" class="sidebar-link">Become a handyman</a></li>
           <div class="nav_line"></div>
           <li class="sidebar-li"><a href="#" class="sidebar-link">All Services</a></li>
@@ -175,7 +422,7 @@
                     <img src="../public/images/furnitue-assembly-man.jpg" alt="Furniture Assembly" class="home-project-img">
                 </div>
                 <div class="home-project-info">
-                    <h3 class="home-project-title">Furniture Assembly &gt&gt;</h3>
+                    <h3 class="home-project-title">Furniture Assembly</h3>
                     <span class="rating"> <i class="fas fa-star" style="color: orange;"></i>
                         <i class="fas fa-star" style="color: orange;"></i>
                         <i class="fas fa-star" style="color: orange;"></i>
@@ -192,7 +439,7 @@
                     <img src="../public/images/helping-moving-out.webp" alt="Help Moving Out" class="home-project-img">
                 </div>
                 <div class="home-project-info">
-                    <h3 class="home-project-title">Help Moving out &gt&gt;</h3>
+                    <h3 class="home-project-title">Help Moving out</h3>
                     <span class="rating"> <i class="fas fa-star" style="color: orange;"></i>
                         <i class="fas fa-star" style="color: orange;"></i>
                         <i class="fas fa-star" style="color: orange;"></i>
@@ -209,7 +456,7 @@
                     <img src="../public/images/plumber.jpg" alt="Minor Plumbing Repair" class="home-project-img">
                 </div>
                 <div class="home-project-info">
-                    <h3 class="home-project-title">Minor Plumbing Repair &gt&gt;</h3>
+                    <h3 class="home-project-title">Minor Plumbing Repair</h3>
                     <span class="rating"> <i class="fas fa-star" style="color: orange;"></i>
                         <i class="fas fa-star" style="color: orange;"></i>
                         <i class="fas fa-star" style="color: orange;"></i>
@@ -521,7 +768,7 @@
             <i class="fas fa-star-half-alt" style="color: orange;"></i></span>
         </p>
         <p class="review-text">
-          “Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut ali”
+          "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut ali"
         </p>
         <p class="review-category">Plumbing work</p>
       </div>
@@ -535,7 +782,7 @@
             <i class="fas fa-star-half-alt" style="color: orange;"></i></span>
         </p>
         <p class="review-text">
-          “Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut ali”
+          "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut ali"
         </p>
         <p class="review-category">Home Garden work</p>
       </div>
@@ -549,7 +796,7 @@
             <i class="fas fa-star-half-alt" style="color: orange;"></i></span>
         </p>
         <p class="review-text">
-          “Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut ali”
+          "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut ali"
         </p>
         <p class="review-category">Electrical work</p>
       </div>

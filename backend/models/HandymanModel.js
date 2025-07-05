@@ -52,7 +52,7 @@ const handymanSchema = new mongoose.Schema({
   },
 profileImage: {
   type: String,
-  required: [true, 'Profile image is required']
+  required: false
 },
 
   portfolioImages: [String],

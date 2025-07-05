@@ -6,7 +6,11 @@ const bookingSchema = mongoose.Schema({
     required: true,
     ref: 'User'
   },
-  handymanId: { type: mongoose.Schema.Types.ObjectId, ref: 'Handyman', required: true },
+  handymanId: { 
+    type: mongoose.Schema.Types.ObjectId, 
+    ref: 'Handyman', 
+    required: true 
+  },
   service: {
     type: String,
     required: true
@@ -36,11 +40,6 @@ const bookingSchema = mongoose.Schema({
     type: String,
     enum: ['Pending', 'Confirmed', 'Completed', 'Cancelled'],
     default: 'Pending'
-  },
-  handyman: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Handyman',
-    default: null
   }
 }, {
   timestamps: true
