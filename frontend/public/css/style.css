@@ -750,10 +750,7 @@ body {
 .step {
     font-size: 1.1rem;
 }
-.phone-user-container {
-  
 
-}
 
 .phone-user-image {
     width: 40vh;  
@@ -1102,7 +1099,8 @@ body {
     .main-container {
         flex-direction: row;
         background-image: url('../images/hero-image.jpg');
-        background-repeat: repeat-x;
+        background-repeat: no repeat;
+        background-size: cover;
         background-position: center;
         
     }
