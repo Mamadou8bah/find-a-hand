@@ -69,9 +69,9 @@
       
       const redirectTimeout = setTimeout(() => {
         console.log('Timeout reached, redirecting to dashboard...');
-        alert("Registration may have been successful. Redirecting to dashboard...");
-        window.location.href = "../views/handyman-dashboard.html";
-      }, 20000); 
+        alert("⏰ Registration may have been successful. Redirecting to your dashboard...");
+        window.location.href = "./handyman-dashboard.html";
+      }, 20000);
 
       try {
         console.log('Submitting handyman registration...');
@@ -93,17 +93,18 @@
             // Store token and redirect
             if (data.token) {
               localStorage.setItem("token", data.token);
-              alert("Registration successful! Redirecting to dashboard...");
-              window.location.href = "../views/handyman-dashboard.html";
+              localStorage.setItem("userType", "handyman");
+              alert("🎉 Registration successful! Welcome to Find-A-Hand. Redirecting to your dashboard...");
+              window.location.href = "./handyman-dashboard.html";
             } else {
              
-              alert("Registration successful! Redirecting to dashboard...");
-              window.location.href = "../views/handyman-dashboard.html";
+              alert("🎉 Registration successful! Redirecting to your dashboard...");
+              window.location.href = "./handyman-dashboard.html";
             }
           } catch (jsonError) {
             console.log('Response was successful but not JSON, redirecting anyway');
-            alert("Registration successful! Redirecting to dashboard...");
-            window.location.href = "../views/handyman-dashboard.html";
+            alert("🎉 Registration successful! Redirecting to your dashboard...");
+            window.location.href = "./handyman-dashboard.html";
           }
         } else {
           
@@ -127,8 +128,8 @@
         
         if (error.name === 'TypeError' && error.message.includes('fetch')) {
          
-          alert("Registration may have been successful. Redirecting to dashboard...");
-          window.location.href = "../views/handyman-dashboard.html";
+          alert("🌐 Registration may have been successful. Redirecting to your dashboard...");
+          window.location.href = "./handyman-dashboard.html";
         } else {
           alert("Network error: " + (error.message || error));
         }
