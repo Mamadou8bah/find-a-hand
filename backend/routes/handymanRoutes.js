@@ -1,4 +1,3 @@
-
 const express = require('express');
 const router = express.Router();
 const handymanController = require('../controllers/handymanController');
@@ -35,6 +34,13 @@ router.post(
   handymanController.login
 );
 
+// @route   GET api/handymen
+// @desc    Get all handymen
+// @access  Public
+router.get('/', handymanController.getAllHandymen);
+
+
+
 // @route   GET api/handymen/me
 // @desc    Get current handyman's profile
 // @access  Private
@@ -43,12 +49,7 @@ router.get('/me', auth, handymanController.getProfile);
 // @route   PUT api/handymen/me
 // @desc    Update handyman profile
 // @access  Private
-router.put('/me', auth, handymanController.updateProfile);
-
-// @route   GET api/handymen
-// @desc    Get all handymen
-// @access  Public
-router.get('/', handymanController.getAllHandymen);
+router.put('/me', auth, upload.single('profileImage'), handymanController.updateProfile);
 
 // @route   GET api/handymen/:id
 // @desc    Get handyman by ID

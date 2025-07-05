@@ -75,4 +75,15 @@ const getBookingById = async (req, res) => {
   }
 };
 
-module.exports = { createBooking,getBooking ,cancelBooking, getBookingById  };
+
+const getBookingsForCurrentHandyman = async (req, res) => {
+  try {
+    const bookings = await Booking.find({ handyman: req.user._id }).sort({ createdAt: -1 });
+    res.json(bookings);
+  } catch (error) {
+    res.status(500).json({ message: 'Failed to fetch bookings' });
+  }
+};
+
+
+module.exports = { createBooking,getBooking ,cancelBooking, getBookingById,getBookingsForCurrentHandyman }; 

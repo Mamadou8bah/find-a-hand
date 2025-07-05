@@ -31,7 +31,7 @@ exports.register = async (req, res) => {
       skills: Array.isArray(req.body.skills) ? req.body.skills : req.body.skills.split(',').map(skill => skill.trim()),
       experience: req.body.experience || 0,
       hourlyRate: req.body.hourlyRate || 0,
-      profileImage: req.file.path 
+      profileImage: req.file ? req.file.path : undefined
     });
 
     await handyman.save();
