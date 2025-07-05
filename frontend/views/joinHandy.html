@@ -75,7 +75,7 @@
 
       try {
         console.log('Submitting handyman registration...');
-        const response = await fetch('http://localhost:5000/api/handymen/register', {
+        const response = await fetch(`${CONFIG.API_BASE_URL}/api/handymen/register`, {
           method: 'POST',
           body: formData
         });
@@ -161,5 +161,7 @@
       });
     });
   </script>
+  <script src="./config.js"></script>
+
 </body>
 </html>
