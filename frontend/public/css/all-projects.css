@@ -147,14 +147,14 @@ body {
     position: absolute;
     top: 100%;
     left: 0;
-    min-width: 900px;
-    padding: 20px;
+    min-width: 25rem;
+    padding: 1.25rem;
     background-color: #fff;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
     z-index: 1;
     display: none;
     flex-wrap: wrap;
-    gap: 40px;
+    gap: 2.5rem;
   }
 
   .dropdown:hover .dropdown-content {
@@ -162,19 +162,19 @@ body {
   }
 
   .column {
-    flex: 1 1 200px;
+    flex: 1 1 12.5rem;
   }
 
   .column h4 {
-    margin-bottom: 10px;
-    font-size: 16px;
+    margin-bottom: 0.625rem;
+    font-size: 1rem;
     color: #f59b14;
   }
 
   .dropdown-list-link {
     display: block;
     margin-bottom: 6px;
-    font-size: 14px;
+    font-size: 0.875rem;
     color: #333;
     text-decoration: none;
   }
@@ -185,7 +185,7 @@ body {
 
   .new-tag {
     color: red;
-    font-size: 10px;
+    font-size: 0.625rem;
     vertical-align: top;
   }
 
@@ -279,7 +279,7 @@ body {
 
 .home-projects-container {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(21.875rem, 1fr));
     gap: 2rem;
     margin: 1.3rem;
 }

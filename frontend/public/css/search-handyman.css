@@ -143,8 +143,8 @@ body {
 }
 
 .plumber-img {
-  width: 50px;
-  height: 50px;
+  width: 3.125rem;
+  height: 3.125rem;
   background: #ddd;
   border-radius: 50%;
   margin-right: 1rem;
@@ -184,10 +184,10 @@ body {
 }
 
 /* Responsive for larger screens */
-@media (min-width: 768px) {
+@media (min-width: 48rem) {
   .container {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(18.75rem, 1fr));
     gap: 1.2rem;
   }
 
