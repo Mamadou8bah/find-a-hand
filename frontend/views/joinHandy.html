@@ -111,12 +111,23 @@
           try {
             const errorData = await response.json();
             console.log('Registration failed:', errorData);
-            const errorMessage = errorData.message || (errorData.errors && errorData.errors[0]?.msg) || "Registration failed";
-            alert("Registration failed: " + errorMessage);
+            
+            // Handle different types of errors
+            let errorMessage = "Registration failed";
+            
+            if (errorData.message) {
+              errorMessage = errorData.message;
+            } else if (errorData.errors && errorData.errors.length > 0) {
+              errorMessage = errorData.errors.map(err => err.msg).join(', ');
+            } else if (errorData.error) {
+              errorMessage = errorData.error;
+            }
+            
+            alert("❌ Registration failed: " + errorMessage);
           } catch (jsonError) {
             const errorText = await response.text();
             console.error('Error response:', errorText);
-            alert("Registration failed. Please try again.");
+            alert("❌ Registration failed. Please check your details and try again.");
           }
         }
       } catch (error) {

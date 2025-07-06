@@ -3,6 +3,36 @@ const jwt = require('jsonwebtoken');
 const { validationResult } = require('express-validator');
 const Booking = require('../models/bookingModel');
 const mongoose = require('mongoose');
+const fs = require('fs');
+const path = require('path');
+
+// Helper function to handle profile image URLs
+const getProfileImageUrl = (profileImagePath) => {
+  if (!profileImagePath) {
+    return null;
+  }
+  
+  // Check if file exists
+  const fullPath = path.join(__dirname, '..', '..', profileImagePath);
+  if (fs.existsSync(fullPath)) {
+    return profileImagePath;
+  } else {
+    console.log(`Profile image not found: ${fullPath}`);
+    return null; // Return null so frontend can handle with default avatar
+  }
+};
+
+// Helper function to process handyman data before sending
+const processHandymanData = (handyman) => {
+  const handymanObj = handyman.toObject ? handyman.toObject() : handyman;
+  
+  // Handle profile image
+  if (handymanObj.profileImage) {
+    handymanObj.profileImage = getProfileImageUrl(handymanObj.profileImage);
+  }
+  
+  return handymanObj;
+};
 
 // Register a new handyman
 exports.register = async (req, res) => {
@@ -29,6 +59,16 @@ exports.register = async (req, res) => {
 
     console.log('Creating new handyman...');
     
+    // Handle skills array properly
+    let skillsArray = [];
+    if (req.body.skills) {
+      if (Array.isArray(req.body.skills)) {
+        skillsArray = req.body.skills;
+      } else {
+        skillsArray = req.body.skills.split(',').map(skill => skill.trim()).filter(skill => skill.length > 0);
+      }
+    }
+    
     // Create new handyman
     handyman = new Handyman({
       firstName,
@@ -38,9 +78,9 @@ exports.register = async (req, res) => {
       location,
       password,
       profession,
-      skills: Array.isArray(req.body.skills) ? req.body.skills : req.body.skills.split(',').map(skill => skill.trim()),
-      experience: req.body.experience || 0,
-      hourlyRate: req.body.hourlyRate || 0,
+      skills: skillsArray,
+      experience: parseInt(req.body.experience) || 0,
+      hourlyRate: parseFloat(req.body.hourlyRate) || 0,
       profileImage: req.file ? req.file.path : undefined
     });
 
@@ -68,7 +108,14 @@ exports.register = async (req, res) => {
     console.log('Response sent successfully');
   } catch (err) {
     console.error('Registration error:', err.message);
-    res.status(500).send('Server error');
+    console.error('Error stack:', err.stack);
+    
+    // Provide more detailed error response
+    res.status(500).json({ 
+      message: 'Registration failed', 
+      error: err.message,
+      timestamp: new Date().toISOString()
+    });
   }
 };
 
@@ -164,7 +211,7 @@ exports.getProfile = async (req, res) => {
       }));
     }
     
-    res.json(handyman);
+    res.json(processHandymanData(handyman));
   } catch (err) {
     console.error('getProfile error:', err.message);
     console.error('Error stack:', err.stack);
@@ -218,7 +265,7 @@ exports.updateProfile = async (req, res) => {
       { new: true }
     ).select('-password');
 
-    res.json(handyman);
+    res.json(processHandymanData(handyman));
   } catch (err) {
     console.error('Update profile error:', err.message);
     console.error('Error stack:', err.stack);
@@ -301,15 +348,15 @@ exports.getAllHandymen = async (req, res) => {
     const handymen = await Handyman.find().select('-password');
     console.log('Found handymen:', handymen.length);
     
-    // Add review count to each handyman
-    const handymenWithReviewCount = handymen.map(handyman => {
-      const handymanObj = handyman.toObject();
+    // Process each handyman to handle profile images and add review count
+    const processedHandymen = handymen.map(handyman => {
+      const handymanObj = processHandymanData(handyman);
       handymanObj.ratingCount = handyman.reviews ? handyman.reviews.length : 0;
       return handymanObj;
     });
     
-    console.log('Returning handymen with review counts');
-    res.json(handymenWithReviewCount);
+    console.log('Returning handymen with processed data');
+    res.json(processedHandymen);
   } catch (err) {
     console.error('getAllHandymen error:', err.message);
     console.error('Error stack:', err.stack);
@@ -332,7 +379,7 @@ exports.getHandymanById = async (req, res) => {
       return res.status(404).json({ message: 'Handyman not found' });
     }
     
-    res.json(handyman);
+    res.json(processHandymanData(handyman));
   } catch (err) {
     console.error(err.message);
     if (err.kind === 'ObjectId') {

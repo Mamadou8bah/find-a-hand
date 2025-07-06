@@ -202,11 +202,9 @@
 
    
     const img = document.querySelector('.image-container img');
-    img.src = handyman.profileImage
-      ? `${CONFIG.API_BASE_URL}/${handyman.profileImage}`
-      : './public/images/handyman-profiles/default-profile.jpg';
+    Utils.setProfileImage(img, handyman.profileImage);
     img.alt = `${handyman.firstName} ${handyman.lastName}`;
-    console.log('Setting profile image:', img.src);
+    console.log('Setting profile image for:', handyman.firstName, handyman.lastName);
 
    
     document.querySelector('.handyman-name').textContent = `${handyman.firstName} ${handyman.lastName}`;

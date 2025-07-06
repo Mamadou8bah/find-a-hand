@@ -4,6 +4,8 @@ const userRoutes = require('./backend/routes/userRoutes');
 const bookingRoutes = require('./backend/routes/bookingRoutes');
 const customerRoutes = require('./backend/routes/customerRoutes');
 const cors = require('cors');
+const path = require('path');
+const fs = require('fs');
 dotenv.config();
 const app = express();
 
@@ -56,7 +58,30 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 app.use(express.json()); 
-app.use('/uploads', express.static('uploads'));
+
+// Serve static files from uploads directory with error handling
+app.use('/uploads', (req, res, next) => {
+  const filePath = path.join(__dirname, req.url);
+  
+  // Check if file exists
+  if (fs.existsSync(filePath)) {
+    express.static('uploads')(req, res, next);
+  } else {
+    // If file doesn't exist, serve a default image or return 404
+    console.log(`File not found: ${filePath}`);
+    
+    // For profile images, serve a default avatar
+    if (req.url.includes('profileImages')) {
+      // You can either serve a default image or return a 404
+      res.status(404).json({ 
+        message: 'Profile image not found',
+        suggestion: 'Upload a new profile image'
+      });
+    } else {
+      res.status(404).json({ message: 'File not found' });
+    }
+  }
+});
 
 // Serve static files from frontend directory
 app.use(express.static('frontend'));
@@ -291,16 +316,20 @@ app.get('/login-test', async (req, res) => {
 
 // Health check endpoint
 app.get('/health', (req, res) => {
-  const healthCheck = {
-    status: 'OK',
+  const uploadsDir = path.join(__dirname, 'uploads', 'profileImages');
+  const uploadsExists = fs.existsSync(uploadsDir);
+  
+  res.status(200).json({
+    status: 'healthy',
     timestamp: new Date().toISOString(),
     environment: process.env.NODE_ENV || 'development',
-    uptime: process.uptime(),
-    memory: process.memoryUsage(),
-    database: 'connected' // We'll handle DB status separately
-  };
-  
-  res.status(200).json(healthCheck);
+    uploadsDirectory: {
+      exists: uploadsExists,
+      path: uploadsDir,
+      writable: uploadsExists ? fs.accessSync(uploadsDir, fs.constants.W_OK) : false
+    },
+    version: '1.0.0'
+  });
 });
 
 // Test endpoint that simulates handyman login

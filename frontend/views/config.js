@@ -261,6 +261,38 @@ const Utils = {
     const url = new URL(window.location);
     url.searchParams.set(param, value);
     window.history.pushState({}, '', url);
+  },
+
+  // Get profile image URL with fallback
+  getProfileImageUrl(profileImagePath) {
+    if (!profileImagePath) {
+      // Return a default avatar SVG
+      return 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgdmlld0JveD0iMCAwIDEwMCAxMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIiBmaWxsPSIjRjNGNEY2Ii8+CjxjaXJjbGUgY3g9IjUwIiBjeT0iMzUiIHI9IjE1IiBmaWxsPSIjOUI5QkEwIi8+CjxwYXRoIGQ9Ik0yMCA4MEM4MCA4MCA4MCA2MEM4MCA0MCA2MCAyMCA1MCAyMEM0MCAyMCAyMCA0MCAyMCA2MFY4MFoiIGZpbGw9IiM5QjlCQTAiLz4KPC9zdmc+';
+    }
+    
+    // If the path is a data URL, return it as is
+    if (profileImagePath.startsWith('data:')) {
+      return profileImagePath;
+    }
+    
+    // Check if the image URL is relative and add base URL
+    if (profileImagePath.startsWith('/')) {
+      return `${CONFIG.API_BASE_URL}${profileImagePath}`;
+    }
+    
+    return profileImagePath;
+  },
+
+  // Set profile image with error handling
+  setProfileImage(imgElement, profileImagePath) {
+    const imageUrl = this.getProfileImageUrl(profileImagePath);
+    
+    imgElement.onerror = function() {
+      console.log('Profile image failed to load, using default avatar');
+      this.src = Utils.getProfileImageUrl(null);
+    };
+    
+    imgElement.src = imageUrl;
   }
 };
 
