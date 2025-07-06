@@ -75,6 +75,13 @@
 
       try {
         console.log('Submitting handyman registration...');
+        
+        // Debug: Log form data
+        console.log('Form data contents:');
+        for (let [key, value] of formData.entries()) {
+          console.log(`${key}:`, value);
+        }
+        
         const response = await fetch(`${CONFIG.API_BASE_URL}/api/handymen/register`, {
           method: 'POST',
           body: formData
@@ -111,6 +118,7 @@
           try {
             const errorData = await response.json();
             console.log('Registration failed:', errorData);
+            console.log('Full error details:', JSON.stringify(errorData, null, 2));
             
             // Handle different types of errors
             let errorMessage = "Registration failed";
@@ -118,7 +126,8 @@
             if (errorData.message) {
               errorMessage = errorData.message;
             } else if (errorData.errors && errorData.errors.length > 0) {
-              errorMessage = errorData.errors.map(err => err.msg).join(', ');
+              console.log('Validation errors:', errorData.errors);
+              errorMessage = errorData.errors.map(err => `${err.param}: ${err.msg}`).join(', ');
             } else if (errorData.error) {
               errorMessage = errorData.error;
             }

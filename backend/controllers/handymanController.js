@@ -40,10 +40,13 @@ exports.register = async (req, res) => {
   console.log('Request body:', req.body);
   console.log('Request file:', req.file);
   console.log('Request headers:', req.headers);
+  console.log('Content-Type:', req.headers['content-type']);
+  console.log('Form data keys:', Object.keys(req.body));
   
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     console.log('Validation errors:', errors.array());
+    console.log('Validation error details:', JSON.stringify(errors.array(), null, 2));
     return res.status(400).json({ errors: errors.array() });
   }
 

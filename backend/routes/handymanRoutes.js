@@ -15,12 +15,25 @@ router.post(
     check('firstName', 'First name is required').not().isEmpty(),
     check('lastName', 'Last name is required').not().isEmpty(),
     check('email', 'Please include a valid email').isEmail(),
-    check('phone', 'Phone number must be at least 7 digits').isLength({ min: 7 }),
+    check('phone', 'Phone number must be at least 7 digits').isLength({ min: 7 }).custom((value) => {
+      // Remove all non-digit characters and check length
+      const digitsOnly = value.replace(/\D/g, '');
+      if (digitsOnly.length < 7) {
+        throw new Error('Phone number must contain at least 7 digits');
+      }
+      return true;
+    }),
     check('location', 'Location is required').not().isEmpty(),
     check('password', 'Please enter a password with 6 or more characters').isLength({ min: 6 }),
     check('profession', 'Profession is required').not().isEmpty(),
     check('skills', 'Skills are required').not().isEmpty(),
-    check('experience', 'Experience is required').isInt({ min: 0 })
+    check('experience', 'Experience is required').custom((value) => {
+      const num = parseInt(value);
+      if (isNaN(num) || num < 0) {
+        throw new Error('Experience must be a valid number (0 or greater)');
+      }
+      return true;
+    })
   ],
   handymanController.register
 );
