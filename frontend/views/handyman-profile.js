@@ -146,21 +146,10 @@ class HandymanProfile {
     
     // Display profile image
     const imageElement = document.getElementById('handymanImage');
-    if (imageElement && this.handyman.profileImage) {
-      imageElement.src = `${CONFIG.API_BASE_URL}/${this.handyman.profileImage}`;
-      console.log('Setting profile image:', imageElement.src);
-      
-      // Add error handling for image loading
-      imageElement.onerror = () => {
-        console.log('Profile image failed to load, using fallback');
-        imageElement.src = './public/images/handyman-profiles/default-profile.jpg';
-      };
-    } else if (imageElement) {
-      imageElement.src = './public/images/handyman-profiles/default-profile.jpg';
-      console.log('Using default profile image');
-    }
     if (imageElement) {
+      Utils.setProfileImage(imageElement, this.handyman.profileImage);
       imageElement.alt = `${this.handyman.firstName} ${this.handyman.lastName}`;
+      console.log('Profile image set for:', this.handyman.firstName, this.handyman.lastName);
     }
 
     // Display basic info

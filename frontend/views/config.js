@@ -265,34 +265,66 @@ const Utils = {
 
   // Get profile image URL with fallback
   getProfileImageUrl(profileImagePath) {
-    if (!profileImagePath) {
+    console.log('getProfileImageUrl called with:', profileImagePath);
+    
+    // If no profile image path or it's null/undefined, return default avatar
+    if (!profileImagePath || profileImagePath === 'null' || profileImagePath === 'undefined') {
+      console.log('No profile image path, returning default avatar');
       // Return a default avatar SVG
       return 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgdmlld0JveD0iMCAwIDEwMCAxMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIiBmaWxsPSIjRjNGNEY2Ii8+CjxjaXJjbGUgY3g9IjUwIiBjeT0iMzUiIHI9IjE1IiBmaWxsPSIjOUI5QkEwIi8+CjxwYXRoIGQ9Ik0yMCA4MEM4MCA4MCA4MCA2MEM4MCA0MCA2MCAyMCA1MCAyMEM0MCAyMCAyMCA0MCAyMCA2MFY4MFoiIGZpbGw9IiM5QjlCQTAiLz4KPC9zdmc+';
     }
     
     // If the path is a data URL, return it as is
     if (profileImagePath.startsWith('data:')) {
+      console.log('Profile image is already a data URL');
+      return profileImagePath;
+    }
+    
+    // If the path is already a full URL, return it as is
+    if (profileImagePath.startsWith('http://') || profileImagePath.startsWith('https://')) {
+      console.log('Profile image is already a full URL:', profileImagePath);
       return profileImagePath;
     }
     
     // Check if the image URL is relative and add base URL
     if (profileImagePath.startsWith('/')) {
-      return `${CONFIG.API_BASE_URL}${profileImagePath}`;
+      const fullUrl = `${CONFIG.API_BASE_URL}${profileImagePath}`;
+      console.log('Profile image with leading slash, full URL:', fullUrl);
+      return fullUrl;
     }
     
-    return profileImagePath;
+    // If it's a relative path without leading slash, add the uploads path
+    const fullUrl = `${CONFIG.API_BASE_URL}/uploads/${profileImagePath}`;
+    console.log('Profile image relative path, full URL:', fullUrl);
+    return fullUrl;
   },
 
   // Set profile image with error handling
   setProfileImage(imgElement, profileImagePath) {
+    console.log('setProfileImage called with:', profileImagePath);
     const imageUrl = this.getProfileImageUrl(profileImagePath);
+    console.log('Setting image src to:', imageUrl);
     
+    // Set up error handling
     imgElement.onerror = function() {
       console.log('Profile image failed to load, using default avatar');
       this.src = Utils.getProfileImageUrl(null);
+      this.onerror = null; // Prevent infinite loop
     };
     
+    // Set up load success
+    imgElement.onload = function() {
+      console.log('Profile image loaded successfully');
+    };
+    
+    // Set the image source
     imgElement.src = imageUrl;
+    
+    // If the URL is the default avatar, don't set up error handling
+    if (imageUrl.includes('data:image/svg+xml')) {
+      console.log('Using default avatar, removing error handler');
+      imgElement.onerror = null;
+    }
   }
 };
 
