@@ -1245,6 +1245,21 @@
                         </div>
                     </form>
                 </div>
+                
+                <div class="account-section">
+                    <div class="section-header">
+                        <h2 class="section-title">Profile Picture</h2>
+                    </div>
+                    <form id="profileImageForm" class="account-form" enctype="multipart/form-data">
+                        <div class="form-group full-width" style="display: flex; align-items: center; gap: 1.5rem;">
+                            <img id="profileImagePreview" src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgdmlld0JveD0iMCAwIDEwMCAxMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIiBmaWxsPSIjRjNGNEY2Ii8+CjxjaXJjbGUgY3g9IjUwIiBjeT0iMzUiIHI9IjE1IiBmaWxsPSIjOUI5QkEwIi8+CjxwYXRoIGQ9Ik0yMCA4MEM4MCA4MCA4MCA2MEM4MCA0MCA2MCAyMCA1MCAyMEM0MCAyMCAyMCA0MCAyMCA2MFY4MFoiIGZpbGw9IiM5QjlCQTAiLz4KPC9zdmc+" alt="Profile Preview" style="width: 80px; height: 80px; border-radius: 50%; object-fit: cover; border: 2px solid #eee;">
+                            <input type="file" id="profileImageInput" name="profileImage" accept="image/*" style="margin-left: 1rem;">
+                        </div>
+                        <div class="form-actions">
+                            <button type="button" id="uploadProfileImageBtn" class="btn btn-primary">Update Profile Picture</button>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     </div>

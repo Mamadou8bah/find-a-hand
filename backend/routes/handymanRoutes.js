@@ -5,6 +5,7 @@ const auth = require('../middlewares/handymanAuthMiddleware');
 const customerAuth = require('../middlewares/authMiddleware');
 const { check } = require('express-validator');
 const upload = require('../middlewares/uploadMiddleware'); 
+const Handyman = require('../models/HandymanModel');
 
 // @route   POST api/handymen/register
 // @desc    Register a handyman
@@ -111,5 +112,28 @@ router.post(
   ],
   handymanController.addReview
 );
+
+// DELETE all handymen profiles (admin/dev use only)
+router.delete('/delete-all', async (req, res) => {
+  try {
+    await Handyman.deleteMany({});
+    res.json({ message: 'All handymen deleted' });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// DELETE a handyman by ID (admin/dev use only)
+router.delete('/:id', async (req, res) => {
+  try {
+    const result = await Handyman.findByIdAndDelete(req.params.id);
+    if (!result) {
+      return res.status(404).json({ message: 'Handyman not found' });
+    }
+    res.json({ message: 'Handyman deleted' });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
 
 module.exports = router;

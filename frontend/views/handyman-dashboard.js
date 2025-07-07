@@ -780,4 +780,58 @@ document.addEventListener('DOMContentLoaded', function() {
       updatePassword();
     });
   }
+
+  // Profile Image Upload Logic
+  const profileImageInput = document.getElementById('profileImageInput');
+  const profileImagePreview = document.getElementById('profileImagePreview');
+  const uploadBtn = document.getElementById('uploadProfileImageBtn');
+
+  // Show preview when a new image is selected
+  if (profileImageInput) {
+    profileImageInput.addEventListener('change', function(e) {
+      const file = e.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(evt) {
+          profileImagePreview.src = evt.target.result;
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+  }
+
+  // Upload the new profile image
+  if (uploadBtn) {
+    uploadBtn.addEventListener('click', async function() {
+      const file = profileImageInput.files[0];
+      if (!file) {
+        alert('Please select an image to upload.');
+        return;
+      }
+      const formData = new FormData();
+      formData.append('profileImage', file);
+      try {
+        const token = localStorage.getItem('token');
+        const response = await fetch(`${CONFIG.API_BASE_URL}/api/handymen/me`, {
+          method: 'PUT',
+          headers: {
+            'Authorization': `Bearer ${token}`
+          },
+          body: formData
+        });
+        if (!response.ok) throw new Error('Failed to upload image');
+        alert('Profile image updated successfully!');
+        // Refresh user data and all profile images
+        const updatedUser = await response.json();
+        // Update all profile images on the page
+        document.querySelectorAll('.profile-image').forEach(img => {
+          Utils.setProfileImage(img, updatedUser.profileImage);
+        });
+        // Update preview
+        Utils.setProfileImage(profileImagePreview, updatedUser.profileImage);
+      } catch (err) {
+        alert('Error uploading image: ' + err.message);
+      }
+    });
+  }
 });
