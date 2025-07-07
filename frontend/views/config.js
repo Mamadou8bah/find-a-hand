@@ -293,8 +293,14 @@ const Utils = {
       return fullUrl;
     }
     
-    // If it's a relative path without leading slash, add the uploads path
-    const fullUrl = `${CONFIG.API_BASE_URL}/uploads/${profileImagePath}`;
+    // If the path already starts with 'uploads/', don't add another 'uploads/'
+    let relativePath = profileImagePath;
+    if (profileImagePath.startsWith('uploads/')) {
+      relativePath = profileImagePath;
+    } else {
+      relativePath = `uploads/${profileImagePath}`;
+    }
+    const fullUrl = `${CONFIG.API_BASE_URL}/${relativePath}`;
     console.log('Profile image relative path, full URL:', fullUrl);
     return fullUrl;
   },
