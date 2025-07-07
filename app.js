@@ -60,28 +60,7 @@ app.use(cors(corsOptions));
 app.use(express.json()); 
 
 // Serve static files from uploads directory with error handling
-app.use('/uploads', (req, res, next) => {
-  const filePath = path.join(__dirname, req.url);
-  
-  // Check if file exists
-  if (fs.existsSync(filePath)) {
-    express.static('uploads')(req, res, next);
-  } else {
-    // If file doesn't exist, serve a default image or return 404
-    console.log(`File not found: ${filePath}`);
-    
-    // For profile images, serve a default avatar
-    if (req.url.includes('profileImages')) {
-      // You can either serve a default image or return a 404
-      res.status(404).json({ 
-        message: 'Profile image not found',
-        suggestion: 'Upload a new profile image'
-      });
-    } else {
-      res.status(404).json({ message: 'File not found' });
-    }
-  }
-});
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // Serve static files from frontend directory
 app.use(express.static('frontend'));
