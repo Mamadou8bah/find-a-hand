@@ -243,7 +243,8 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding: 1rem;
+    padding: 1.5rem;
+    margin-top: 9rem;
 
 }
 .hero-main-text{
@@ -271,7 +272,7 @@ body {
     border-bottom-left-radius: 1.875rem;
     padding: 0 1.25rem;
     flex: 1;
-    min-width: 0;
+    max-width: 90%;
     height: 3.25rem;
 }
 
@@ -333,8 +334,13 @@ body {
     }
 }
 .services {
-    margin-left: 0.2rem;
-    margin-right: 0.2rem;
+    margin-left: 0.1rem;
+    margin-right: 0.1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
 }
   
 .sub-section-text {
@@ -353,12 +359,14 @@ body {
     flex-wrap: wrap;
     justify-content: center;
     gap: 3rem;
+    margin: 0;
     margin-top: 2rem;
+    width: 100%;
   }
   
   .service-item {
     text-align: center;
-    max-width: 6.25rem;
+    max-width: 6rem;
     transition: transform 0.3s ease; 
     cursor: pointer;
   }
