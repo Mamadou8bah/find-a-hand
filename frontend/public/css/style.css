@@ -216,6 +216,7 @@ body {
     background-color: #fff;
     border-bottom: 1px solid #ddd;
     width: 95%;
+    padding-right: 0;
 }
 @media (max-width:64rem) {
 
@@ -224,6 +225,12 @@ body {
     }
     .nav-burger-menu{
         display: block;
+        width: 4rem;
+    }
+    .nav-burger-menu svg{
+        width: 100%;
+        height: 3rem;
+        fill: #333;
     }
 
     
@@ -383,25 +390,31 @@ body {
   }
 /* Project Section Styles */
 .home-projects {
-    margin: 2rem;
+    margin: 1rem;
     text-align: center;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     
 }
 
 .home-projects-heading {
     padding: 0.1rem;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: flex-start;
-    
-    
+    gap: 0.5rem;
+    justify-content: space-between;
+    width: 100%;
 }
 
 
 .popular-home-project, .cleaning-project-h3 {
     margin-bottom: 0;
-    font-size: 1.6rem;
-    font-weight: bold;
+    font-size: 1.2rem;
+    font-weight: 550;
     
    
 }
