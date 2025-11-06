@@ -215,6 +215,7 @@ body {
     padding: 0.5rem 1.25rem;
     background-color: #fff;
     border-bottom: 1px solid #ddd;
+    width: 95%;
 }
 @media (max-width:64rem) {
 
@@ -235,11 +236,14 @@ body {
 }
 /* Hero Section */
 .hero {
-    padding-top: 7rem;
-    padding-bottom: 2rem;
-    padding-left: 2rem;
-    padding-right: 2rem;
+
     text-align: center;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
 
 }
 .hero-main-text{
