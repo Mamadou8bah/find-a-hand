@@ -582,7 +582,7 @@ body {
 .handymen-near-you-container {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
-    gap: 1rem;
+    gap: 2rem;
     margin-top: 1rem;
     align-items: start;
     width: 95%;

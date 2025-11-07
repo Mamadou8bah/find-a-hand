@@ -165,7 +165,7 @@ async function loadHandymen() {
         <a href="/public/views/handyman-profile.html?handymanId=${handyman._id}" class="handyman-link" data-handyman='${JSON.stringify(handyman)}'>
           <div class="handyman-near-you">
             <div class="handyman-image">
-              <img src="${Utils.getProfileImageUrl(handyman.profileImage)}" 
+        <img src="${Utils.getProfileImageUrl(handyman.profileImage)}" 
                    alt="${handyman.firstName} ${handyman.lastName}">
             </div>
             <div class="handyman-details">

@@ -11,15 +11,30 @@ const getProfileImageUrl = (profileImagePath) => {
   if (!profileImagePath) {
     return null;
   }
-  
-  // Check if file exists
-  const fullPath = path.join(__dirname, '..', '..', profileImagePath);
-  if (fs.existsSync(fullPath)) {
-    return profileImagePath;
-  } else {
-    console.log(`Profile image not found: ${fullPath}`);
-    return null; // Return null so frontend can handle with default avatar
+
+  // Normalize Windows backslashes to URL-friendly forward slashes
+  const normalized = String(profileImagePath).replace(/\\/g, '/');
+
+  // If absolute URL already, return as-is
+  if (/^https?:\/\//i.test(normalized)) {
+    return normalized;
   }
+
+  // Ensure it is rooted under /uploads for the static middleware to serve
+  const withLeadingSlash = normalized.startsWith('/') ? normalized : `/${normalized}`;
+
+  // Optional existence check (logs only, do not suppress URL)
+  try {
+    const fullPath = path.join(__dirname, '..', '..', withLeadingSlash);
+    if (!fs.existsSync(fullPath)) {
+      console.log(`Profile image not found on disk (serving URL anyway): ${fullPath}`);
+    }
+  } catch (e) {
+    // Non-fatal; still return the URL
+    console.log('Profile image existence check skipped due to error:', e?.message);
+  }
+
+  return withLeadingSlash;
 };
 
 // Helper function to process handyman data before sending

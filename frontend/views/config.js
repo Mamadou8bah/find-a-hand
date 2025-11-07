@@ -1,9 +1,7 @@
 // Configuration for Find-A-Hand Application
 const CONFIG = {
   // API Configuration
-  API_BASE_URL: window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' 
-    ? 'http://localhost:5000' 
-    : 'https://find-a-hand.onrender.com', 
+  API_BASE_URL:  'https://find-a-hand.onrender.com', 
   
   // Storage Keys
   STORAGE_KEYS: {
@@ -266,6 +264,11 @@ const Utils = {
   // Get profile image URL with fallback
   getProfileImageUrl(profileImagePath) {
     console.log('getProfileImageUrl called with:', profileImagePath);
+    
+    // Normalize any Windows-style backslashes to forward slashes first
+    if (typeof profileImagePath === 'string') {
+      profileImagePath = profileImagePath.replace(/\\/g, '/');
+    }
     
     // If no profile image path or it's null/undefined, return default avatar
     if (!profileImagePath || profileImagePath === 'null' || profileImagePath === 'undefined') {
