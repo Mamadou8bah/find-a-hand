@@ -89,10 +89,6 @@ router.put('/me/bookings/:id/status', auth, handymanController.updateBookingStat
 // @access  Private
 router.delete('/me/bookings/:id', auth, handymanController.deleteBooking);
 
-// @route   POST api/handymen/me/test-booking
-// @desc    Create a test booking for debugging
-// @access  Private
-router.post('/me/test-booking', auth, handymanController.createTestBooking);
 
 // @route   GET api/handymen/:id
 // @desc    Get handyman by ID

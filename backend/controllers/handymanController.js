@@ -590,28 +590,4 @@ exports.updatePassword = async (req, res) => {
   }
 };
 
-// Create a test booking for debugging
-exports.createTestBooking = async (req, res) => {
-  try {
-    console.log('Creating test booking for handyman:', req.handyman.id);
-
-    // Create a test booking
-    const testBooking = await Booking.create({
-      user: req.handyman.id, // Use handyman as user for testing
-      handymanId: req.handyman.id,
-      service: 'Test Service',
-      taskDescription: 'This is a test booking for debugging',
-      date: new Date(Date.now() + 24 * 60 * 60 * 1000), // Tomorrow
-      time: '10:00 AM',
-      phone: '1234567890',
-      location: 'Test Location',
-      status: 'Pending'
-    });
-
-    console.log('Test booking created:', testBooking._id);
-    res.json({ message: 'Test booking created', booking: testBooking });
-  } catch (err) {
-    console.error('Error creating test booking:', err.message);
-    res.status(500).json({ message: 'Server error creating test booking', error: err.message });
-  }
-};
+ 

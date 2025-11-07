@@ -56,9 +56,9 @@ class HandymanProfile {
     if (container) {
       container.innerHTML = `
         <div class="profile-card">
-          <div class="profile-header">
+          <section class="profile-hero">
             <div class="profile-image">
-              <img id="handymanImage" src="https://via.placeholder.com/140x140/f7931e/ffffff?text=Profile" alt="Handyman Profile">
+              <img id="handymanImage" alt="Profile">
             </div>
             <div class="profile-info">
               <h2 id="handymanName">Loading...</h2>
@@ -66,79 +66,73 @@ class HandymanProfile {
                 <div id="stars"></div>
                 <span id="ratingText">0 reviews</span>
               </div>
-              <p id="handymanProfession">Loading...</p>
-              <p id="handymanLocation">Loading...</p>
+              <p id="handymanProfession"></p>
+              <p id="handymanLocation" class="location-pill"></p>
             </div>
-          </div>
+          </section>
 
-          <div class="profile-details">
+          <section class="stats-row">
+            <div class="stat-card">
+              <div class="stat-label">Experience</div>
+              <div class="stat-value" id="handymanExperience">0 years</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-label">Hourly Rate</div>
+              <div class="stat-value" id="handymanRate">GMD 0/hour</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-label">Completed</div>
+              <div class="stat-value" id="handymanCompleted">0</div>
+            </div>
+          </section>
+
+          <section class="profile-details">
             <div class="detail-section">
               <h3>About</h3>
-              <p id="handymanAbout">Loading...</p>
+              <p id="handymanAbout">No bio available</p>
             </div>
 
             <div class="detail-section">
-              <h3>Skills & Services</h3>
-              <div id="handymanSkills" class="skills-list">
-                <span class="loading">Loading...</span>
-              </div>
+              <h3>Skills</h3>
+              <div id="handymanSkills" class="skills-list"></div>
             </div>
 
-            <div class="detail-section">
-              <h3>Experience</h3>
-              <p id="handymanExperience">Loading...</p>
+            <div class="detail-section" id="portfolioSection" style="display:none;">
+              <h3>Portfolio</h3>
+              <div id="portfolioGrid" class="gallery-grid"></div>
             </div>
-
-            <div class="detail-section">
-              <h3>Hourly Rate</h3>
-              <p id="handymanRate">Loading...</p>
-            </div>
-          </div>
+          </section>
 
           <div class="action-buttons">
-            <button id="bookNowBtn" class="btn btn-primary">
-              <i class="fas fa-calendar-plus"></i> Book Now
-            </button>
-            <button id="viewReviewsBtn" class="btn btn-secondary">
-              <i class="fas fa-star"></i> View Reviews
-            </button>
+            <button id="bookNowBtn" class="btn btn-primary"><i class="fas fa-calendar-plus"></i> Book Now</button>
+            <button id="viewReviewsBtn" class="btn btn-secondary"><i class="fas fa-star"></i> View Reviews</button>
           </div>
         </div>
 
         <div class="tab-content hidden" id="reviews">
           <div class="reviews-section">
             <h3>Customer Reviews</h3>
-            
-            <!-- Review Form for Customers -->
             <div class="review-form-container" id="reviewFormContainer" style="display: none;">
               <h4>Leave a Review</h4>
               <form id="reviewForm" class="review-form">
                 <div class="rating-input">
                   <label>Your Rating:</label>
                   <div class="star-rating">
-                    <input type="radio" name="rating" value="5" id="star5">
-                    <label for="star5" class="star">★</label>
-                    <input type="radio" name="rating" value="4" id="star4">
-                    <label for="star4" class="star">★</label>
-                    <input type="radio" name="rating" value="3" id="star3">
-                    <label for="star3" class="star">★</label>
-                    <input type="radio" name="rating" value="2" id="star2">
-                    <label for="star2" class="star">★</label>
-                    <input type="radio" name="rating" value="1" id="star1">
-                    <label for="star1" class="star">★</label>
+                    <input type="radio" name="rating" value="5" id="star5"><label for="star5" class="star">★</label>
+                    <input type="radio" name="rating" value="4" id="star4"><label for="star4" class="star">★</label>
+                    <input type="radio" name="rating" value="3" id="star3"><label for="star3" class="star">★</label>
+                    <input type="radio" name="rating" value="2" id="star2"><label for="star2" class="star">★</label>
+                    <input type="radio" name="rating" value="1" id="star1"><label for="star1" class="star">★</label>
                   </div>
                 </div>
                 <div class="form-group">
                   <label for="reviewComment">Your Review:</label>
-                  <textarea id="reviewComment" name="comment" rows="4" placeholder="Share your experience with this handyman..." required></textarea>
+                  <textarea id="reviewComment" name="comment" rows="4" required></textarea>
                 </div>
                 <button type="submit" class="submit-review-btn">Submit Review</button>
               </form>
             </div>
-            
-            <div id="reviewsList">
-              <!-- Reviews will be loaded here -->
-            </div>
+            <div id="reviewsList"></div>
           </div>
         </div>
       `;
@@ -157,15 +151,17 @@ class HandymanProfile {
     const professionElement = document.getElementById('handymanProfession');
     const locationElement = document.getElementById('handymanLocation');
     const aboutElement = document.getElementById('handymanAbout');
-    const experienceElement = document.getElementById('handymanExperience');
-    const rateElement = document.getElementById('handymanRate');
+  const experienceElement = document.getElementById('handymanExperience');
+  const rateElement = document.getElementById('handymanRate');
+  const completedElement = document.getElementById('handymanCompleted');
 
     if (nameElement) nameElement.textContent = `${this.handyman.firstName} ${this.handyman.lastName}`;
     if (professionElement) professionElement.textContent = this.handyman.profession || 'General Handyman';
     if (locationElement) locationElement.textContent = this.handyman.location || 'Location not specified';
     if (aboutElement) aboutElement.textContent = this.handyman.bio || 'No bio available';
-    if (experienceElement) experienceElement.textContent = `${this.handyman.experience || 0} years`;
-    if (rateElement) rateElement.textContent = `GMD ${this.handyman.hourlyRate || 0}/hour`;
+  if (experienceElement) experienceElement.textContent = `${this.handyman.experience || 0} years`;
+  if (rateElement) rateElement.textContent = `${Utils.formatCurrency(this.handyman.hourlyRate || 0)}/hour`;
+  if (completedElement) completedElement.textContent = `${this.handyman.completedBookings || 0}`;
 
     console.log('Basic info displayed');
 
@@ -173,13 +169,25 @@ class HandymanProfile {
     const skillsContainer = document.getElementById('handymanSkills');
     if (skillsContainer) {
       if (this.handyman.skills && this.handyman.skills.length > 0) {
-        skillsContainer.innerHTML = this.handyman.skills.map(skill => 
-          `<span class="skill-tag">${skill}</span>`
-        ).join('');
+        skillsContainer.innerHTML = this.handyman.skills.map(skill => `<span class="skill-tag">${skill}</span>`).join('');
         console.log('Skills displayed:', this.handyman.skills);
       } else {
         skillsContainer.innerHTML = '<span class="no-skills">No skills listed</span>';
         console.log('No skills to display');
+      }
+    }
+
+    const portfolio = Array.isArray(this.handyman.portfolioImages) ? this.handyman.portfolioImages : [];
+    const portfolioSection = document.getElementById('portfolioSection');
+    const portfolioGrid = document.getElementById('portfolioGrid');
+    if (portfolioSection && portfolioGrid) {
+      if (portfolio.length > 0) {
+        portfolioSection.style.display = 'block';
+        portfolioGrid.innerHTML = portfolio.map(url => `
+          <div class="gallery-item"><img src="${Utils.getProfileImageUrl(url)}" alt="Portfolio"></div>
+        `).join('');
+      } else {
+        portfolioSection.style.display = 'none';
       }
     }
 
