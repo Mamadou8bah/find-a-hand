@@ -12,9 +12,11 @@ body {
 }
 
 .container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 20px;
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
 }
 
 /* Utility classes */
@@ -55,6 +57,19 @@ body {
   background: #ffe8cc;
   transform: translateX(-2px);
 }
+.profile-hero .back-btn {
+  background: transparent;
+  color: #fff;
+  padding: 0;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.profile-hero .back-btn:hover {
+  background: transparent;
+  color: #fff;
+  transform: none;
+}
 
 .header h1 {
   margin: 0;
@@ -65,15 +80,15 @@ body {
 
 .profile-container {
   display: grid;
-  gap: 30px;
+  gap: 0;
 }
 
 .profile-card {
   background: white;
-  border-radius: 20px;
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+  border-radius: 0;
+  box-shadow: none;
   overflow: hidden;
-  border: 1px solid #f0f0f0;
+  border: none;
 }
 
 .profile-hero {
@@ -282,6 +297,7 @@ body {
   display: flex;
   gap: 20px;
   padding: 0 40px 40px;
+  margin-bottom: 3rem;
 }
 
 .btn {
@@ -364,7 +380,7 @@ body {
 }
 
 .reviews-section h3::before {
-  content: '⭐';
+  content: '';
   font-size: 20px;
 }
 
@@ -563,7 +579,6 @@ body {
   border: 1px solid #f5c6cb;
 }
 
-/* Login Prompt for Reviews */
 .login-prompt {
   background: #fff3cd;
   border: 1px solid #ffeaa7;

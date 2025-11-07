@@ -8,8 +8,10 @@
     box-sizing: border-box;
 }
 
-body {
+html, body {
     font-family: 'Poppins', sans-serif;
+    overflow-x: hidden;
+    width: 100%;
 }
 /* Navigation Styles */
 .logo-text {
@@ -581,10 +583,10 @@ body {
 
 .handymen-near-you-container {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
-    gap: 2rem;
+    grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
+    gap: 1.25rem;
     margin-top: 1rem;
-    align-items: start;
+    align-items: stretch;
     width: 95%;
     margin: 0 auto;
 }
@@ -598,37 +600,43 @@ body {
 }
 .cleaning-handyman-projects{
     width: 100%;
-    margin-left: 1rem;
+    padding-left: 1rem;
 }
 
 .home-improvement-projects{
     width: 100%;
-    margin-left: 1rem;
+    padding-left: 1rem;
 }
 .handyman-link {
     text-decoration: none;
     color: inherit;
     display: block;
     width: 100%;
-    margin-bottom: 1rem;
+    height: 100%;
 }
 
 .handyman-near-you {
     display: flex;
-    align-items: center;
-    gap: 1rem;
+    flex-direction: column;
+    align-items: stretch;
     text-align: left;
-    padding: 0.75rem;
+    height: 100%;
     background: #ffffff;
-    border-radius: 0.5rem;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+    border-radius: 0.75rem;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.06);
+    overflow: hidden;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.handyman-near-you:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 24px rgba(0,0,0,0.12);
 }
 
 .handyman-image {
-    width: 6rem;
-    height: 6rem;
+    width: 100%;
+    height: 11rem;
     flex-shrink: 0;
-    border-radius: 0.5rem;
     overflow: hidden;
 }
 
@@ -636,36 +644,48 @@ body {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.handyman-near-you:hover .handyman-image img {
+    transform: scale(1.05);
 }
 
 .handyman-details {
+    padding: 0.75rem 0.75rem 1rem;
     text-align: left;
 }
 
 .handyman-name {
-    font-size: 1.4rem;
-    font-weight: bold;
-    margin: 0;
+    font-size: 1.05rem;
+    font-weight: 600;
+    margin: 0 0 0.25rem 0;
 }
 
 .handyman-rating {
     display: flex;
     align-items: center;
-    font-size: 1.2rem;
-    margin: 0.2rem 0;
+    gap: 0.25rem;
+    font-size: 0.9rem;
+    color: #f7931e;
+    margin: 0.2rem 0 0.4rem;
 }
 
 .handyman-skill {
-    font-size: 1.2rem;
-    font-weight: bold;
-    color: #666;
-    margin: 0.2rem 0;
+    display: inline-block;
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: #f7931e;
+    background: #fff5e6;
+    padding: 0.2rem 0.5rem;
+    border-radius: 0.5rem;
+    margin: 0.25rem 0;
 }
 
 .handyman-location {
-    font-size: 1.2rem;
+    font-size: 0.9rem;
     color: #666;
-    margin: 0;
+    margin: 0.15rem 0 0;
 }
 .see-more-container-handymen-near-you {
     margin-top: 0.4rem;

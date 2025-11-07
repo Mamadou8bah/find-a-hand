@@ -57,6 +57,7 @@ class HandymanProfile {
       container.innerHTML = `
         <div class="profile-card">
           <section class="profile-hero">
+            <a href="../index.html" class="back-btn"><i class="fas fa-arrow-left"></i> Back</a>
             <div class="profile-image">
               <img id="handymanImage" alt="Profile">
             </div>
@@ -255,6 +256,14 @@ class HandymanProfile {
   }
 
   setupEventListeners() {
+    const backBtn = document.querySelector('.back-btn');
+    if (backBtn) {
+      backBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        window.history.back();
+      });
+    }
+
     // View reviews button
     const viewReviewsBtn = document.getElementById('viewReviewsBtn');
     if (viewReviewsBtn) {

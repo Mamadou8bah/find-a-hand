@@ -8,42 +8,39 @@ const path = require('path');
 const cloudinary = require('../config/cloudinary');
 const { uploadBuffer } = require('../utils/cloudinaryUpload');
 
-// Helper function to handle profile image URLs
 const getProfileImageUrl = (profileImagePath) => {
   if (!profileImagePath) {
     return null;
   }
 
-  // Normalize Windows backslashes to URL-friendly forward slashes
+  
   const normalized = String(profileImagePath).replace(/\\/g, '/');
 
-  // If absolute URL already, return as-is
   if (/^https?:\/\//i.test(normalized)) {
     return normalized;
   }
 
-  // Ensure it is rooted under /uploads for the static middleware to serve
+
   const withLeadingSlash = normalized.startsWith('/') ? normalized : `/${normalized}`;
 
-  // Optional existence check (logs only, do not suppress URL)
+ 
   try {
     const fullPath = path.join(__dirname, '..', '..', withLeadingSlash);
     if (!fs.existsSync(fullPath)) {
       console.log(`Profile image not found on disk (serving URL anyway): ${fullPath}`);
     }
   } catch (e) {
-    // Non-fatal; still return the URL
+  
     console.log('Profile image existence check skipped due to error:', e?.message);
   }
 
   return withLeadingSlash;
 };
 
-// Helper function to process handyman data before sending
+
 const processHandymanData = (handyman) => {
   const handymanObj = handyman.toObject ? handyman.toObject() : handyman;
-  
-  // Handle profile image
+
   if (handymanObj.profileImage) {
     handymanObj.profileImage = getProfileImageUrl(handymanObj.profileImage);
   }
@@ -51,7 +48,7 @@ const processHandymanData = (handyman) => {
   return handymanObj;
 };
 
-// Register a new handyman
+
 exports.register = async (req, res) => {
   console.log('=== Handyman Registration ===');
   console.log('Request body:', req.body);
@@ -70,7 +67,7 @@ exports.register = async (req, res) => {
   const { firstName, lastName, email, phone, location, password, profession } = req.body;
 
   try {
-    // Check if user already exists
+    
     let handyman = await Handyman.findOne({ email });
     if (handyman) {
       console.log('Handyman already exists:', email);
@@ -79,7 +76,7 @@ exports.register = async (req, res) => {
 
     console.log('Creating new handyman...');
     
-    // Handle skills array properly
+  
     let skillsArray = [];
     if (req.body.skills) {
       if (Array.isArray(req.body.skills)) {
@@ -126,7 +123,7 @@ exports.register = async (req, res) => {
     console.log('Handyman registered successfully:', handyman.email);
     console.log('Sending response with token...');
     
-    // Set proper headers
+   
     res.setHeader('Content-Type', 'application/json');
     
     res.json({ token, message: 'Registration successful' });
@@ -135,7 +132,7 @@ exports.register = async (req, res) => {
     console.error('Registration error:', err.message);
     console.error('Error stack:', err.stack);
     
-    // Provide more detailed error response
+   
     res.status(500).json({ 
       message: 'Registration failed', 
       error: err.message,
@@ -144,7 +141,7 @@ exports.register = async (req, res) => {
   }
 };
 
-// Login handyman
+
 exports.login = async (req, res) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
@@ -157,7 +154,6 @@ exports.login = async (req, res) => {
     console.log('=== handyman login attempt ===');
     console.log('Email:', email);
     
-    // Check if handyman exists
     let handyman = await Handyman.findOne({ email });
     if (!handyman) {
       console.log('Handyman not found for email:', email);
@@ -166,14 +162,13 @@ exports.login = async (req, res) => {
 
     console.log('Handyman found:', handyman._id);
 
-    // Check password
     const isMatch = await handyman.comparePassword(password);
     if (!isMatch) {
       console.log('Password mismatch for handyman:', handyman._id);
       return res.status(400).json({ message: 'Invalid credentials' });
     }
 
-    // Create JWT token using async/await
+   
     const payload = {
       handyman: {
         id: handyman.id,
@@ -196,7 +191,7 @@ exports.login = async (req, res) => {
   }
 };
 
-// Get handyman profile
+
 exports.getProfile = async (req, res) => {
   try {
     console.log('=== getProfile called ===');
@@ -217,19 +212,18 @@ exports.getProfile = async (req, res) => {
     
     console.log('Handyman found:', handyman._id);
     
-    // Populate user data for reviews if reviews exist
+    
     if (handyman.reviews && handyman.reviews.length > 0) {
       const User = require('../models/userModel');
       const userIds = handyman.reviews.map(review => review.userId);
       const users = await User.find({ _id: { $in: userIds } }).select('firstName lastName');
       
-      // Create a map of user data
       const userMap = {};
       users.forEach(user => {
         userMap[user._id.toString()] = user;
       });
       
-      // Add user data to reviews
+      
       handyman.reviews = handyman.reviews.map(review => ({
         ...review.toObject(),
         user: userMap[review.userId.toString()]
@@ -273,7 +267,7 @@ exports.updateProfile = async (req, res) => {
     profileFields.profileImage = uploadRes.secure_url;
   }
 
-  // Remove undefined keys (to avoid overwriting fields with undefined)
+  
   Object.keys(profileFields).forEach(
     key => profileFields[key] === undefined && delete profileFields[key]
   );
@@ -311,7 +305,6 @@ exports.updateBookingStatus = async (req, res) => {
 
   const { status } = req.body;
 
-  // Map lowercase status to proper case
   const statusMap = {
     'confirmed': 'Confirmed',
     'cancelled': 'Cancelled', 
