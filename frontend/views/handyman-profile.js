@@ -118,11 +118,11 @@ class HandymanProfile {
                 <div class="rating-input">
                   <label>Your Rating:</label>
                   <div class="star-rating">
-                    <input type="radio" name="rating" value="5" id="star5"><label for="star5" class="star">★</label>
-                    <input type="radio" name="rating" value="4" id="star4"><label for="star4" class="star">★</label>
-                    <input type="radio" name="rating" value="3" id="star3"><label for="star3" class="star">★</label>
-                    <input type="radio" name="rating" value="2" id="star2"><label for="star2" class="star">★</label>
-                    <input type="radio" name="rating" value="1" id="star1"><label for="star1" class="star">★</label>
+                    <input type="radio" name="rating" value="5" id="star5"><label for="star5" class="star"><i class="fas fa-star"></i></label>
+                    <input type="radio" name="rating" value="4" id="star4"><label for="star4" class="star"><i class="fas fa-star"></i></label>
+                    <input type="radio" name="rating" value="3" id="star3"><label for="star3" class="star"><i class="fas fa-star"></i></label>
+                    <input type="radio" name="rating" value="2" id="star2"><label for="star2" class="star"><i class="fas fa-star"></i></label>
+                    <input type="radio" name="rating" value="1" id="star1"><label for="star1" class="star"><i class="fas fa-star"></i></label>
                   </div>
                 </div>
                 <div class="form-group">
@@ -232,15 +232,12 @@ class HandymanProfile {
       if (rating >= i) {
         star.className = 'fas fa-star';
         star.style.color = 'orange';
-        star.textContent = '★'; // Fallback Unicode star
       } else if (rating >= i - 0.5) {
         star.className = 'fas fa-star-half-alt';
         star.style.color = 'orange';
-        star.textContent = '★'; // Fallback Unicode star
       } else {
         star.className = 'far fa-star';
         star.style.color = 'orange';
-        star.textContent = '☆'; // Fallback Unicode empty star
       }
       starsContainer.appendChild(star);
     }

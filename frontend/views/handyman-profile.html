@@ -12,111 +12,63 @@
 </head>
 <body>
   <div class="container">
-    <header class="header">
-      <div class="header-content">
-        <a href="../index.html" class="back-btn">
-          <i class="fas fa-arrow-left"></i> Back to Home
-        </a>
-        <h1>Handyman Profile</h1>
-      </div>
-    </header>
-
     <main class="profile-container">
       <div class="profile-card">
-        <div class="profile-header">
+        <section class="profile-hero">
+          <a href="../index.html" class="back-btn"><i class="fas fa-arrow-left"></i> Back</a>
           <div class="profile-image">
-            <img id="handymanImage" src="https://via.placeholder.com/140x140/f7931e/ffffff?text=Profile" alt="Handyman Profile">
+            <img id="handymanImage" alt="Profile">
           </div>
           <div class="profile-info">
             <h2 id="handymanName">Loading...</h2>
-            <div class="rating">
-              <div id="stars"></div>
-              <span id="ratingText">0 reviews</span>
-            </div>
+            <div class="rating"><div id="stars"></div><span id="ratingText">0 reviews</span></div>
             <p id="handymanProfession">Loading...</p>
-            <p id="handymanLocation">Loading...</p>
+            <p id="handymanLocation" class="location-pill">Loading...</p>
           </div>
-        </div>
-
-        <div class="profile-details">
-          <div class="detail-section">
-            <h3>About</h3>
-            <p id="handymanAbout">Loading...</p>
-          </div>
-
-          <div class="detail-section">
-            <h3>Skills & Services</h3>
-            <div id="handymanSkills" class="skills-list">
-              <span class="loading">Loading...</span>
-            </div>
-          </div>
-
-          <div class="detail-section">
-            <h3>Experience</h3>
-            <p id="handymanExperience">Loading...</p>
-          </div>
-
-          <div class="detail-section">
-            <h3>Hourly Rate</h3>
-            <p id="handymanRate">Loading...</p>
-          </div>
-        </div>
-
+        </section>
+        <section class="stats-row">
+          <div class="stat-card"><div class="stat-label">Experience</div><div class="stat-value" id="handymanExperience">0 years</div></div>
+          <div class="stat-card"><div class="stat-label">Hourly Rate</div><div class="stat-value" id="handymanRate">GMD 0/hour</div></div>
+          <div class="stat-card"><div class="stat-label">Completed</div><div class="stat-value" id="handymanCompleted">0</div></div>
+        </section>
+        <section class="profile-details">
+          <div class="detail-section"><h3>About</h3><p id="handymanAbout">Loading...</p></div>
+          <div class="detail-section"><h3>Skills</h3><div id="handymanSkills" class="skills-list"><span class="loading">Loading...</span></div></div>
+          <div class="detail-section" id="portfolioSection" style="display:none;"><h3>Portfolio</h3><div id="portfolioGrid" class="gallery-grid"></div></div>
+        </section>
         <div class="action-buttons">
-          <button id="bookNowBtn" class="btn btn-primary">
-            <i class="fas fa-calendar-plus"></i> Book Now
-          </button>
-          <button id="viewReviewsBtn" class="btn btn-secondary">
-            <i class="fas fa-star"></i> View Reviews
-          </button>
+          <button id="bookNowBtn" class="btn btn-primary"><i class="fas fa-calendar-plus"></i> Book Now</button>
+          <button id="viewReviewsBtn" class="btn btn-secondary"><i class="fas fa-star"></i> Reviews</button>
         </div>
       </div>
-
       <div class="tab-content hidden" id="reviews">
         <div class="reviews-section">
           <h3>Customer Reviews</h3>
-          
-          <!-- Review Form for Customers -->
-          <div class="review-form-container" id="reviewFormContainer" style="display: none;">
+          <div class="review-form-container" id="reviewFormContainer" style="display:none;">
             <h4>Leave a Review</h4>
             <form id="reviewForm" class="review-form">
               <div class="rating-input">
                 <label>Your Rating:</label>
                 <div class="star-rating">
-                  <input type="radio" name="rating" value="5" id="star5">
-                  <label for="star5" class="star">★</label>
-                  <input type="radio" name="rating" value="4" id="star4">
-                  <label for="star4" class="star">★</label>
-                  <input type="radio" name="rating" value="3" id="star3">
-                  <label for="star3" class="star">★</label>
-                  <input type="radio" name="rating" value="2" id="star2">
-                  <label for="star2" class="star">★</label>
-                  <input type="radio" name="rating" value="1" id="star1">
-                  <label for="star1" class="star">★</label>
-                </div>
+                    <input type="radio" name="rating" value="5" id="star5"><label for="star5" class="star"><i class="fas fa-star"></i></label>
+                    <input type="radio" name="rating" value="4" id="star4"><label for="star4" class="star"><i class="fas fa-star"></i></label>
+                    <input type="radio" name="rating" value="3" id="star3"><label for="star3" class="star"><i class="fas fa-star"></i></label>
+                    <input type="radio" name="rating" value="2" id="star2"><label for="star2" class="star"><i class="fas fa-star"></i></label>
+                    <input type="radio" name="rating" value="1" id="star1"><label for="star1" class="star"><i class="fas fa-star"></i></label>
+                  </div>
               </div>
               <div class="form-group">
                 <label for="reviewComment">Your Review:</label>
-                <textarea id="reviewComment" name="comment" rows="4" placeholder="Share your experience with this handyman..." required></textarea>
+                <textarea id="reviewComment" name="comment" rows="4" required></textarea>
               </div>
               <button type="submit" class="submit-review-btn">Submit Review</button>
             </form>
           </div>
-          
-          <div id="reviewsList">
-            <!-- Reviews will be loaded here -->
-          </div>
+          <div id="reviewsList"></div>
         </div>
       </div>
     </main>
   </div>
-
-  <script>
-   
-    document.querySelector('.back-btn').addEventListener('click', (e) => {
-      e.preventDefault();
-      window.history.back();
-    });
-  </script>
+  <script>document.querySelector('.back-btn').addEventListener('click',e=>{e.preventDefault();window.history.back();});</script>
 </body>
 </html> 
