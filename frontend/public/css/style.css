@@ -1222,11 +1222,9 @@ body {
 
 }
 
-/* Ensure footer background bleeds edge-to-edge on small screens
-   in case parent containers (or centered wrappers) limit width. */
 @media (max-width: 64rem) {
     .footer {
-        /* Force full viewport width */
+        
         width: 100vw;
         max-width: 100vw;
         position: relative;
@@ -1234,7 +1232,6 @@ body {
         right: 50%;
         margin-left: -50vw;
         margin-right: -50vw;
-        /* keep small inner horizontal padding so content doesn't touch edges */
         padding-left: 1rem;
         padding-right: 1rem;
         box-sizing: border-box;
