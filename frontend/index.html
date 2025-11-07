@@ -50,27 +50,9 @@
             transform: scale(1.05);
         }
         
-        .handyman-link {
-            transition: all 0.3s ease;
-            padding: 20px;
-        }
-        
-        .handyman-link:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
-        }
-        
-        .handyman-image {
-            overflow: hidden;
-        }
-        
-        .handyman-image img {
-            transition: transform 0.3s ease;
-        }
-        
-        .handyman-link:hover .handyman-image img {
-            transform: scale(1.05);
-        }
+    .handyman-link { padding: 0; }
+    .handyman-image { overflow: hidden; }
+    .handyman-image img { transition: none; }
         
         .search-button {
             transition: all 0.3s ease;
@@ -221,9 +203,7 @@
                 transform: translateY(-2px);
             }
             
-            .handyman-link:hover {
-                transform: translateY(-2px);
-            }
+            
         }
         
         /* Loading state styling */

@@ -172,7 +172,7 @@ async function loadHandymen() {
               <p class="handyman-name">${handyman.firstName} ${handyman.lastName}</p>
               <span class="handyman-rating">
                 ${stars}
-                <span>${handyman.ratingCount > 0 ? handyman.ratingCount : 'No reviews'}</span>
+                ${handyman.ratingCount > 0 ? `<span>${handyman.ratingCount}</span>` : ''}
               </span>
               <p class="handyman-skill">${handyman.profession || handyman.job || 'No profession set'}</p>
               <p class="handyman-location">${handyman.location || 'Location not specified'}</p>
