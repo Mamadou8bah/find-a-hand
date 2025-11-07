@@ -182,6 +182,12 @@ async function loadHandymen() {
       `;
 
       container.insertAdjacentHTML('beforeend', handymanHTML);
+
+      const card = container.lastElementChild;
+      const imgEl = card && card.querySelector('.handyman-image img');
+      if (imgEl) {
+        Utils.setProfileImage(imgEl, handyman.profileImage);
+      }
     });
 
     // Add click event listeners to handyman cards
