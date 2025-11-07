@@ -11,23 +11,7 @@
     <script src="/public/views/index.js"></script>
     <style>
         
-        .service-item {
-            transition: all 0.3s ease;
-            cursor: pointer;
-        }
-        
-        .service-item:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 25px rgba(247, 147, 30, 0.15);
-        }
-        
-        .service-item img {
-            transition: transform 0.3s ease;
-        }
-        
-        .service-item:hover img {
-            transform: scale(1.1);
-        }
+    .service-item { cursor: pointer; }
         
         .project-link {
             transition: all 0.3s ease;
@@ -194,12 +178,8 @@
 
         
       
-        @media (max-width: 768px) {
-            .service-item:hover {
-                transform: translateY(-3px);
-            }
-            
-            .project-link:hover {
+    @media (max-width: 768px) {
+      .project-link:hover {
                 transform: translateY(-2px);
             }
             
@@ -541,10 +521,6 @@
                 </div>
             </div>
         </a>
-    </div>
-
-    <div class="see-more-container">
-        <a href="#" class="see-more">See More &gt;&gt;</a>
     </div>
    </section>
    <!-- Cleaning and Handy Task End-->
