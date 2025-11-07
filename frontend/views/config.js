@@ -3,7 +3,7 @@ const CONFIG = {
   // API Configuration
   API_BASE_URL: window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' 
     ? 'http://localhost:5000' 
-    : 'https://web-production-f6074.up.railway.app', // Your Railway backend URL
+    : 'https://find-a-hand.onrender.com', 
   
   // Storage Keys
   STORAGE_KEYS: {
