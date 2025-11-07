@@ -292,8 +292,9 @@ const Utils = {
     // Check if the image URL is relative and add base URL
     if (profileImagePath.startsWith('/')) {
       const fullUrl = `${CONFIG.API_BASE_URL}${profileImagePath}`;
+      const encoded = encodeURI(fullUrl);
       console.log('Profile image with leading slash, full URL:', fullUrl);
-      return fullUrl;
+      return encoded;
     }
     
     // If the path already starts with 'uploads/', don't add another 'uploads/'
@@ -303,9 +304,10 @@ const Utils = {
     } else {
       relativePath = `uploads/${profileImagePath}`;
     }
-    const fullUrl = `${CONFIG.API_BASE_URL}/${relativePath}`;
-    console.log('Profile image relative path, full URL:', fullUrl);
-    return fullUrl;
+  const fullUrl = `${CONFIG.API_BASE_URL}/${relativePath}`;
+  const encoded = encodeURI(fullUrl);
+  console.log('Profile image relative path, full URL:', fullUrl);
+  return encoded;
   },
 
   // Set profile image with error handling

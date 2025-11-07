@@ -5,6 +5,8 @@ const Booking = require('../models/bookingModel');
 const mongoose = require('mongoose');
 const fs = require('fs');
 const path = require('path');
+const cloudinary = require('../config/cloudinary');
+const { uploadBuffer } = require('../utils/cloudinaryUpload');
 
 // Helper function to handle profile image URLs
 const getProfileImageUrl = (profileImagePath) => {
@@ -87,7 +89,12 @@ exports.register = async (req, res) => {
       }
     }
     
-    // Create new handyman
+    let uploadedUrl;
+    if (req.file && req.file.buffer) {
+      const uploadRes = await uploadBuffer(req.file.buffer, { folder: 'find-a-hand/profileImages' });
+      uploadedUrl = uploadRes.secure_url;
+    }
+
     handyman = new Handyman({
       firstName,
       lastName,
@@ -99,7 +106,7 @@ exports.register = async (req, res) => {
       skills: skillsArray,
       experience: parseInt(req.body.experience) || 0,
       hourlyRate: parseFloat(req.body.hourlyRate) || 0,
-      profileImage: req.file ? req.file.path : undefined
+      profileImage: uploadedUrl || undefined
     });
 
     await handyman.save();
@@ -261,8 +268,9 @@ exports.updateProfile = async (req, res) => {
       : skills.split(',').map(skill => skill.trim());
   }
 
-  if (req.file) {
-    profileFields.profileImage = req.file.path;
+  if (req.file && req.file.buffer) {
+    const uploadRes = await uploadBuffer(req.file.buffer, { folder: 'find-a-hand/profileImages' });
+    profileFields.profileImage = uploadRes.secure_url;
   }
 
   // Remove undefined keys (to avoid overwriting fields with undefined)

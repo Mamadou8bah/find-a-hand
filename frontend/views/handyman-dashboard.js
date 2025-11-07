@@ -786,7 +786,7 @@ document.addEventListener('DOMContentLoaded', function() {
   const profileImagePreview = document.getElementById('profileImagePreview');
   const uploadBtn = document.getElementById('uploadProfileImageBtn');
 
-  // Show preview when a new image is selected
+
   if (profileImageInput) {
     profileImageInput.addEventListener('change', function(e) {
       const file = e.target.files[0];
@@ -821,9 +821,8 @@ document.addEventListener('DOMContentLoaded', function() {
         });
         if (!response.ok) throw new Error('Failed to upload image');
         alert('Profile image updated successfully!');
-        // Refresh user data and all profile images
+       
         const updatedUser = await response.json();
-        // Update all profile images on the page
         document.querySelectorAll('.profile-image').forEach(img => {
           Utils.setProfileImage(img, updatedUser.profileImage);
         });
